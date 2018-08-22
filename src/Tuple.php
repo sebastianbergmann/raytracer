@@ -86,4 +86,14 @@ final class Tuple
             $this->w + $that->w()
         );
     }
+
+    public function minus(self $that): self
+    {
+        return new self(
+            $this->x - $that->x(),
+            $this->y - $that->y(),
+            $this->z - $that->z(),
+            $this->w - $that->w()
+        );
+    }
 }
