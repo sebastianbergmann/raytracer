@@ -111,4 +111,16 @@ final class TupleTest extends TestCase
         $this->assertSame(-6.0, $c->z());
         $this->assertSame(0.0, $c->w());
     }
+
+    public function test_can_be_negated(): void
+    {
+        $a = Tuple::point(1.0, -2.0, 3.0);
+
+        $b = $a->negate();
+
+        $this->assertSame(-1.0, $b->x());
+        $this->assertSame(2.0, $b->y());
+        $this->assertSame(-3.0, $b->z());
+        $this->assertSame(-1.0, $b->w());
+    }
 }

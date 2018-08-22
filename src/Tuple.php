@@ -96,4 +96,14 @@ final class Tuple
             $this->w - $that->w()
         );
     }
+
+    public function negate(): self
+    {
+        return new self(
+            -1 * $this->x,
+            -1 * $this->y,
+            -1 * $this->z,
+            -1 * $this->w
+        );
+    }
 }
