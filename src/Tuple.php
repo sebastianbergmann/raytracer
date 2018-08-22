@@ -73,6 +73,12 @@ final class Tuple
 
     public function plus(self $that): self
     {
+        if ($this->isPoint() && $that->isPoint()) {
+            throw new RuntimeException(
+                'Cannot add point tuple to another point tuple'
+            );
+        }
+
         return new self(
             $this->x + $that->x(),
             $this->y + $that->y(),

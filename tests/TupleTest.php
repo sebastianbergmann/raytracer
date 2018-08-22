@@ -38,7 +38,7 @@ final class TupleTest extends TestCase
         $this->assertTrue($a->isVector());
     }
 
-    public function testAnotherTupleCanBeAdded(): void
+    public function testAdditionOfPointAndVectorWorks(): void
     {
         $a = Tuple::point(3.0, -2.0, 5.0);
         $b = Tuple::vector(-2.0, 3.0, 1.0);
@@ -49,5 +49,27 @@ final class TupleTest extends TestCase
         $this->assertSame(1.0, $c->y());
         $this->assertSame(6.0, $c->z());
         $this->assertSame(1.0, $c->w());
+    }
+
+    public function testAdditionOfTwoVectorsWorks(): void
+    {
+        $a = Tuple::vector(3.0, -2.0, 5.0);
+        $b = Tuple::vector(-2.0, 3.0, 1.0);
+
+        $c = $a->plus($b);
+
+        $this->assertSame(1.0, $c->x());
+        $this->assertSame(1.0, $c->y());
+        $this->assertSame(6.0, $c->z());
+        $this->assertSame(0.0, $c->w());
+    }
+
+    public function testAdditionOfTwoPointsDoesNotWork(): void
+    {
+        $a = Tuple::point(3.0, -2.0, 5.0);
+
+        $this->expectException(RuntimeException::class);
+
+        $a->plus($a);
     }
 }
