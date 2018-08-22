@@ -85,4 +85,17 @@ final class TupleTest extends TestCase
         $this->assertSame(-6.0, $c->z());
         $this->assertSame(0.0, $c->w());
     }
+
+    public function test_subtracting_a_vector_from_a_point_works(): void
+    {
+        $a = Tuple::point(3.0, 2.0, 1.0);
+        $b = Tuple::vector(5.0, 6.0, 7.0);
+
+        $c = $a->minus($b);
+
+        $this->assertSame(-2.0, $c->x());
+        $this->assertSame(-4.0, $c->y());
+        $this->assertSame(-6.0, $c->z());
+        $this->assertSame(1.0, $c->w());
+    }
 }
