@@ -123,4 +123,16 @@ final class TupleTest extends TestCase
         $this->assertSame(-3.0, $b->z());
         $this->assertSame(-1.0, $b->w());
     }
+
+    public function test_can_be_multiplied_by_a_scalar(): void
+    {
+        $a = Tuple::point(1.0, -2.0, 3.0);
+
+        $b = $a->multiplyBy(3.5);
+
+        $this->assertSame(3.5, $b->x());
+        $this->assertSame(-7.0, $b->y());
+        $this->assertSame(10.5, $b->z());
+        $this->assertSame(3.5, $b->w());
+    }
 }

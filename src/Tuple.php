@@ -106,4 +106,14 @@ final class Tuple
             -1 * $this->w
         );
     }
+
+    public function multiplyBy(float $factor): self
+    {
+        return new self(
+            $factor * $this->x,
+            $factor * $this->y,
+            $factor * $this->z,
+            $factor * $this->w
+        );
+    }
 }
