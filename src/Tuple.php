@@ -28,6 +28,11 @@ final class Tuple
         return new self($x, $y, $z, 1.0);
     }
 
+    public static function vector(float $x, float $y, float $z): self
+    {
+        return new self($x, $y, $z, 0.0);
+    }
+
     private function __construct(float $x, float $y, float $z, float $w)
     {
         $this->x = $x;
@@ -59,5 +64,10 @@ final class Tuple
     public function isPoint(): bool
     {
         return $this->w === 1.0;
+    }
+
+    public function isVector(): bool
+    {
+        return $this->w === 0.0;
     }
 }
