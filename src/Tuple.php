@@ -70,4 +70,14 @@ final class Tuple
     {
         return $this->w === 0.0;
     }
+
+    public function plus(self $that): self
+    {
+        return new self(
+            $this->x + $that->x(),
+            $this->y + $that->y(),
+            $this->z + $that->z(),
+            $this->w + $that->w()
+        );
+    }
 }
