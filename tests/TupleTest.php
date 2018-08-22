@@ -11,7 +11,7 @@ final class TupleTest extends TestCase
     /**
      * @testdox A tuple with w=1.0 is a point
      */
-    public function testCanBePoint(): void
+    public function test_a_tuple_with_w_equal_to_one_is_a_point(): void
     {
         $a = Tuple::point(4.3, -4.2, 3.1);
 
@@ -26,7 +26,7 @@ final class TupleTest extends TestCase
     /**
      * @testdox A tuple with w=0.0 is a vector
      */
-    public function testCanBeVector(): void
+    public function test_a_tuple_with_w_equal_to_zero_is_a_vector(): void
     {
         $a = Tuple::vector(4.3, -4.2, 3.1);
 
@@ -38,7 +38,7 @@ final class TupleTest extends TestCase
         $this->assertTrue($a->isVector());
     }
 
-    public function testAdditionOfPointAndVectorWorks(): void
+    public function test_a_vector_can_be_added_to_a_point(): void
     {
         $a = Tuple::point(3.0, -2.0, 5.0);
         $b = Tuple::vector(-2.0, 3.0, 1.0);
@@ -51,7 +51,7 @@ final class TupleTest extends TestCase
         $this->assertSame(1.0, $c->w());
     }
 
-    public function testAdditionOfTwoVectorsWorks(): void
+    public function test_a_vector_can_be_added_to_another_vector(): void
     {
         $a = Tuple::vector(3.0, -2.0, 5.0);
         $b = Tuple::vector(-2.0, 3.0, 1.0);
@@ -64,7 +64,7 @@ final class TupleTest extends TestCase
         $this->assertSame(0.0, $c->w());
     }
 
-    public function testAdditionOfTwoPointsDoesNotWork(): void
+    public function test_a_point_cannot_be_added_to_a_point(): void
     {
         $a = Tuple::point(3.0, -2.0, 5.0);
 
