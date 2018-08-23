@@ -53,4 +53,13 @@ final class Color
             $this->blue + $that->blue()
         );
     }
+
+    public function minus(self $that): self
+    {
+        return new self(
+            $this->red - $that->red(),
+            $this->green - $that->green(),
+            $this->blue - $that->blue()
+        );
+    }
 }

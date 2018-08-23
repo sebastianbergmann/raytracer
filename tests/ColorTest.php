@@ -31,4 +31,16 @@ final class ColorTest extends TestCase
         $this->assertSame(0.7, $c3->green());
         $this->assertSame(1.0, $c3->blue());
     }
+
+    public function test_another_color_can_be_subtracted(): void
+    {
+        $c1 = Color::create(0.9, 0.6, 0.75);
+        $c2 = Color::create(0.7, 0.1, 0.25);
+
+        $c3 = $c1->minus($c2);
+
+        $this->assertSame(0.2, $c3->red());
+        $this->assertSame(0.5, $c3->green());
+        $this->assertSame(0.5, $c3->blue());
+    }
 }
