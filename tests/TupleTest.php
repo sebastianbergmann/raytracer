@@ -162,4 +162,24 @@ final class TupleTest extends TestCase
         $this->assertSame(1.5, $t2->z());
         $this->assertSame(-2.0, $t2->w());
     }
+
+    /**
+     * @dataProvider magnitudeProvider
+     * @testdox The magnitude of v($x, $y, $z) is calculated to be $magnitude
+     */
+    public function test_the_magnitude_of_a_vector_can_be_calculated(float $magnitude, float $x, float $y, float $z): void
+    {
+        $this->assertSame($magnitude, Tuple::createVector($x, $y, $z)->magnitude());
+    }
+
+    public function magnitudeProvider(): array
+    {
+        return [
+            [1.0, 1.0, 0.0, 0.0],
+            [1.0, 0.0, 1.0, 0.0],
+            [1.0, 0.0, 0.0, 1.0],
+            [sqrt(14), 1.0, 2.0, 3.0],
+            [sqrt(14), -1.0, -2.0, -3.0]
+        ];
+    }
 }

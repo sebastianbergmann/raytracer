@@ -131,4 +131,9 @@ final class Tuple
             $this->w / $divisor
         );
     }
+
+    public function magnitude(): float
+    {
+        return sqrt($this->x ** 2 + $this->y ** 2 + $this->z ** 2 + $this->w ** 2);
+    }
 }
