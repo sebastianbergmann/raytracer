@@ -42,6 +42,11 @@ final class Canvas
         return $this->pixels[$x][$y];
     }
 
+    public function writePixel(int $x, int $y, Color $c): void
+    {
+        $this->pixels[$x][$y] = $c;
+    }
+
     private function initializePixels(): void
     {
         for ($x = 1; $x <= $this->width; $x++) {
