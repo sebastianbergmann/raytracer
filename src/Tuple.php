@@ -149,7 +149,7 @@ final class Tuple
         );
     }
 
-    public function dotProduct(self $that): float
+    public function dot(self $that): float
     {
         return $this->x * $that->x() +
                $this->y * $that->y() +
@@ -157,7 +157,7 @@ final class Tuple
                $this->w * $that->w();
     }
 
-    public function crossProduct(self $that): self
+    public function cross(self $that): self
     {
         return self::createVector(
             $this->y * $that->z() - $this->z * $that->y(),
