@@ -83,6 +83,7 @@ final class Color
 
     public function equalTo(self $that): bool
     {
+        /* @noinspection TypeUnsafeComparisonInspection */
         return $this->red == $that->red() &&
                $this->green == $that->green() &&
                $this->blue == $that->blue();
