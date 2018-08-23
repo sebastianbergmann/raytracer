@@ -193,7 +193,25 @@ final class MatrixTest extends TestCase
         );
     }
 
-    public function test_4x4_matrix_can_be_multiplied_by_a_tuple(): void
+    public function test_a_4x4_matrix_can_be_multiplied_by_the_4x4_identity_matrix(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [1.0, 2.0, 3.0, 4.0],
+                [2.0, 3.0, 4.0, 5.0],
+                [3.0, 4.0, 5.0, 6.0],
+                [4.0, 5.0, 6.0, 7.0]
+            ]
+        );
+
+        $i = Matrix::identity(4);
+
+        $c = $a->multiply($i);
+
+        $this->assertTrue($c->equalTo($a));
+    }
+
+    public function test_a_4x4_matrix_can_be_multiplied_by_a_tuple(): void
     {
         $a = Matrix::fromArray(
             [
