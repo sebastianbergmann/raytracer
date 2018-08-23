@@ -10,6 +10,14 @@ use PHPUnit\Framework\TestCase;
  */
 final class CanvasTest extends TestCase
 {
+    public function test_has_width_and_height(): void
+    {
+        $canvas = Canvas::create(10, 20, Color::create(0.0, 0.0, 0.0));
+
+        $this->assertSame(10, $canvas->width());
+        $this->assertSame(20, $canvas->height());
+    }
+
     public function test_is_initially_black(): void
     {
         $canvas = Canvas::create(10, 20, Color::create(0.0, 0.0, 0.0));

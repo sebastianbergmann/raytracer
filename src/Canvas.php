@@ -37,6 +37,16 @@ final class Canvas
         $this->initializePixels();
     }
 
+    public function width(): int
+    {
+        return $this->width;
+    }
+
+    public function height(): int
+    {
+        return $this->height;
+    }
+
     public function pixelAt(int $x, int $y): Color
     {
         return $this->pixels[$x][$y];
