@@ -18,16 +18,16 @@ final class Color
      */
     private $blue;
 
+    public static function create(float $red, float $green, float $blue): self
+    {
+        return new self($red, $green, $blue);
+    }
+
     private function __construct(float $red, float $green, float $blue)
     {
         $this->red   = $red;
         $this->green = $green;
         $this->blue  = $blue;
-    }
-
-    public static function create(float $red, float $green, float $blue): self
-    {
-        return new self($red, $green, $blue);
     }
 
     public function red(): float
