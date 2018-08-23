@@ -74,6 +74,12 @@ final class Matrix
 
     public function multiplyBy(Tuple $tuple): Tuple
     {
+        if ($this->size() !== 4) {
+            throw new RuntimeException(
+                'Multiplication of matrix and tuple is only implemented for 4x4 matrices'
+            );
+        }
+
         $result = [0.0, 0.0, 0.0, 0.0];
 
         for ($i = 0; $i < 4; $i++) {

@@ -184,4 +184,21 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($a->multiplyBy($b)->equalTo(Tuple::createPoint(18.0, 24.0, 33.0)));
     }
+
+    public function test_other_matrices_cannot_be_multiplied_by_a_tuple(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [1.0, 2.0, 3.0],
+                [2.0, 4.0, 4.0],
+                [8.0, 6.0, 4.0]
+            ]
+        );
+
+        $b = Tuple::createPoint(1.0, 2.0, 3.0);
+
+        $this->expectException(RuntimeException::class);
+
+        $a->multiplyBy($b);
+    }
 }
