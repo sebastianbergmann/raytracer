@@ -23,12 +23,17 @@ final class Tuple
      */
     private $w;
 
-    public static function point(float $x, float $y, float $z): self
+    public static function create(float $x, float $y, float $z, float $w): self
+    {
+        return new self($x, $y, $z, $w);
+    }
+
+    public static function createPoint(float $x, float $y, float $z): self
     {
         return new self($x, $y, $z, 1.0);
     }
 
-    public static function vector(float $x, float $y, float $z): self
+    public static function createVector(float $x, float $y, float $z): self
     {
         return new self($x, $y, $z, 0.0);
     }
