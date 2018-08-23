@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-final class Canvas
+final class Canvas implements \IteratorAggregate
 {
     /**
      * @var int
@@ -55,6 +55,11 @@ final class Canvas
     public function writePixel(int $x, int $y, Color $c): void
     {
         $this->pixels[$x][$y] = $c;
+    }
+
+    public function getIterator(): CanvasIterator
+    {
+        return new CanvasIterator($this);
     }
 
     private function initializePixels(): void

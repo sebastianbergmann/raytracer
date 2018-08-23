@@ -5,6 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \SebastianBergmann\Raytracer\Canvas
+ * @covers \SebastianBergmann\Raytracer\CanvasIterator
  *
  * @uses \SebastianBergmann\Raytracer\Color
  */
@@ -38,5 +39,18 @@ final class CanvasTest extends TestCase
         $canvas->writePixel(2, 3, $red);
 
         $this->assertTrue($canvas->pixelAt(2, 3)->equalTo($red));
+    }
+
+    public function test_can_be_iterated(): void
+    {
+        $black  = Color::create(0.0, 0.0, 0.0);
+        $canvas = Canvas::create(2, 2, $black);
+        $pixels = \iterator_to_array($canvas);
+
+        $this->assertCount(4, $pixels);
+
+        foreach ($pixels as $pixel) {
+            $this->assertTrue($pixel->equalTo($black));
+        }
     }
 }
