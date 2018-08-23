@@ -165,7 +165,7 @@ final class TupleTest extends TestCase
 
     /**
      * @dataProvider magnitudeProvider
-     * @testdox The magnitude of v($x, $y, $z) is calculated to be $magnitude
+     * @testdox The magnitude of vector ($x, $y, $z) is calculated to be $magnitude
      */
     public function test_the_magnitude_of_a_vector_can_be_calculated(float $magnitude, float $x, float $y, float $z): void
     {
