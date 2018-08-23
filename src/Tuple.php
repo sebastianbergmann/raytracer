@@ -156,4 +156,13 @@ final class Tuple
                $this->z * $other->z() +
                $this->w * $other->w();
     }
+
+    public function crossProduct(self $that): self
+    {
+        return self::createVector(
+            $this->y * $that->z() - $this->z * $that->y(),
+            $this->z * $that->x() - $this->x * $that->z(),
+            $this->x * $that->y() - $this->y * $that->x()
+        );
+    }
 }

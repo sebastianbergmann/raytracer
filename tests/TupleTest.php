@@ -212,4 +212,20 @@ final class TupleTest extends TestCase
 
         $this->assertSame(20.0, $a->dotProduct($b));
     }
+
+    public function test_the_cross_product_of_two_vectors_can_be_calculated(): void
+    {
+        $a = Tuple::createVector(1.0, 2.0, 3.0);
+        $b = Tuple::createVector(2.0, 3.0, 4.0);
+
+        $ab = $a->crossProduct($b);
+        $this->assertSame(-1.0, $ab->x());
+        $this->assertSame(2.0, $ab->y());
+        $this->assertSame(-1.0, $ab->z());
+
+        $ba = $b->crossProduct($a);
+        $this->assertSame(1.0, $ba->x());
+        $this->assertSame(-2.0, $ba->y());
+        $this->assertSame(1.0, $ba->z());
+    }
 }
