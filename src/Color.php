@@ -71,4 +71,13 @@ final class Color
             $factor * $this->blue
         );
     }
+
+    public function product(self $that): self
+    {
+        return new self(
+            $this->red * $that->red(),
+            $this->green * $that->green(),
+            $this->blue * $that->blue()
+        );
+    }
 }

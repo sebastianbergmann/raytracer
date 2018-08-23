@@ -54,4 +54,16 @@ final class ColorTest extends TestCase
         $this->assertSame(0.6, $c2->green());
         $this->assertSame(0.8, $c2->blue());
     }
+
+    public function test_the_product_of_two_colors_can_be_calculated(): void
+    {
+        $c1 = Color::create(1.0, 0.2, 0.4);
+        $c2 = Color::create(0.9, 1.0, 0.1);
+
+        $c3 = $c1->product($c2);
+
+        $this->assertSame(0.9, $c3->red());
+        $this->assertSame(0.2, $c3->green());
+        $this->assertSame(0.04, $c3->blue());
+    }
 }
