@@ -66,4 +66,13 @@ final class ColorTest extends TestCase
         $this->assertSame(0.2, $c3->green());
         $this->assertSame(0.04, $c3->blue());
     }
+
+    public function test_can_be_compared_to_another_color(): void
+    {
+        $c1 = Color::create(0.0, 0.0, 0.0);
+        $c2 = Color::create(1.0, 1.0, 1.0);
+
+        $this->assertTrue($c1->equalTo($c1));
+        $this->assertFalse($c1->equalTo($c2));
+    }
 }

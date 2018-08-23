@@ -80,4 +80,11 @@ final class Color
             $this->blue * $that->blue()
         );
     }
+
+    public function equalTo(self $that): bool
+    {
+        return $this->red   == $that->red() &&
+               $this->green == $that->green() &&
+               $this->blue  == $that->blue();
+    }
 }
