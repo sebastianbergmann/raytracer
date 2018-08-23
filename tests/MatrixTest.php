@@ -101,4 +101,33 @@ final class MatrixTest extends TestCase
             ]
         );
     }
+
+    public function test_two_matrices_can_be_compared(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [-3.0, 5.0],
+                [1.0, -2.0]
+            ]
+        );
+
+        $b = Matrix::fromArray(
+            [
+                [3.0, -5.0],
+                [-1.0, 2.0]
+            ]
+        );
+
+        $c = Matrix::fromArray(
+            [
+                [-3.0, 5.0, 0.0],
+                [1.0, -2.0, -7.0],
+                [0.0, 1.0, 1.0]
+            ]
+        );
+
+        $this->assertTrue($a->equalTo($a));
+        $this->assertFalse($a->equalTo($b));
+        $this->assertFalse($a->equalTo($c));
+    }
 }

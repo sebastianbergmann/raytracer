@@ -31,6 +31,25 @@ final class Matrix
         return \count($this->elements);
     }
 
+    public function equalTo(self $that): bool
+    {
+        $size = $this->size();
+
+        if ($this->size() !== $that->size()) {
+            return false;
+        }
+
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
+                if ($this->elements[$i][$j] !== $that->element($i, $j)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);
