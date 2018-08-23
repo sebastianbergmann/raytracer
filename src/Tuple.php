@@ -149,12 +149,12 @@ final class Tuple
         );
     }
 
-    public function dotProduct(self $other): float
+    public function dotProduct(self $that): float
     {
-        return $this->x * $other->x() +
-               $this->y * $other->y() +
-               $this->z * $other->z() +
-               $this->w * $other->w();
+        return $this->x * $that->x() +
+               $this->y * $that->y() +
+               $this->z * $that->z() +
+               $this->w * $that->w();
     }
 
     public function crossProduct(self $that): self
