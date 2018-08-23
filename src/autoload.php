@@ -6,6 +6,8 @@ require __DIR__ . '/Canvas.php';
 require __DIR__ . '/CanvasIterator.php';
 require __DIR__ . '/Color.php';
 require __DIR__ . '/exceptions/Exception.php';
+require __DIR__ . '/exceptions/InvalidArgumentException.php';
+require __DIR__ . '/Matrix.php';
 require __DIR__ . '/PortablePixmapMapper.php';
 require __DIR__ . '/exceptions/RuntimeException.php';
 require __DIR__ . '/Tuple.php';
