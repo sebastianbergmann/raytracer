@@ -121,4 +121,14 @@ final class Tuple
             $factor * $this->w
         );
     }
+
+    public function divideBy(float $divisor): self
+    {
+        return new self(
+            $this->x / $divisor,
+            $this->y / $divisor,
+            $this->z / $divisor,
+            $this->w / $divisor
+        );
+    }
 }

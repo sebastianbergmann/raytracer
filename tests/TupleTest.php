@@ -150,4 +150,16 @@ final class TupleTest extends TestCase
         $this->assertSame(10.5, $t2->z());
         $this->assertSame(-14.0, $t2->w());
     }
+
+    public function test_can_be_divided_by_a_scalar(): void
+    {
+        $t1 = Tuple::create(1.0, -2.0, 3.0, -4.0);
+
+        $t2 = $t1->divideBy(2.0);
+
+        $this->assertSame(0.5, $t2->x());
+        $this->assertSame(-1.0, $t2->y());
+        $this->assertSame(1.5, $t2->z());
+        $this->assertSame(-2.0, $t2->w());
+    }
 }
