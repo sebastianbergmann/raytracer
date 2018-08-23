@@ -44,4 +44,13 @@ final class Color
     {
         return $this->blue;
     }
+
+    public function plus(self $that): self
+    {
+        return new self(
+            $this->red + $that->red(),
+            $this->green + $that->green(),
+            $this->blue + $that->blue()
+        );
+    }
 }
