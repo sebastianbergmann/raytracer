@@ -25,7 +25,7 @@ final class Color
         $this->blue  = $blue;
     }
 
-    public function create(float $red, float $green, float $blue): self
+    public static function create(float $red, float $green, float $blue): self
     {
         return new self($red, $green, $blue);
     }
