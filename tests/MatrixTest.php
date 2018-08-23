@@ -81,6 +81,30 @@ final class MatrixTest extends TestCase
         $this->assertSame(4, $matrix->size());
     }
 
+    public function test_the_4x4_identity_matrix_can_be_created(): void
+    {
+        $matrix = Matrix::identity(4);
+
+        $this->assertSame(1.0, $matrix->element(0, 0));
+        $this->assertSame(0.0, $matrix->element(0, 1));
+        $this->assertSame(0.0, $matrix->element(0, 2));
+        $this->assertSame(0.0, $matrix->element(0, 3));
+        $this->assertSame(0.0, $matrix->element(1, 0));
+        $this->assertSame(1.0, $matrix->element(1, 1));
+        $this->assertSame(0.0, $matrix->element(1, 2));
+        $this->assertSame(0.0, $matrix->element(1, 3));
+        $this->assertSame(0.0, $matrix->element(2, 0));
+        $this->assertSame(0.0, $matrix->element(2, 1));
+        $this->assertSame(1.0, $matrix->element(2, 2));
+        $this->assertSame(0.0, $matrix->element(2, 3));
+        $this->assertSame(0.0, $matrix->element(3, 0));
+        $this->assertSame(0.0, $matrix->element(3, 1));
+        $this->assertSame(0.0, $matrix->element(3, 2));
+        $this->assertSame(1.0, $matrix->element(3, 3));
+
+        $this->assertSame(4, $matrix->size());
+    }
+
     public function test_an_MxN_matrix_cannot_be_represented(): void
     {
         $this->expectException(InvalidArgumentException::class);

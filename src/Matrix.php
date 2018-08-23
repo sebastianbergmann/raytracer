@@ -13,6 +13,23 @@ final class Matrix
         return new self($elements);
     }
 
+    public static function identity(int $size): self
+    {
+        $elements = [];
+
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
+                if ($i === $j) {
+                    $elements[$i][$j] = 1.0;
+                } else {
+                    $elements[$i][$j] = 0.0;
+                }
+            }
+        }
+
+        return new self($elements);
+    }
+
     public function __construct(array $elements)
     {
         $this->ensureSize($elements);
