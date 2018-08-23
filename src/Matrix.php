@@ -50,6 +50,28 @@ final class Matrix
         return true;
     }
 
+    public function multiply(self $that): self
+    {
+        $size   = $this->size();
+        $result = [];
+
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
+                $result[$i][$j] = 0.0;
+            }
+        }
+
+        for ($i = 0; $i < $size; $i++) {
+            for ($k = 0; $k < $size; $k++) {
+                for ($j = 0; $j < $size; $j++) {
+                    $result[$i][$k] += $this->elements[$i][$j] * $that->element($j, $k);
+                }
+            }
+        }
+
+        return new self($result);
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);

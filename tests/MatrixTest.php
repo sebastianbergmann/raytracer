@@ -130,4 +130,40 @@ final class MatrixTest extends TestCase
         $this->assertFalse($a->equalTo($b));
         $this->assertFalse($a->equalTo($c));
     }
+
+    public function test_two_matrices_of_same_size_can_be_multiplied_together(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [1.0, 2.0, 3.0, 4.0],
+                [2.0, 3.0, 4.0, 5.0],
+                [3.0, 4.0, 5.0, 6.0],
+                [4.0, 5.0, 6.0, 7.0]
+            ]
+        );
+
+        $b = Matrix::fromArray(
+            [
+                [0.0, 1.0, 2.0, 4.0],
+                [1.0, 2.0, 4.0, 8.0],
+                [2.0, 4.0, 8.0, 16.0],
+                [4.0, 8.0, 16.0, 32.0]
+            ]
+        );
+
+        $c = $a->multiply($b);
+
+        $this->assertTrue(
+            $c->equalTo(
+                Matrix::fromArray(
+                    [
+                        [24.0, 49.0, 98.0, 196.0],
+                        [31.0, 64.0, 128.0, 256.0],
+                        [38.0, 79.0, 158.0, 316.0],
+                        [45.0, 94.0, 188.0, 376.0]
+                    ]
+                )
+            )
+        );
+    }
 }
