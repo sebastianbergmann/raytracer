@@ -43,4 +43,15 @@ final class ColorTest extends TestCase
         $this->assertSame(0.5, $c3->green());
         $this->assertSame(0.5, $c3->blue());
     }
+
+    public function test_can_be_multiplied_by_a_scalar(): void
+    {
+        $c1 = Color::create(0.2, 0.3, 0.4);
+
+        $c2 = $c1->multiplyBy(2.0);
+
+        $this->assertSame(0.4, $c2->red());
+        $this->assertSame(0.6, $c2->green());
+        $this->assertSame(0.8, $c2->blue());
+    }
 }

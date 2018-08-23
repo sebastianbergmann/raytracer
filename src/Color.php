@@ -62,4 +62,13 @@ final class Color
             $this->blue - $that->blue()
         );
     }
+
+    public function multiplyBy(float $factor): self
+    {
+        return new self(
+            $factor * $this->red,
+            $factor * $this->green,
+            $factor * $this->blue
+        );
+    }
 }
