@@ -72,6 +72,20 @@ final class Matrix
         return new self($result);
     }
 
+    public function multiplyBy(Tuple $tuple): Tuple
+    {
+        $result = [0.0, 0.0, 0.0, 0.0];
+
+        for ($i = 0; $i < 4; $i++) {
+            $result[$i] += $this->elements[$i][0] * $tuple->x();
+            $result[$i] += $this->elements[$i][1] * $tuple->y();
+            $result[$i] += $this->elements[$i][2] * $tuple->z();
+            $result[$i] += $this->elements[$i][3] * $tuple->w();
+        }
+
+        return Tuple::create(...$result);
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);
