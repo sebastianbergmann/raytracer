@@ -136,4 +136,16 @@ final class Tuple
     {
         return sqrt($this->x ** 2 + $this->y ** 2 + $this->z ** 2 + $this->w ** 2);
     }
+
+    public function normalize(): self
+    {
+        $magnitude = $this->magnitude();
+
+        return new self(
+            $this->x / $magnitude,
+            $this->y / $magnitude,
+            $this->z / $magnitude,
+            $this->w / $magnitude
+        );
+    }
 }

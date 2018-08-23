@@ -182,4 +182,26 @@ final class TupleTest extends TestCase
             [sqrt(14), -1.0, -2.0, -3.0]
         ];
     }
+
+    /**
+     * @dataProvider normalizationProvider
+     * @testdox The vector ($x1, $y1, $z1) is normalized to ($x2, $y2, $z2)
+     */
+    public function test_a_vector_can_be_normalized(float $x1, float $y1, float $z1, float $x2, float $y2, float $z2): void
+    {
+        $n = Tuple::createVector($x1, $y1, $z1)->normalize();
+
+        $this->assertSame($x2, $n->x());
+        $this->assertSame($y2, $n->y());
+        $this->assertSame($z2, $n->z());
+        $this->assertSame(1.0, $n->magnitude());
+    }
+
+    public function normalizationProvider(): array
+    {
+        return [
+            [4.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+            [1.0, 2.0, 3.0, 1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14)]
+        ];
+    }
 }
