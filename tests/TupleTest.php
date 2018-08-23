@@ -228,4 +228,13 @@ final class TupleTest extends TestCase
         $this->assertSame(-2.0, $ba->y());
         $this->assertSame(1.0, $ba->z());
     }
+
+    public function test_two_tuples_can_be_compared(): void
+    {
+        $p1 = Tuple::createPoint(3.0, 2.0, 1.0);
+        $p2 = Tuple::createPoint(5.0, 6.0, 7.0);
+
+        $this->assertTrue($p1->equalTo($p1));
+        $this->assertFalse($p1->equalTo($p2));
+    }
 }

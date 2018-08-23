@@ -165,4 +165,12 @@ final class Tuple
             $this->x * $that->y() - $this->y * $that->x()
         );
     }
+
+    public function equalTo(self $that): bool
+    {
+        return $this->x === $that->x() &&
+               $this->y === $that->y() &&
+               $this->z === $that->z() &&
+               $this->w === $that->w();
+    }
 }
