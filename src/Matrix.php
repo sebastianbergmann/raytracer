@@ -109,6 +109,20 @@ final class Matrix
         return Tuple::create(...$result);
     }
 
+    public function transpose(): self
+    {
+        $size   = $this->size();
+        $result = [];
+
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
+                $result[$j][$i] = $this->elements[$i][$j];
+            }
+        }
+
+        return new self($result);
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);

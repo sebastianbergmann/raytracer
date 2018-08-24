@@ -243,4 +243,38 @@ final class MatrixTest extends TestCase
 
         $a->multiplyBy($b);
     }
+
+    public function test_a_matrix_can_be_transposed(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [0.0, 9.0, 3.0, 0.0],
+                [9.0, 8.0, 0.0, 8.0],
+                [1.0, 8.0, 5.0, 3.0],
+                [0.0, 0.0, 5.0, 8.0]
+            ]
+        );
+
+        $b = $a->transpose();
+
+        $this->assertTrue(
+            $b->equalTo(
+                Matrix::fromArray(
+                    [
+                        [0.0, 9.0, 1.0, 0.0],
+                        [9.0, 8.0, 8.0, 0.0],
+                        [3.0, 0.0, 5.0, 5.0],
+                        [0.0, 8.0, 3.0, 8.0]
+                    ]
+                )
+            )
+        );
+    }
+
+    public function test_the_identity_matrix_can_be_transposed(): void
+    {
+        $i = Matrix::identity(4);
+
+        $this->assertTrue($i->equalTo($i->transpose()));
+    }
 }
