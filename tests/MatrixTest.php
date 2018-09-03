@@ -351,4 +351,20 @@ final class MatrixTest extends TestCase
         $this->assertSame(25.0, $b->determinant());
         $this->assertSame(25.0, $a->minor(1, 0));
     }
+
+    public function test_the_cofactor_of_a_3x3_matrix_can_be_calculated(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [3.0, 5.0, 0.0],
+                [2.0, -1.0, -7.0],
+                [6.0, -1.0, 5.0]
+            ]
+        );
+
+        $this->assertSame(-12.0, $a->minor(0, 0));
+        $this->assertSame(-12.0, $a->cofactor(0, 0));
+        $this->assertSame(25.0, $a->minor(1, 0));
+        $this->assertSame(-25.0, $a->cofactor(1, 0));
+    }
 }

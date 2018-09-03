@@ -163,6 +163,17 @@ final class Matrix
         return $this->submatrix($row, $column)->determinant();
     }
 
+    public function cofactor(int $row, int $column): float
+    {
+        $minor = $this->minor($row, $column);
+
+        if ($row + $column % 2 !== 0) {
+            $minor *= -1.0;
+        }
+
+        return $minor;
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);
