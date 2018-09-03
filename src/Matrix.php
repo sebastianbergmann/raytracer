@@ -184,6 +184,11 @@ final class Matrix
         return $minor;
     }
 
+    public function invertible(): bool
+    {
+        return $this->determinant() !== 0.0;
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);

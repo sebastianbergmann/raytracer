@@ -401,4 +401,37 @@ final class MatrixTest extends TestCase
         $this->assertSame(51.0, $a->cofactor(0, 3));
         $this->assertSame(-4071.0, $a->determinant());
     }
+
+    public function test_an_invertible_matrix_is_recognized_as_invertible(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [6.0, 4.0, 4.0, 4.0],
+                [5.0, 5.0, 7.0, 6.0],
+                [4.0, -9.0, 3.0, -7.0],
+                [9.0, 1.0, 7.0, -6.0]
+            ]
+        );
+
+        $this->assertSame(-2120.0, $a->determinant());
+        $this->assertTrue($a->invertible());
+    }
+
+    /**
+     * @testdox A non-invertible matrix is recognized as non-invertible
+     */
+    public function test_a_noninvertible_matrix_is_recognized_as_noninvertible(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [-4.0, 2.0, -2.0, -3.0],
+                [9.0, 6.0, 2.0, 6.0],
+                [0.0, -5.0, 1.0, -5.0],
+                [0.0, 0.0, 0.0, 0.0]
+            ]
+        );
+
+        $this->assertSame(0.0, $a->determinant());
+        $this->assertFalse($a->invertible());
+    }
 }
