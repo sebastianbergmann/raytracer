@@ -158,6 +158,11 @@ final class Matrix
         return new self($elements);
     }
 
+    public function minor(int $row, int $column): float
+    {
+        return $this->submatrix($row, $column)->determinant();
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);

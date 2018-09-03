@@ -335,4 +335,20 @@ final class MatrixTest extends TestCase
             )
         );
     }
+
+    public function test_the_minor_of_a_3x3_matrix_can_be_calculated(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [3.0, 5.0, 0.0],
+                [2.0, -1.0, -7.0],
+                [6.0, -1.0, 5.0]
+            ]
+        );
+
+        $b = $a->submatrix(1, 0);
+
+        $this->assertSame(25.0, $b->determinant());
+        $this->assertSame(25.0, $a->minor(1, 0));
+    }
 }
