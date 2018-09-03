@@ -48,7 +48,7 @@ final class Matrix
         return \count($this->elements);
     }
 
-    public function equalTo(self $that): bool
+    public function equalTo(self $that, float $delta = 0.0): bool
     {
         $size = $this->size();
 
@@ -58,7 +58,7 @@ final class Matrix
 
         for ($i = 0; $i < $size; $i++) {
             for ($j = 0; $j < $size; $j++) {
-                if ($this->elements[$i][$j] !== $that->element($i, $j)) {
+                if (\abs($this->elements[$i][$j] - $that->element($i, $j)) > $delta) {
                     return false;
                 }
             }
