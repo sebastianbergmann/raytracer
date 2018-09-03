@@ -277,4 +277,16 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($i->equalTo($i->transpose()));
     }
+
+    public function test_the_determinant_of_a_2x2_matrix_can_be_calculated(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [1.0, 5.0],
+                [-3.0, 2.0]
+            ]
+        );
+
+        $this->assertSame(17.0, $a->determinant());
+    }
 }

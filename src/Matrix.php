@@ -123,6 +123,14 @@ final class Matrix
         return new self($result);
     }
 
+    public function determinant(): float
+    {
+        if ($this->size() === 2) {
+            return $this->elements[0][0] * $this->elements[1][1] -
+                   $this->elements[0][1] * $this->elements[1][0];
+        }
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);
