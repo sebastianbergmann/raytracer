@@ -435,27 +435,18 @@ final class MatrixTest extends TestCase
         $this->assertFalse($a->invertible());
     }
 
-    public function test_the_inverse_of_a_matrix_can_be_calculated(): void
+    /**
+     * @dataProvider matrixInversionProvider
+     */
+    public function test_the_inverse_of_a_matrix_can_be_calculated_for(Matrix $expected, Matrix $matrix): void
     {
-        $a = Matrix::fromArray(
-            [
-                [-5.0, 2.0, 6.0, -8.0],
-                [1.0, -5.0, 1.0, 8.0],
-                [7.0, 7.0, -6.0, -7.0],
-                [1.0, -3.0, 7.0, 4.0]
-            ]
-        );
+        $this->assertTrue($matrix->inverse()->equalTo($expected, 0.01));
+    }
 
-        $b = $a->inverse();
-
-        $this->assertSame(532.0, $a->determinant());
-        $this->assertSame(-160.0, $a->cofactor(2, 3));
-        $this->assertSame(-160.0 / 532.0, $b->element(3, 2));
-        $this->assertSame(105.0, $a->cofactor(3, 2));
-        $this->assertSame(105.0 / 532.0, $b->element(2, 3));
-
-        $this->assertTrue(
-            $b->equalTo(
+    public function matrixInversionProvider(): array
+    {
+        return [
+            '4x4 matrix' => [
                 Matrix::fromArray(
                     [
                         [0.21805, 0.45113, 0.24060, -0.04511],
@@ -464,8 +455,50 @@ final class MatrixTest extends TestCase
                         [-0.52256, -0.81391, -0.30075, 0.30639]
                     ]
                 ),
-                0.01
-            )
-        );
+                Matrix::fromArray(
+                    [
+                        [-5.0, 2.0, 6.0, -8.0],
+                        [1.0, -5.0, 1.0, 8.0],
+                        [7.0, 7.0, -6.0, -7.0],
+                        [1.0, -3.0, 7.0, 4.0]
+                    ]
+                )
+            ],
+            'another 4x4 matrix' => [
+                Matrix::fromArray(
+                    [
+                        [-0.15385, -0.15385, -0.28205, -0.53846],
+                        [-0.07692, 0.12308, 0.02564, 0.03077],
+                        [0.35897, 0.35897, 0.43590, 0.92308],
+                        [-0.69231, -0.69231, -0.76923, -1.92308]]
+                ),
+                Matrix::fromArray(
+                    [
+                        [8.0, -5.0, 9.0, 2.0],
+                        [7.0, 5.0, 6.0, 1.0],
+                        [-6.0, 0.0, 9.0, 6.0],
+                        [-3.0, 0.0, -9.0, -4.0]
+                    ]
+                )
+            ],
+            'yet another 4x4 matrix' => [
+                Matrix::fromArray(
+                    [
+                        [-0.04074, -0.07778, 0.14444, -0.22222],
+                        [-0.07778, 0.03333, 0.36667, -0.33333],
+                        [-0.02901, -0.14630, -0.10926, 0.12963],
+                        [0.17778, 0.06667, -0.26667, 0.33333]
+                    ]
+                ),
+                Matrix::fromArray(
+                    [
+                        [9.0, 3.0, 0.0, 9.0],
+                        [-5.0, -2.0, -6.0, -3.0],
+                        [-4.0, 9.0, 6.0, 4.0],
+                        [-7.0, 6.0, 6.0, 2.0]
+                    ]
+                )
+            ]
+        ];
     }
 }
