@@ -189,6 +189,21 @@ final class Matrix
         return $this->determinant() !== 0.0;
     }
 
+    public function inverse(): self
+    {
+        $elements    = $this->cofactorMatrix()->transpose()->elements;
+        $determinant = $this->determinant();
+        $size        = $this->size();
+
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
+                $elements[$i][$j] /= $determinant;
+            }
+        }
+
+        return new self($elements);
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);
@@ -213,5 +228,19 @@ final class Matrix
                 }
             }
         }
+    }
+
+    private function cofactorMatrix(): self
+    {
+        $size   = $this->size();
+        $result = [];
+
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
+                $result[$i][$j] = $this->cofactor($i, $j);
+            }
+        }
+
+        return new self($result);
     }
 }

@@ -434,4 +434,38 @@ final class MatrixTest extends TestCase
         $this->assertSame(0.0, $a->determinant());
         $this->assertFalse($a->invertible());
     }
+
+    public function test_the_inverse_of_a_matrix_can_be_calculated(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [-5.0, 2.0, 6.0, -8.0],
+                [1.0, -5.0, 1.0, 8.0],
+                [7.0, 7.0, -6.0, -7.0],
+                [1.0, -3.0, 7.0, 4.0]
+            ]
+        );
+
+        $b = $a->inverse();
+
+        $this->assertSame(532.0, $a->determinant());
+        $this->assertSame(-160.0, $a->cofactor(2, 3));
+        $this->assertSame(-160.0 / 532.0, $b->element(3, 2));
+        $this->assertSame(105.0, $a->cofactor(3, 2));
+        $this->assertSame(105.0 / 532.0, $b->element(2, 3));
+
+        $this->assertTrue(
+            $b->equalTo(
+                Matrix::fromArray(
+                    [
+                        [0.21805, 0.45113, 0.24060, -0.04511],
+                        [-0.80827, -1.45677, -0.44361, 0.52068],
+                        [-0.07895, -0.22368, -0.05263, 0.19737],
+                        [-0.52256, -0.81391, -0.30075, 0.30639]
+                    ]
+                ),
+                0.01
+            )
+        );
+    }
 }
