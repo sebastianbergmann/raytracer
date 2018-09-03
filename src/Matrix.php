@@ -131,6 +131,33 @@ final class Matrix
         }
     }
 
+    public function submatrix(int $row, int $column): self
+    {
+        $elements = [];
+        $tmp      = [];
+        $size     = $this->size();
+
+        for ($i = 0; $i < $size; $i++) {
+            if ($i === $row) {
+                continue;
+            }
+
+            for ($j = 0; $j < $size; $j++) {
+                if ($j === $column) {
+                    continue;
+                }
+
+                $tmp[$i][$j] = $this->elements[$i][$j];
+            }
+        }
+
+        foreach (\array_keys($tmp) as $key) {
+            $elements[] = \array_values($tmp[$key]);
+        }
+
+        return new self($elements);
+    }
+
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);

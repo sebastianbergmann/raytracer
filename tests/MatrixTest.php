@@ -289,4 +289,50 @@ final class MatrixTest extends TestCase
 
         $this->assertSame(17.0, $a->determinant());
     }
+
+    public function test_a_submatrix_of_a_3x3_matrix_is_a_2x2_matrix(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [1.0, 5.0, 0.0],
+                [-3.0, 2.0, 7.0],
+                [0.0, 6.0, -3.0]
+            ]
+        );
+
+        $this->assertTrue(
+            $a->submatrix(0, 2)->equalTo(
+                Matrix::fromArray(
+                    [
+                        [-3.0, 2.0],
+                        [0.0, 6.0]
+                    ]
+                )
+            )
+        );
+    }
+
+    public function test_a_submatrix_of_a_4x4_matrix_is_a_3x3_matrix(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [-6.0, 1.0, 1.0, 6.0],
+                [-8.0, 5.0, 8.0, 6.0],
+                [-1.0, 0.0, 8.0, 2.0],
+                [-7.0, 1.0, -1.0, 1.0]
+            ]
+        );
+
+        $this->assertTrue(
+            $a->submatrix(2, 1)->equalTo(
+                Matrix::fromArray(
+                    [
+                        [-6.0, 1.0, 6.0],
+                        [-8.0, 8.0, 6.0],
+                        [-7.0, -1.0, 1.0]
+                    ]
+                )
+            )
+        );
+    }
 }
