@@ -125,10 +125,20 @@ final class Matrix
 
     public function determinant(): float
     {
-        if ($this->size() === 2) {
+        $size = $this->size();
+
+        if ($size === 2) {
             return $this->elements[0][0] * $this->elements[1][1] -
                    $this->elements[0][1] * $this->elements[1][0];
         }
+
+        $determinant = 0.0;
+
+        for ($i = 0; $i < $size; $i++) {
+            $determinant += $this->cofactor(0, $i) * $this->elements[0][$i];
+        }
+
+        return $determinant;
     }
 
     public function submatrix(int $row, int $column): self

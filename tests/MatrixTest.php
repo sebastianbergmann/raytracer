@@ -367,4 +367,38 @@ final class MatrixTest extends TestCase
         $this->assertSame(25.0, $a->minor(1, 0));
         $this->assertSame(-25.0, $a->cofactor(1, 0));
     }
+
+    public function test_the_determinant_of_a_3x3_matrix_can_be_calculated(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [1.0, 2.0, 6.0],
+                [-5.0, 8.0, -4.0],
+                [2.0, 6.0, 4.0]
+            ]
+        );
+
+        $this->assertSame(56.0, $a->cofactor(0, 0));
+        $this->assertSame(12.0, $a->cofactor(0, 1));
+        $this->assertSame(-46.0, $a->cofactor(0, 2));
+        $this->assertSame(-196.0, $a->determinant());
+    }
+
+    public function test_the_determinant_of_a_4x4_matrix_can_be_calculated(): void
+    {
+        $a = Matrix::fromArray(
+            [
+                [-2.0, -8.0, 3.0, 5.0],
+                [-3.0, 1.0, 7.0, 3.0],
+                [1.0, 2.0, -9.0, 6.0],
+                [-6.0, 7.0, 7.0, -9.0]
+            ]
+        );
+
+        $this->assertSame(690.0, $a->cofactor(0, 0));
+        $this->assertSame(447.0, $a->cofactor(0, 1));
+        $this->assertSame(210.0, $a->cofactor(0, 2));
+        $this->assertSame(51.0, $a->cofactor(0, 3));
+        $this->assertSame(-4071.0, $a->determinant());
+    }
 }
