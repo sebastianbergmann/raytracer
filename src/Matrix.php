@@ -177,7 +177,7 @@ final class Matrix
     {
         $minor = $this->minor($row, $column);
 
-        if ($row + $column % 2 !== 0) {
+        if (($row + $column) % 2 !== 0) {
             $minor *= -1.0;
         }
 
