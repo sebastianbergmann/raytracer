@@ -109,6 +109,20 @@ final class Matrix
         return Tuple::create(...$result);
     }
 
+    public function divideAllElementsBy(float $divisor): self
+    {
+        $elements = $this->elements;
+        $size     = $this->size();
+
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
+                $elements[$i][$j] /= $divisor;
+            }
+        }
+
+        return new self($elements);
+    }
+
     public function transpose(): self
     {
         $size   = $this->size();
@@ -191,17 +205,7 @@ final class Matrix
 
     public function inverse(): self
     {
-        $elements    = $this->cofactorMatrix()->transpose()->elements;
-        $determinant = $this->determinant();
-        $size        = $this->size();
-
-        for ($i = 0; $i < $size; $i++) {
-            for ($j = 0; $j < $size; $j++) {
-                $elements[$i][$j] /= $determinant;
-            }
-        }
-
-        return new self($elements);
+        return $this->cofactorMatrix()->transpose()->divideAllElementsBy($this->determinant());
     }
 
     private function ensureSize(array $elements): void
