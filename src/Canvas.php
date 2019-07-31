@@ -64,6 +64,8 @@ final class Canvas implements \IteratorAggregate
 
     private function initializePixels(): void
     {
+        $this->pixels = [];
+
         for ($x = 1; $x <= $this->width; $x++) {
             for ($y = 1; $y <= $this->height; $y++) {
                 $this->pixels[$x][$y] = $this->background;
