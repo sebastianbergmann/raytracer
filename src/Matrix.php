@@ -4,10 +4,13 @@ namespace SebastianBergmann\Raytracer;
 final class Matrix
 {
     /**
-     * @var array
+     * @var array<int,array<int,float>>
      */
     private $elements;
 
+    /**
+     * @param array<int,array<int,float>> $elements
+     */
     public static function fromArray(array $elements): self
     {
         return new self($elements);
@@ -30,6 +33,9 @@ final class Matrix
         return new self($elements);
     }
 
+    /**
+     * @param array<int,array<int,float>> $elements
+     */
     public function __construct(array $elements)
     {
         $this->ensureSize($elements);

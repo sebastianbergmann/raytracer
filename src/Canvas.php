@@ -19,7 +19,7 @@ final class Canvas implements \IteratorAggregate
     private $background;
 
     /**
-     * @var int
+     * @var array<int,array<int,Color>>
      */
     private $pixels;
 
