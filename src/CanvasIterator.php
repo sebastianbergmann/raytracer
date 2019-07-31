@@ -11,17 +11,17 @@ final class CanvasIterator implements \Iterator
     /**
      * @var int
      */
-    private $x;
+    private $x = 1;
 
     /**
      * @var int
      */
-    private $y;
+    private $y = 1;
 
     /**
      * @var int
      */
-    private $p;
+    private $p = 1;
 
     public function __construct(Canvas $canvas)
     {
