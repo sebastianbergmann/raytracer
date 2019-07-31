@@ -214,6 +214,9 @@ final class Matrix
         return $this->cofactorMatrix()->transpose()->divideAllElementsBy($this->determinant());
     }
 
+    /**
+     * @param array<int,array<int,float>> $elements
+     */
     private function ensureSize(array $elements): void
     {
         $numberOfRows = \count($elements);
@@ -227,6 +230,9 @@ final class Matrix
         }
     }
 
+    /**
+     * @param array<int,array<int,float>> $elements
+     */
     private function ensureOnlyFloats(array $elements): void
     {
         foreach ($elements as $row) {
