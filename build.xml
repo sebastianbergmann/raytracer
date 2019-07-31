@@ -40,6 +40,14 @@
         </exec>
     </target>
 
+    <target name="type-coverage" description="Calculate type coverage with Psalm">
+        <exec executable="${basedir}/tools/psalm" taskname="psalm">
+            <arg value="--no-progress"/>
+            <arg value="--stats"/>
+            <arg value="--show-info=false"/>
+        </exec>
+    </target>
+
     <target name="fix" description="Fix coding guidelines violations with php-cs-fixer">
         <exec executable="${basedir}/tools/php-cs-fixer" taskname="php-cs-fixer">
             <arg value="fix" />
