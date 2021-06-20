@@ -100,6 +100,9 @@ final class Matrix
         return new self($result);
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function multiplyBy(Tuple $tuple): Tuple
     {
         if ($this->size() !== 4) {

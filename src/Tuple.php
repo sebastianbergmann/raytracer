@@ -66,6 +66,9 @@ final class Tuple
         return $this->w === 0.0;
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function plus(self $that): self
     {
         if ($this->isPoint() && $that->isPoint()) {
