@@ -6,6 +6,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \SebastianBergmann\Raytracer\Tuple
+ *
+ * @small
  */
 final class TupleTest extends TestCase
 {

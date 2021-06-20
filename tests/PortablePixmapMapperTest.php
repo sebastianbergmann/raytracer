@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
  * @uses \SebastianBergmann\Raytracer\Canvas
  * @uses \SebastianBergmann\Raytracer\CanvasIterator
  * @uses \SebastianBergmann\Raytracer\Color
+ *
+ * @small
  */
 final class PortablePixmapMapperTest extends TestCase
 {

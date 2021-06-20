@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
  * @covers \SebastianBergmann\Raytracer\CanvasIterator
  *
  * @uses \SebastianBergmann\Raytracer\Color
+ *
+ * @small
  */
 final class CanvasTest extends TestCase
 {

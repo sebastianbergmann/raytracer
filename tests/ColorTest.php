@@ -5,6 +5,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \SebastianBergmann\Raytracer\Color
+ *
+ * @small
  */
 final class ColorTest extends TestCase
 {

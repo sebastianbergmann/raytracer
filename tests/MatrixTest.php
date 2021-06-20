@@ -7,6 +7,8 @@ use PHPUnit\Framework\TestCase;
  * @covers \SebastianBergmann\Raytracer\Matrix
  *
  * @uses \SebastianBergmann\Raytracer\Tuple
+ *
+ * @small
  */
 final class MatrixTest extends TestCase
 {
