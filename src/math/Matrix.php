@@ -24,19 +24,7 @@ final class Matrix
 
     public static function identity(int $size): self
     {
-        $elements = [];
-
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $j) {
-                if ($i === $j) {
-                    $elements[$i][$j] = 1.0;
-                } else {
-                    $elements[$i][$j] = 0.0;
-                }
-            }
-        }
-
-        return new self($elements);
+        return new self(self::identityElements($size));
     }
 
     /**
@@ -250,5 +238,25 @@ final class Matrix
         }
 
         return new self($result);
+    }
+
+    /**
+     * @psalm-return array<int,array<int,float>>
+     */
+    private static function identityElements(int $size): array
+    {
+        $elements = [];
+
+        foreach (range(0, $size - 1) as $i) {
+            foreach (range(0, $size - 1) as $j) {
+                if ($i === $j) {
+                    $elements[$i][$j] = 1.0;
+                } else {
+                    $elements[$i][$j] = 0.0;
+                }
+            }
+        }
+
+        return $elements;
     }
 }
