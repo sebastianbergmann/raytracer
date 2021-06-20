@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function abs;
 use function sqrt;
 
 final class Tuple
@@ -159,11 +160,20 @@ final class Tuple
         );
     }
 
-    public function equalTo(self $that): bool
+    public function equalTo(self $that, float $delta = 0.00000000000001): bool
     {
-        return $this->x === $that->x() &&
-               $this->y === $that->y() &&
-               $this->z === $that->z() &&
-               $this->w === $that->w();
+        if (abs($this->x - $that->x()) > $delta) {
+            return false;
+        }
+
+        if (abs($this->y - $that->y()) > $delta) {
+            return false;
+        }
+
+        if (abs($this->z - $that->z()) > $delta) {
+            return false;
+        }
+
+        return true;
     }
 }

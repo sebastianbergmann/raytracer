@@ -83,7 +83,7 @@ final class Matrix
         return count($this->elements);
     }
 
-    public function equalTo(self $that, float $delta = 0.0): bool
+    public function equalTo(self $that, float $delta = 0.00000000000001): bool
     {
         $size = $this->size();
 

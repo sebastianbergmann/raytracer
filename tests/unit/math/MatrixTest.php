@@ -515,7 +515,7 @@ final class MatrixTest extends TestCase
 
         $c = $a->multiply($b);
 
-        $this->assertTrue($a->equalTo($c->multiply($b->inverse()), 0.00000000000001));
+        $this->assertTrue($a->equalTo($c->multiply($b->inverse())));
     }
 
     public function test_multiplying_a_point_by_a_translation_matrix_moves_the_point(): void
