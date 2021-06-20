@@ -544,4 +544,13 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($transform->multiplyBy($v)->equalTo($v));
     }
+
+    public function test_applying_a_scaling_matrix_to_a_point_scales_the_point(): void
+    {
+        $transform = Matrix::scaling(2, 3, 4);
+
+        $p = Tuple::point(-4, 6, 8);
+
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(-8, 18, 32)));
+    }
 }

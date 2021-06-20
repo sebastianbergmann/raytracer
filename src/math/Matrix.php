@@ -38,6 +38,17 @@ final class Matrix
         return new self($elements);
     }
 
+    public static function scaling(float $x, float $y, float $z): self
+    {
+        $elements = self::identityElements(4);
+
+        $elements[0][0] = $x;
+        $elements[1][1] = $y;
+        $elements[2][2] = $z;
+
+        return new self($elements);
+    }
+
     /**
      * @psalm-param array<int,array<int,float>> $elements
      */
