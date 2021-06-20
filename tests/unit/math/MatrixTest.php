@@ -592,4 +592,13 @@ final class MatrixTest extends TestCase
         $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(0, sqrt(2) / 2, sqrt(2) / 2)));
         $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(0, 0, 1)));
     }
+
+    public function test_the_inverse_of_an_X_rotation_rotates_in_the_opposite_direction(): void
+    {
+        $p = Tuple::point(0, 1, 0);
+
+        $inverse = Matrix::rotationAroundX(M_PI / 4)->inverse();
+
+        $this->assertTrue($inverse->multiplyBy($p)->equalTo(Tuple::point(0, sqrt(2) / 2, -sqrt(2) / 2)));
+    }
 }
