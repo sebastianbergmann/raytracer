@@ -89,6 +89,18 @@ final class Matrix
         );
     }
 
+    public static function rotationAroundZ(float $r): self
+    {
+        return self::fromArray(
+            [
+                [cos($r), -sin($r), 0.0, 0.0],
+                [sin($r), cos($r), 0.0, 0.0],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ]
+        );
+    }
+
     /**
      * @psalm-param array<int,array<int,float>> $elements
      */
