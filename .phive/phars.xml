@@ -4,4 +4,5 @@
   <phar name="php-cs-fixer" version="^3.0" installed="3.0.0" location="./tools/php-cs-fixer" copy="true"/>
   <phar name="psalm" version="^4.7" installed="4.7.3" location="./tools/psalm" copy="true"/>
   <phar name="phpunit" version="^9.5" installed="9.5.5" location="./tools/phpunit" copy="true"/>
+  <phar name="infection" version="^0.23" installed="0.23.0" location="./tools/infection" copy="true"/>
 </phive>
