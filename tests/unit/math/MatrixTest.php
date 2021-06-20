@@ -213,9 +213,9 @@ final class MatrixTest extends TestCase
             ]
         );
 
-        $b = Tuple::createPoint(1.0, 2.0, 3.0);
+        $b = Tuple::point(1.0, 2.0, 3.0);
 
-        $this->assertTrue($a->multiplyBy($b)->equalTo(Tuple::createPoint(18.0, 24.0, 33.0)));
+        $this->assertTrue($a->multiplyBy($b)->equalTo(Tuple::point(18.0, 24.0, 33.0)));
     }
 
     public function test_other_matrices_cannot_be_multiplied_by_a_tuple(): void
@@ -228,7 +228,7 @@ final class MatrixTest extends TestCase
             ]
         );
 
-        $b = Tuple::createPoint(1.0, 2.0, 3.0);
+        $b = Tuple::point(1.0, 2.0, 3.0);
 
         $this->expectException(RuntimeException::class);
 

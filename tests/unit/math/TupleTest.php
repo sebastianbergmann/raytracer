@@ -16,7 +16,7 @@ final class TupleTest extends TestCase
      */
     public function test_a_tuple_with_w_equal_to_one_is_a_point(): void
     {
-        $p = Tuple::createPoint(4.3, -4.2, 3.1);
+        $p = Tuple::point(4.3, -4.2, 3.1);
 
         $this->assertSame(4.3, $p->x());
         $this->assertSame(-4.2, $p->y());
@@ -31,7 +31,7 @@ final class TupleTest extends TestCase
      */
     public function test_a_tuple_with_w_equal_to_zero_is_a_vector(): void
     {
-        $v = Tuple::createVector(4.3, -4.2, 3.1);
+        $v = Tuple::vector(4.3, -4.2, 3.1);
 
         $this->assertSame(4.3, $v->x());
         $this->assertSame(-4.2, $v->y());
@@ -58,8 +58,8 @@ final class TupleTest extends TestCase
 
     public function test_a_vector_can_be_added_to_a_point(): void
     {
-        $p1 = Tuple::createPoint(3.0, -2.0, 5.0);
-        $v  = Tuple::createVector(-2.0, 3.0, 1.0);
+        $p1 = Tuple::point(3.0, -2.0, 5.0);
+        $v  = Tuple::vector(-2.0, 3.0, 1.0);
 
         $p2 = $p1->plus($v);
 
@@ -71,8 +71,8 @@ final class TupleTest extends TestCase
 
     public function test_a_vector_can_be_added_to_another_vector(): void
     {
-        $v1 = Tuple::createVector(3.0, -2.0, 5.0);
-        $v2 = Tuple::createVector(-2.0, 3.0, 1.0);
+        $v1 = Tuple::vector(3.0, -2.0, 5.0);
+        $v2 = Tuple::vector(-2.0, 3.0, 1.0);
 
         $v3 = $v1->plus($v2);
 
@@ -84,7 +84,7 @@ final class TupleTest extends TestCase
 
     public function test_a_point_cannot_be_added_to_a_point(): void
     {
-        $p = Tuple::createPoint(3.0, -2.0, 5.0);
+        $p = Tuple::point(3.0, -2.0, 5.0);
 
         $this->expectException(RuntimeException::class);
 
@@ -93,8 +93,8 @@ final class TupleTest extends TestCase
 
     public function test_subtracting_a_point_from_another_point_works(): void
     {
-        $p1 = Tuple::createPoint(3.0, 2.0, 1.0);
-        $p2 = Tuple::createPoint(5.0, 6.0, 7.0);
+        $p1 = Tuple::point(3.0, 2.0, 1.0);
+        $p2 = Tuple::point(5.0, 6.0, 7.0);
 
         $v = $p1->minus($p2);
 
@@ -106,8 +106,8 @@ final class TupleTest extends TestCase
 
     public function test_subtracting_a_vector_from_a_point_works(): void
     {
-        $p1 = Tuple::createPoint(3.0, 2.0, 1.0);
-        $v  = Tuple::createVector(5.0, 6.0, 7.0);
+        $p1 = Tuple::point(3.0, 2.0, 1.0);
+        $v  = Tuple::vector(5.0, 6.0, 7.0);
 
         $p2 = $p1->minus($v);
 
@@ -119,8 +119,8 @@ final class TupleTest extends TestCase
 
     public function test_subtracting_a_vector_from_another_vector_works(): void
     {
-        $v1 = Tuple::createVector(3.0, 2.0, 1.0);
-        $v2 = Tuple::createVector(5.0, 6.0, 7.0);
+        $v1 = Tuple::vector(3.0, 2.0, 1.0);
+        $v2 = Tuple::vector(5.0, 6.0, 7.0);
 
         $v3 = $v1->minus($v2);
 
@@ -172,7 +172,7 @@ final class TupleTest extends TestCase
      */
     public function test_the_magnitude_of_a_vector_can_be_calculated(float $magnitude, float $x, float $y, float $z): void
     {
-        $this->assertSame($magnitude, Tuple::createVector($x, $y, $z)->magnitude());
+        $this->assertSame($magnitude, Tuple::vector($x, $y, $z)->magnitude());
     }
 
     public function magnitudeProvider(): array
@@ -192,7 +192,7 @@ final class TupleTest extends TestCase
      */
     public function test_a_vector_can_be_normalized(float $x1, float $y1, float $z1, float $x2, float $y2, float $z2): void
     {
-        $n = Tuple::createVector($x1, $y1, $z1)->normalize();
+        $n = Tuple::vector($x1, $y1, $z1)->normalize();
 
         $this->assertSame($x2, $n->x());
         $this->assertSame($y2, $n->y());
@@ -210,16 +210,16 @@ final class TupleTest extends TestCase
 
     public function test_the_dot_product_of_two_vectors_can_be_calculated(): void
     {
-        $a = Tuple::createVector(1.0, 2.0, 3.0);
-        $b = Tuple::createVector(2.0, 3.0, 4.0);
+        $a = Tuple::vector(1.0, 2.0, 3.0);
+        $b = Tuple::vector(2.0, 3.0, 4.0);
 
         $this->assertSame(20.0, $a->dot($b));
     }
 
     public function test_the_cross_product_of_two_vectors_can_be_calculated(): void
     {
-        $a = Tuple::createVector(1.0, 2.0, 3.0);
-        $b = Tuple::createVector(2.0, 3.0, 4.0);
+        $a = Tuple::vector(1.0, 2.0, 3.0);
+        $b = Tuple::vector(2.0, 3.0, 4.0);
 
         $ab = $a->cross($b);
         $this->assertSame(-1.0, $ab->x());
@@ -234,8 +234,8 @@ final class TupleTest extends TestCase
 
     public function test_two_tuples_can_be_compared(): void
     {
-        $p1 = Tuple::createPoint(3.0, 2.0, 1.0);
-        $p2 = Tuple::createPoint(5.0, 6.0, 7.0);
+        $p1 = Tuple::point(3.0, 2.0, 1.0);
+        $p2 = Tuple::point(5.0, 6.0, 7.0);
 
         $this->assertTrue($p1->equalTo($p1));
         $this->assertFalse($p1->equalTo($p2));

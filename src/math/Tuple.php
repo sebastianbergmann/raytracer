@@ -18,12 +18,12 @@ final class Tuple
         return new self($x, $y, $z, $w);
     }
 
-    public static function createPoint(float $x, float $y, float $z): self
+    public static function point(float $x, float $y, float $z): self
     {
         return new self($x, $y, $z, 1.0);
     }
 
-    public static function createVector(float $x, float $y, float $z): self
+    public static function vector(float $x, float $y, float $z): self
     {
         return new self($x, $y, $z, 0.0);
     }
@@ -152,7 +152,7 @@ final class Tuple
 
     public function cross(self $that): self
     {
-        return self::createVector(
+        return self::vector(
             $this->y * $that->z() - $this->z * $that->y(),
             $this->z * $that->x() - $this->x * $that->z(),
             $this->x * $that->y() - $this->y * $that->x()
