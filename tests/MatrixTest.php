@@ -117,17 +117,6 @@ final class MatrixTest extends TestCase
         );
     }
 
-    public function test_can_only_represent_matrices_of_float_values(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Matrix::fromArray(
-            [
-                ['not a float'],
-            ]
-        );
-    }
-
     public function test_two_matrices_can_be_compared(): void
     {
         $a = Matrix::fromArray(

@@ -5,7 +5,6 @@ use function abs;
 use function array_keys;
 use function array_values;
 use function count;
-use function is_float;
 
 final class Matrix
 {
@@ -45,7 +44,6 @@ final class Matrix
     public function __construct(array $elements)
     {
         $this->ensureSize($elements);
-        $this->ensureOnlyFloats($elements);
 
         $this->elements = $elements;
     }
@@ -232,22 +230,6 @@ final class Matrix
                 throw new InvalidArgumentException(
                     'Elements do not describe a MxM matrix'
                 );
-            }
-        }
-    }
-
-    /**
-     * @param array<int,array<int,float>> $elements
-     */
-    private function ensureOnlyFloats(array $elements): void
-    {
-        foreach ($elements as $row) {
-            foreach ($row as $element) {
-                if (!is_float($element)) {
-                    throw new InvalidArgumentException(
-                        'Elements are not only float values'
-                    );
-                }
             }
         }
     }
