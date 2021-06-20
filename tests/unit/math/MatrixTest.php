@@ -535,4 +535,13 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($inverse->multiplyBy($p)->equalTo(Tuple::point(-8, 7, 3)));
     }
+
+    public function test_translation_does_not_affect_vectors(): void
+    {
+        $transform = Matrix::translation(5, -3, 2);
+
+        $v = Tuple::vector(-3, 4, 5);
+
+        $this->assertTrue($transform->multiplyBy($v)->equalTo($v));
+    }
 }
