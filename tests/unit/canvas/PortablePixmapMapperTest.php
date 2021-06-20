@@ -20,6 +20,6 @@ final class PortablePixmapMapperTest extends TestCase
 
         $mapper = new PortablePixmapMapper;
 
-        $this->assertStringEqualsFile(__DIR__ . '/fixture/10_20_empty.ppm', $mapper->map($canvas));
+        $this->assertStringEqualsFile(__DIR__ . '/../../fixture/10_20_empty.ppm', $mapper->map($canvas));
     }
 }
