@@ -562,4 +562,13 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($transform->multiplyBy($v)->equalTo(Tuple::vector(-8, 18, 32)));
     }
+
+    public function test_applying_the_inverse_of_a_scaling_matrix_to_a_vector_scales_the_vector_in_reverse(): void
+    {
+        $inverse = Matrix::scaling(2, 3, 4)->inverse();
+
+        $v = Tuple::vector(-4, 6, 8);
+
+        $this->assertTrue($inverse->multiplyBy($v)->equalTo(Tuple::vector(-2, 2, 2)));
+    }
 }
