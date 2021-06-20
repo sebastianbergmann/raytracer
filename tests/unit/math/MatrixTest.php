@@ -601,4 +601,15 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($inverse->multiplyBy($p)->equalTo(Tuple::point(0, sqrt(2) / 2, -sqrt(2) / 2)));
     }
+
+    public function test_a_point_can_be_rotated_around_the_Y_axis(): void
+    {
+        $p = Tuple::point(0, 0, 1);
+
+        $halfQuarter = Matrix::rotationAroundY(M_PI / 4);
+        $fullQuarter = Matrix::rotationAroundY(M_PI / 2);
+
+        $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(sqrt(2) / 2, 0, sqrt(2) / 2)));
+        $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(1, 0, 0)));
+    }
 }
