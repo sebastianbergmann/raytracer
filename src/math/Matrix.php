@@ -27,6 +27,17 @@ final class Matrix
         return new self(self::identityElements($size));
     }
 
+    public static function translation(float $x, float $y, float $z): self
+    {
+        $elements = self::identityElements(4);
+
+        $elements[0][3] = $x;
+        $elements[1][3] = $y;
+        $elements[2][3] = $z;
+
+        return new self($elements);
+    }
+
     /**
      * @psalm-param array<int,array<int,float>> $elements
      */
