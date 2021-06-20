@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="src/Matrix.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>is_float($element)</code>
+    </DocblockTypeContradiction>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$elements</code>
+    </MixedArgumentTypeCoercion>
+  </file>
+</files>

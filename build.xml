@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="raytracer" default="setup">
-
-    <target name="setup" depends="generate-autoloader"/>
-
-    <target name="clean" unless="clean.done" description="Cleanup build artifacts">
-        <delete dir="${basedir}/build"/>
-
-        <property name="clean.done" value="true"/>
-    </target>
-
-    <target name="prepare" depends="clean" description="Prepare for build">
-        <mkdir dir="${basedir}/build"/>
-    </target>
-
-    <target name="update-tools" description="Update tools">
-        <exec executable="phive" taskname="phive" failonerror="true">
-            <arg value="--no-progress"/>
-            <arg value="update"/>
-        </exec>
-    </target>
-
+<project name="raytracer" default="generate-autoloader">
     <target name="generate-autoloader" description="Generate autoloader with PHPAB">
         <exec executable="${basedir}/tools/phpab" taskname="phpab">
             <arg value="--static" />
@@ -29,28 +9,10 @@
         </exec>
     </target>
 
-    <target name="test" depends="prepare,generate-autoloader" description="Run tests with PHPUnit">
-        <exec executable="${basedir}/tools/phpunit" taskname="phpunit" failonerror="true"/>
-    </target>
-
-    <target name="coverage" depends="prepare,generate-autoloader" description="Run tests with PHPUnit and generate code coverage report in HTML format">
-        <exec executable="${basedir}/tools/phpunit" taskname="phpunit" failonerror="true">
-            <arg value="--coverage-html" />
-            <arg path="${basedir}/build/code-coverage" />
-        </exec>
-    </target>
-
-    <target name="type-coverage" description="Calculate type coverage with Psalm">
-        <exec executable="${basedir}/tools/psalm" taskname="psalm">
+    <target name="update-tools" description="Update tools">
+        <exec executable="phive" taskname="phive" failonerror="true">
             <arg value="--no-progress"/>
-            <arg value="--stats"/>
-            <arg value="--show-info=false"/>
-        </exec>
-    </target>
-
-    <target name="fix" description="Fix coding guidelines violations with php-cs-fixer">
-        <exec executable="${basedir}/tools/php-cs-fixer" taskname="php-cs-fixer">
-            <arg value="fix" />
+            <arg value="update"/>
         </exec>
     </target>
 </project>
