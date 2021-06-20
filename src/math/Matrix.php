@@ -24,29 +24,43 @@ final class Matrix
 
     public static function identity(int $size): self
     {
-        return new self(self::identityElements($size));
+        $elements = [];
+
+        foreach (range(0, $size - 1) as $i) {
+            foreach (range(0, $size - 1) as $j) {
+                if ($i === $j) {
+                    $elements[$i][$j] = 1.0;
+                } else {
+                    $elements[$i][$j] = 0.0;
+                }
+            }
+        }
+
+        return new self($elements);
     }
 
     public static function translation(float $x, float $y, float $z): self
     {
-        $elements = self::identityElements(4);
-
-        $elements[0][3] = $x;
-        $elements[1][3] = $y;
-        $elements[2][3] = $z;
-
-        return new self($elements);
+        return self::fromArray(
+            [
+                [1.0, 0.0, 0.0,  $x],
+                [0.0, 1.0, 0.0,  $y],
+                [0.0, 0.0, 1.0,  $z],
+                [0.0, 0.0, 0.0, 1.0],
+            ]
+        );
     }
 
     public static function scaling(float $x, float $y, float $z): self
     {
-        $elements = self::identityElements(4);
-
-        $elements[0][0] = $x;
-        $elements[1][1] = $y;
-        $elements[2][2] = $z;
-
-        return new self($elements);
+        return self::fromArray(
+            [
+                [$x, 0.0, 0.0, 0.0],
+                [0.0,  $y, 0.0, 0.0],
+                [0.0, 0.0,  $z, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ]
+        );
     }
 
     /**
@@ -260,25 +274,5 @@ final class Matrix
         }
 
         return new self($result);
-    }
-
-    /**
-     * @psalm-return array<int,array<int,float>>
-     */
-    private static function identityElements(int $size): array
-    {
-        $elements = [];
-
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $j) {
-                if ($i === $j) {
-                    $elements[$i][$j] = 1.0;
-                } else {
-                    $elements[$i][$j] = 0.0;
-                }
-            }
-        }
-
-        return $elements;
     }
 }
