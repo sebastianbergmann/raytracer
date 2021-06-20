@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function iterator_to_array;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -45,7 +46,7 @@ final class CanvasTest extends TestCase
     {
         $black  = Color::create(0.0, 0.0, 0.0);
         $canvas = Canvas::create(2, 2, $black);
-        $pixels = \iterator_to_array($canvas);
+        $pixels = iterator_to_array($canvas);
 
         $this->assertCount(4, $pixels);
 

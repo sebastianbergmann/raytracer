@@ -1,27 +1,17 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-final class CanvasIterator implements \Iterator
+use Iterator;
+
+final class CanvasIterator implements Iterator
 {
-    /**
-     * @var Canvas
-     */
-    private $canvas;
+    private Canvas $canvas;
 
-    /**
-     * @var int
-     */
-    private $x = 1;
+    private int $x = 1;
 
-    /**
-     * @var int
-     */
-    private $y = 1;
+    private int $y = 1;
 
-    /**
-     * @var int
-     */
-    private $p = 1;
+    private int $p = 1;
 
     public function __construct(Canvas $canvas)
     {

@@ -1,27 +1,20 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-final class Canvas implements \IteratorAggregate
+use IteratorAggregate;
+
+final class Canvas implements IteratorAggregate
 {
-    /**
-     * @var int
-     */
-    private $width;
+    private int $width;
+
+    private int $height;
+
+    private Color $background;
 
     /**
-     * @var int
+     * @psalm-var array<int,array<int,Color>>
      */
-    private $height;
-
-    /**
-     * @var Color
-     */
-    private $background;
-
-    /**
-     * @var array<int,array<int,Color>>
-     */
-    private $pixels;
+    private array $pixels;
 
     public static function create(int $width, int $height, Color $background): self
     {

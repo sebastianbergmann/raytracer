@@ -1,27 +1,17 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function sqrt;
+
 final class Tuple
 {
-    /**
-     * @var float
-     */
-    private $x;
+    private float $x;
 
-    /**
-     * @var float
-     */
-    private $y;
+    private float $y;
 
-    /**
-     * @var float
-     */
-    private $z;
+    private float $z;
 
-    /**
-     * @var float
-     */
-    private $w;
+    private float $w;
 
     public static function create(float $x, float $y, float $z, float $w): self
     {
@@ -134,7 +124,7 @@ final class Tuple
 
     public function magnitude(): float
     {
-        return \sqrt($this->x ** 2 + $this->y ** 2 + $this->z ** 2 + $this->w ** 2);
+        return sqrt($this->x ** 2 + $this->y ** 2 + $this->z ** 2 + $this->w ** 2);
     }
 
     public function normalize(): self

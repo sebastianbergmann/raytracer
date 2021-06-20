@@ -3,20 +3,11 @@ namespace SebastianBergmann\Raytracer;
 
 final class Color
 {
-    /**
-     * @var float
-     */
-    private $red;
+    private float $red;
 
-    /**
-     * @var float
-     */
-    private $green;
+    private float $green;
 
-    /**
-     * @var float
-     */
-    private $blue;
+    private float $blue;
 
     public static function create(float $red, float $green, float $blue): self
     {

@@ -1,15 +1,21 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function abs;
+use function array_keys;
+use function array_values;
+use function count;
+use function is_float;
+
 final class Matrix
 {
     /**
-     * @var array<int,array<int,float>>
+     * @psalm-var array<int,array<int,float>>
      */
-    private $elements;
+    private array $elements;
 
     /**
-     * @param array<int,array<int,float>> $elements
+     * @psalm-param array<int,array<int,float>> $elements
      */
     public static function fromArray(array $elements): self
     {
@@ -34,7 +40,7 @@ final class Matrix
     }
 
     /**
-     * @param array<int,array<int,float>> $elements
+     * @psalm-param array<int,array<int,float>> $elements
      */
     public function __construct(array $elements)
     {
@@ -51,7 +57,7 @@ final class Matrix
 
     public function size(): int
     {
-        return \count($this->elements);
+        return count($this->elements);
     }
 
     public function equalTo(self $that, float $delta = 0.0): bool
@@ -64,7 +70,7 @@ final class Matrix
 
         for ($i = 0; $i < $size; $i++) {
             for ($j = 0; $j < $size; $j++) {
-                if (\abs($this->elements[$i][$j] - $that->element($i, $j)) > $delta) {
+                if (abs($this->elements[$i][$j] - $that->element($i, $j)) > $delta) {
                     return false;
                 }
             }
@@ -181,8 +187,8 @@ final class Matrix
             }
         }
 
-        foreach (\array_keys($tmp) as $key) {
-            $elements[] = \array_values($tmp[$key]);
+        foreach (array_keys($tmp) as $key) {
+            $elements[] = array_values($tmp[$key]);
         }
 
         return new self($elements);
@@ -219,10 +225,10 @@ final class Matrix
      */
     private function ensureSize(array $elements): void
     {
-        $numberOfRows = \count($elements);
+        $numberOfRows = count($elements);
 
         foreach ($elements as $row) {
-            if (\count($row) !== $numberOfRows) {
+            if (count($row) !== $numberOfRows) {
                 throw new InvalidArgumentException(
                     'Elements do not describe a MxM matrix'
                 );
@@ -237,7 +243,7 @@ final class Matrix
     {
         foreach ($elements as $row) {
             foreach ($row as $element) {
-                if (!\is_float($element)) {
+                if (!is_float($element)) {
                     throw new InvalidArgumentException(
                         'Elements are not only float values'
                     );

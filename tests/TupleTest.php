@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function sqrt;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -178,8 +179,8 @@ final class TupleTest extends TestCase
             [1.0, 1.0, 0.0, 0.0],
             [1.0, 0.0, 1.0, 0.0],
             [1.0, 0.0, 0.0, 1.0],
-            [\sqrt(14), 1.0, 2.0, 3.0],
-            [\sqrt(14), -1.0, -2.0, -3.0]
+            [sqrt(14), 1.0, 2.0, 3.0],
+            [sqrt(14), -1.0, -2.0, -3.0],
         ];
     }
 
@@ -201,7 +202,7 @@ final class TupleTest extends TestCase
     {
         return [
             [4.0, 0.0, 0.0, 1.0, 0.0, 0.0],
-            [1.0, 2.0, 3.0, 1 / \sqrt(14), 2 / \sqrt(14), 3 / \sqrt(14)]
+            [1.0, 2.0, 3.0, 1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14)],
         ];
     }
 
