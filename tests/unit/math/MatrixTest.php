@@ -571,4 +571,13 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($inverse->multiplyBy($v)->equalTo(Tuple::vector(-2, 2, 2)));
     }
+
+    public function test_reflection_is_scaling_by_a_negative_value(): void
+    {
+        $transform = Matrix::scaling(-1, 1, 1);
+
+        $p = Tuple::point(2, 3, 4);
+
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(-2, 3, 4)));
+    }
 }
