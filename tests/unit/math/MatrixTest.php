@@ -526,4 +526,13 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 1, 7)));
     }
+
+    public function test_multiplying_a_point_by_a_the_inverse_of_a_translation_matrix_moves_the_point_in_reverse(): void
+    {
+        $inverse = Matrix::translation(5, -3, 2)->inverse();
+
+        $p = Tuple::point(-3, 4, 5);
+
+        $this->assertTrue($inverse->multiplyBy($p)->equalTo(Tuple::point(-8, 7, 3)));
+    }
 }
