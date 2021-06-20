@@ -493,29 +493,6 @@ final class MatrixTest extends TestCase
 
     public function test_the_product_of_two_matrices_can_be_multiplied_by_its_inverse(): void
     {
-        // The operation itself works correctly, but Matrix::equalTo() considers
-        // two matrices that are equal not be be equal.
-        //
-        // Debugging code:
-        //
-        //    for ($i = 0; $i < $size; $i++) {
-        //        for ($j = 0; $j < $size; $j++) {
-        //            if (\abs($this->elements[$i][$j] - $that->element($i, $j)) > $delta) {
-        //                var_dump($this->elements[$i][$j]);
-        //                var_dump($that->element($i, $j));
-        //                var_dump(\abs($this->elements[$i][$j] - $that->element($i, $j)));
-        //                return false;
-        //            }
-        //        }
-        //    }
-        //
-        // This prints:
-        //
-        //     double(3)
-        //     double(3)
-        //     double(8.8817841970013E-16)
-        $this->markTestSkipped();
-
         $a = Matrix::fromArray(
             [
                 [3.0, -9.0, 7.0, 3.0],
@@ -536,6 +513,6 @@ final class MatrixTest extends TestCase
 
         $c = $a->multiply($b);
 
-        $this->assertTrue($a->equalTo($c->multiply($b->inverse())));
+        $this->assertTrue($a->equalTo($c->multiply($b->inverse()), 0.00000000000001));
     }
 }
