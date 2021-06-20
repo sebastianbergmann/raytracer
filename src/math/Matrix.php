@@ -4,8 +4,10 @@ namespace SebastianBergmann\Raytracer;
 use function abs;
 use function array_keys;
 use function array_values;
+use function cos;
 use function count;
 use function range;
+use function sin;
 
 final class Matrix
 {
@@ -59,6 +61,18 @@ final class Matrix
                 [0.0,  $y, 0.0, 0.0],
                 [0.0, 0.0,  $z, 0.0],
                 [0.0, 0.0, 0.0, 1.0],
+            ]
+        );
+    }
+
+    public static function rotationAroundX(float $r): self
+    {
+        return self::fromArray(
+            [
+                [1.0,     0.0,      0.0, 0.0],
+                [0.0, cos($r), -sin($r), 0.0],
+                [0.0, sin($r),  cos($r), 0.0],
+                [0.0,     0.0,      0.0, 1.0],
             ]
         );
     }

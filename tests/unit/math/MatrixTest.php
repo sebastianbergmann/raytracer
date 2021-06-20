@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function sqrt;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -579,5 +580,16 @@ final class MatrixTest extends TestCase
         $p = Tuple::point(2, 3, 4);
 
         $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(-2, 3, 4)));
+    }
+
+    public function test_a_point_can_be_rotated_around_the_X_axis(): void
+    {
+        $p = Tuple::point(0, 1, 0);
+
+        $halfQuarter = Matrix::rotationAroundX(M_PI / 4);
+        $fullQuarter = Matrix::rotationAroundX(M_PI / 2);
+
+        $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(0, sqrt(2) / 2, sqrt(2) / 2)));
+        $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(0, 0, 1)));
     }
 }
