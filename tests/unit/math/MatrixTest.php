@@ -677,4 +677,21 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 3, 7)));
     }
+
+    public function test_individual_transformations_are_applied_in_sequence(): void
+    {
+        $p = Tuple::point(1, 0, 1);
+        $A = Matrix::rotationAroundX(M_PI / 2);
+        $B = Matrix::scaling(5, 5, 5);
+        $C = Matrix::translation(10, 5, 7);
+
+        $p2 = $A->multiplyBy($p);
+        $this->assertTrue($p2->equalTo(Tuple::point(1, -1, 0)));
+
+        $p3 = $B->multiplyBy($p2);
+        $this->assertTrue($p3->equalTo(Tuple::point(5, -5, 0)));
+
+        $p4 = $C->multiplyBy($p3);
+        $this->assertTrue($p4->equalTo(Tuple::point(15, 0, 7)));
+    }
 }
