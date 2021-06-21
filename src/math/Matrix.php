@@ -296,6 +296,36 @@ final class Matrix
         return $this->cofactorMatrix()->transpose()->divideAllElementsBy($this->determinant());
     }
 
+    public function translate(float $x, float $y, float $z): self
+    {
+        return $this->multiply(self::translation($x, $y, $z));
+    }
+
+    public function scale(float $x, float $y, float $z): self
+    {
+        return $this->multiply(self::scaling($x, $y, $z));
+    }
+
+    public function rotateAroundX(float $r): self
+    {
+        return $this->multiply(self::rotationAroundX($r));
+    }
+
+    public function rotateAroundY(float $r): self
+    {
+        return $this->multiply(self::rotationAroundY($r));
+    }
+
+    public function rotateAroundZ(float $r): self
+    {
+        return $this->multiply(self::rotationAroundZ($r));
+    }
+
+    public function shear(float $xy, float $xz, float $yx, float $yz, float $zx, float $zy): self
+    {
+        return $this->multiply(self::shearing($xy, $xz, $yx, $yz, $zx, $zy));
+    }
+
     /**
      * @param array<int,array<int,float>> $elements
      */
