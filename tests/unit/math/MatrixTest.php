@@ -694,4 +694,16 @@ final class MatrixTest extends TestCase
         $p4 = $C->multiplyBy($p3);
         $this->assertTrue($p4->equalTo(Tuple::point(15, 0, 7)));
     }
+
+    public function test_chained_transformations_must_be_applied_in_reverse_order(): void
+    {
+        $p = Tuple::point(1, 0, 1);
+        $A = Matrix::rotationAroundX(M_PI / 2);
+        $B = Matrix::scaling(5, 5, 5);
+        $C = Matrix::translation(10, 5, 7);
+
+        $T = $C->multiply($B)->multiply($A);
+
+        $this->assertTrue($T->multiplyBy($p)->equalTo(Tuple::point(15, 0, 7)));
+    }
 }
