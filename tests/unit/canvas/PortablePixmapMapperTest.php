@@ -18,8 +18,9 @@ final class PortablePixmapMapperTest extends TestCase
     {
         $canvas = Canvas::create(10, 20, Color::create(0.0, 0.0, 0.0));
 
-        $mapper = new PortablePixmapMapper;
-
-        $this->assertStringEqualsFile(__DIR__ . '/../../fixture/10_20_empty.ppm', $mapper->map($canvas));
+        $this->assertStringEqualsFile(
+            __DIR__ . '/../../fixture/10_20_empty.ppm',
+            (new PortablePixmapMapper)->map($canvas)
+        );
     }
 }
