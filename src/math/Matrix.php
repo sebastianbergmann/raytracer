@@ -101,6 +101,18 @@ final class Matrix
         );
     }
 
+    public static function shearing(float $xy, float $xz, float $yx, float $yz, float $zx, float $zy): self
+    {
+        return self::fromArray(
+            [
+                [1.0, $xy, $xz, 0.0],
+                [$yx, 1.0, $yz, 0.0],
+                [$zx, $zy, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ]
+        );
+    }
+
     /**
      * @psalm-param array<int,array<int,float>> $elements
      */

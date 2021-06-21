@@ -623,4 +623,58 @@ final class MatrixTest extends TestCase
         $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(-sqrt(2) / 2, sqrt(2) / 2, 0)));
         $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(-1, 0, 0)));
     }
+
+    public function test_a_shearing_transformation_moves_x_in_proportion_to_y(): void
+    {
+        $p = Tuple::point(2, 3, 4);
+
+        $transform = Matrix::shearing(1, 0, 0, 0, 0, 0);
+
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(5, 3, 4)));
+    }
+
+    public function test_a_shearing_transformation_moves_x_in_proportion_to_z(): void
+    {
+        $p = Tuple::point(2, 3, 4);
+
+        $transform = Matrix::shearing(0, 1, 0, 0, 0, 0);
+
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(6, 3, 4)));
+    }
+
+    public function test_a_shearing_transformation_moves_y_in_proportion_to_x(): void
+    {
+        $p = Tuple::point(2, 3, 4);
+
+        $transform = Matrix::shearing(0, 0, 1, 0, 0, 0);
+
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 5, 4)));
+    }
+
+    public function test_a_shearing_transformation_moves_y_in_proportion_to_z(): void
+    {
+        $p = Tuple::point(2, 3, 4);
+
+        $transform = Matrix::shearing(0, 0, 0, 1, 0, 0);
+
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 7, 4)));
+    }
+
+    public function test_a_shearing_transformation_moves_z_in_proportion_to_x(): void
+    {
+        $p = Tuple::point(2, 3, 4);
+
+        $transform = Matrix::shearing(0, 0, 0, 0, 1, 0);
+
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 3, 6)));
+    }
+
+    public function test_a_shearing_transformation_moves_z_in_proportion_to_y(): void
+    {
+        $p = Tuple::point(2, 3, 4);
+
+        $transform = Matrix::shearing(0, 0, 0, 0, 0, 1);
+
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 3, 7)));
+    }
 }
