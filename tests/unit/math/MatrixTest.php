@@ -625,7 +625,7 @@ final class MatrixTest extends TestCase
         $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(-1, 0, 0)));
     }
 
-    public function test_a_shearing_transformation_moves_x_in_proportion_to_y(): void
+    public function test_a_shearing_transformation_moves_X_in_proportion_to_Y(): void
     {
         $p = Tuple::point(2, 3, 4);
 
@@ -634,7 +634,7 @@ final class MatrixTest extends TestCase
         $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(5, 3, 4)));
     }
 
-    public function test_a_shearing_transformation_moves_x_in_proportion_to_z(): void
+    public function test_a_shearing_transformation_moves_X_in_proportion_to_Z(): void
     {
         $p = Tuple::point(2, 3, 4);
 
@@ -643,7 +643,7 @@ final class MatrixTest extends TestCase
         $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(6, 3, 4)));
     }
 
-    public function test_a_shearing_transformation_moves_y_in_proportion_to_x(): void
+    public function test_a_shearing_transformation_moves_Y_in_proportion_to_X(): void
     {
         $p = Tuple::point(2, 3, 4);
 
@@ -652,7 +652,7 @@ final class MatrixTest extends TestCase
         $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 5, 4)));
     }
 
-    public function test_a_shearing_transformation_moves_y_in_proportion_to_z(): void
+    public function test_a_shearing_transformation_moves_Y_in_proportion_to_Z(): void
     {
         $p = Tuple::point(2, 3, 4);
 
@@ -661,7 +661,7 @@ final class MatrixTest extends TestCase
         $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 7, 4)));
     }
 
-    public function test_a_shearing_transformation_moves_z_in_proportion_to_x(): void
+    public function test_a_shearing_transformation_moves_Z_in_proportion_to_X(): void
     {
         $p = Tuple::point(2, 3, 4);
 
@@ -670,7 +670,7 @@ final class MatrixTest extends TestCase
         $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 3, 6)));
     }
 
-    public function test_a_shearing_transformation_moves_z_in_proportion_to_y(): void
+    public function test_a_shearing_transformation_moves_Z_in_proportion_to_Y(): void
     {
         $p = Tuple::point(2, 3, 4);
 
