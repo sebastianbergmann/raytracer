@@ -31,7 +31,7 @@ final class Sphere
     }
 
     /**
-     * @psalm-return list<float>
+     * @psalm-return array<empty, empty>|array{float, float}
      */
     public function intersect(Ray $r): array
     {
