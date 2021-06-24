@@ -90,6 +90,7 @@ final class TupleTest extends TestCase
 
         $this->expectException(RuntimeException::class);
 
+        /* @noinspection UnusedFunctionResultInspection */
         $p->plus($p);
     }
 
@@ -139,6 +140,7 @@ final class TupleTest extends TestCase
 
         $this->expectException(RuntimeException::class);
 
+        /* @noinspection UnusedFunctionResultInspection */
         $v->minus($p);
     }
 
