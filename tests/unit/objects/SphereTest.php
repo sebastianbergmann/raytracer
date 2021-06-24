@@ -35,10 +35,7 @@ final class SphereTest extends TestCase
             Vector::from(0, 0, 1)
         );
 
-        $s = Sphere::from(
-            Point::from(0, 0, 0),
-            1.0
-        );
+        $s = Sphere::unit();
 
         $xs = $s->intersect($r);
 
@@ -58,10 +55,7 @@ final class SphereTest extends TestCase
             Vector::from(0, 0, 1)
         );
 
-        $s = Sphere::from(
-            Point::from(0, 0, 0),
-            1.0
-        );
+        $s = Sphere::unit();
 
         $xs = $s->intersect($r);
 
@@ -81,10 +75,7 @@ final class SphereTest extends TestCase
             Vector::from(0, 0, 1)
         );
 
-        $s = Sphere::from(
-            Point::from(0, 0, 0),
-            1.0
-        );
+        $s = Sphere::unit();
 
         $xs = $s->intersect($r);
 
@@ -98,10 +89,7 @@ final class SphereTest extends TestCase
             Vector::from(0, 0, 1)
         );
 
-        $s = Sphere::from(
-            Point::from(0, 0, 0),
-            1.0
-        );
+        $s = Sphere::unit();
 
         $xs = $s->intersect($r);
 
@@ -121,10 +109,7 @@ final class SphereTest extends TestCase
             Vector::from(0, 0, 1)
         );
 
-        $s = Sphere::from(
-            Point::from(0, 0, 0),
-            1.0
-        );
+        $s = Sphere::unit();
 
         $xs = $s->intersect($r);
 

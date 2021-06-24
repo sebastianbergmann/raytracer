@@ -14,6 +14,14 @@ final class Sphere implements Object_
         return new self($origin, $radius);
     }
 
+    public static function unit(): self
+    {
+        return new self(
+            Point::from(0, 0, 0),
+            1.0
+        );
+    }
+
     private function __construct(Point $origin, float $radius)
     {
         $this->origin = $origin;
