@@ -94,7 +94,7 @@ final class TupleTest extends TestCase
         $p->plus($p);
     }
 
-    public function test_subtracting_a_point_from_another_point_works(): void
+    public function test_a_point_can_be_subtracted_from_another_point(): void
     {
         $p1 = Point::from(3.0, 2.0, 1.0);
         $p2 = Point::from(5.0, 6.0, 7.0);
@@ -107,7 +107,7 @@ final class TupleTest extends TestCase
         $this->assertSame(0.0, $v->w());
     }
 
-    public function test_subtracting_a_vector_from_a_point_works(): void
+    public function test_a_vector_can_be_subtracted_from_a_point(): void
     {
         $p1 = Point::from(3.0, 2.0, 1.0);
         $v  = Vector::from(5.0, 6.0, 7.0);
@@ -120,7 +120,7 @@ final class TupleTest extends TestCase
         $this->assertSame(1.0, $p2->w());
     }
 
-    public function test_subtracting_a_vector_from_another_vector_works(): void
+    public function test_a_vector_can_be_subtracted_from_another_vector(): void
     {
         $v1 = Vector::from(3.0, 2.0, 1.0);
         $v2 = Vector::from(5.0, 6.0, 7.0);
