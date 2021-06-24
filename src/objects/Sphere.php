@@ -3,7 +3,7 @@ namespace SebastianBergmann\Raytracer;
 
 use function sqrt;
 
-final class Sphere
+final class Sphere implements Object_
 {
     private Point $origin;
 
