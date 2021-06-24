@@ -4,7 +4,10 @@ namespace SebastianBergmann\Raytracer;
 use function abs;
 use function sqrt;
 
-final class Tuple
+/**
+ * @psalm-suppress UnsafeInstantiation
+ */
+class Tuple
 {
     private float $x;
 
@@ -14,22 +17,7 @@ final class Tuple
 
     private float $w;
 
-    public static function create(float $x, float $y, float $z, float $w): self
-    {
-        return new self($x, $y, $z, $w);
-    }
-
-    public static function point(float $x, float $y, float $z): self
-    {
-        return new self($x, $y, $z, 1.0);
-    }
-
-    public static function vector(float $x, float $y, float $z): self
-    {
-        return new self($x, $y, $z, 0.0);
-    }
-
-    private function __construct(float $x, float $y, float $z, float $w)
+    public function __construct(float $x, float $y, float $z, float $w)
     {
         $this->x = $x;
         $this->y = $y;
@@ -70,7 +58,7 @@ final class Tuple
     /**
      * @throws RuntimeException
      */
-    public function plus(self $that): self
+    public function plus(self $that): static
     {
         if ($this->isPoint() && $that->isPoint()) {
             throw new RuntimeException(
@@ -78,7 +66,7 @@ final class Tuple
             );
         }
 
-        return new self(
+        return new static(
             $this->x + $that->x(),
             $this->y + $that->y(),
             $this->z + $that->z(),
@@ -89,7 +77,7 @@ final class Tuple
     /**
      * @throws RuntimeException
      */
-    public function minus(self $that): self
+    public function minus(self $that): static
     {
         if ($this->isVector() && $that->isPoint()) {
             throw new RuntimeException(
@@ -97,7 +85,7 @@ final class Tuple
             );
         }
 
-        return new self(
+        return new static(
             $this->x - $that->x(),
             $this->y - $that->y(),
             $this->z - $that->z(),
@@ -105,9 +93,9 @@ final class Tuple
         );
     }
 
-    public function negate(): self
+    public function negate(): static
     {
-        return new self(
+        return new static(
             -1 * $this->x,
             -1 * $this->y,
             -1 * $this->z,
@@ -115,9 +103,9 @@ final class Tuple
         );
     }
 
-    public function multiplyBy(float $factor): self
+    public function multiplyBy(float $factor): static
     {
-        return new self(
+        return new static(
             $factor * $this->x,
             $factor * $this->y,
             $factor * $this->z,
@@ -125,9 +113,9 @@ final class Tuple
         );
     }
 
-    public function divideBy(float $divisor): self
+    public function divideBy(float $divisor): static
     {
-        return new self(
+        return new static(
             $this->x / $divisor,
             $this->y / $divisor,
             $this->z / $divisor,
@@ -140,11 +128,11 @@ final class Tuple
         return sqrt($this->x ** 2 + $this->y ** 2 + $this->z ** 2 + $this->w ** 2);
     }
 
-    public function normalize(): self
+    public function normalize(): static
     {
         $magnitude = $this->magnitude();
 
-        return new self(
+        return new static(
             $this->x / $magnitude,
             $this->y / $magnitude,
             $this->z / $magnitude,
@@ -160,9 +148,9 @@ final class Tuple
                $this->w * $that->w();
     }
 
-    public function cross(self $that): self
+    public function cross(self $that): Vector
     {
-        return self::vector(
+        return Vector::from(
             $this->y * $that->z() - $this->z * $that->y(),
             $this->z * $that->x() - $this->x * $that->z(),
             $this->x * $that->y() - $this->y * $that->x()

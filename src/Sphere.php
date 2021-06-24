@@ -5,22 +5,22 @@ use function sqrt;
 
 final class Sphere
 {
-    private Tuple $origin;
+    private Point $origin;
 
     private float $radius;
 
-    public static function from(Tuple $origin, float $radius): self
+    public static function from(Point $origin, float $radius): self
     {
         return new self($origin, $radius);
     }
 
-    private function __construct(Tuple $origin, float $radius)
+    private function __construct(Point $origin, float $radius)
     {
         $this->origin = $origin;
         $this->radius = $radius;
     }
 
-    public function origin(): Tuple
+    public function origin(): Point
     {
         return $this->origin;
     }

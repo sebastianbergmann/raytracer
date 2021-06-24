@@ -20,7 +20,7 @@ final class Chapter4Test extends TestCase
         $black  = Color::create(0.0, 0.0, 0.0);
         $white  = Color::create(255.0, 255.0, 255.0);
         $canvas = Canvas::create($size, $size, $black);
-        $twelve = Tuple::point(0, 0, 1);
+        $twelve = Point::from(0, 0, 1);
 
         foreach (range(1, 12) as $hour) {
             $rotation = Matrix::rotationAroundY($hour * (M_PI / 6));

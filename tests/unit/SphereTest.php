@@ -14,7 +14,7 @@ final class SphereTest extends TestCase
 {
     public function test_creating_and_querying_a_sphere(): void
     {
-        $origin = Tuple::point(0, 0, 0);
+        $origin = Point::from(0, 0, 0);
         $radius = 1.0;
 
         $s = Sphere::from($origin, $radius);
@@ -26,12 +26,12 @@ final class SphereTest extends TestCase
     public function test_a_ray_intersects_a_sphere_at_two_points(): void
     {
         $r = Ray::from(
-            Tuple::point(0, 0, -5),
-            Tuple::vector(0, 0, 1)
+            Point::from(0, 0, -5),
+            Vector::from(0, 0, 1)
         );
 
         $s = Sphere::from(
-            Tuple::point(0, 0, 0),
+            Point::from(0, 0, 0),
             1.0
         );
 
@@ -45,12 +45,12 @@ final class SphereTest extends TestCase
     public function test_a_ray_intersects_a_sphere_at_a_tangent(): void
     {
         $r = Ray::from(
-            Tuple::point(0, 1, -5),
-            Tuple::vector(0, 0, 1)
+            Point::from(0, 1, -5),
+            Vector::from(0, 0, 1)
         );
 
         $s = Sphere::from(
-            Tuple::point(0, 0, 0),
+            Point::from(0, 0, 0),
             1.0
         );
 
@@ -64,12 +64,12 @@ final class SphereTest extends TestCase
     public function test_a_ray_misses_a_sphere(): void
     {
         $r = Ray::from(
-            Tuple::point(0, 2, -5),
-            Tuple::vector(0, 0, 1)
+            Point::from(0, 2, -5),
+            Vector::from(0, 0, 1)
         );
 
         $s = Sphere::from(
-            Tuple::point(0, 0, 0),
+            Point::from(0, 0, 0),
             1.0
         );
 
@@ -81,12 +81,12 @@ final class SphereTest extends TestCase
     public function test_a_ray_originates_inside_a_sphere(): void
     {
         $r = Ray::from(
-            Tuple::point(0, 0, 0),
-            Tuple::vector(0, 0, 1)
+            Point::from(0, 0, 0),
+            Vector::from(0, 0, 1)
         );
 
         $s = Sphere::from(
-            Tuple::point(0, 0, 0),
+            Point::from(0, 0, 0),
             1.0
         );
 
@@ -100,12 +100,12 @@ final class SphereTest extends TestCase
     public function test_a_sphere_is_behind_a_ray(): void
     {
         $r = Ray::from(
-            Tuple::point(0, 0, 5),
-            Tuple::vector(0, 0, 1)
+            Point::from(0, 0, 5),
+            Vector::from(0, 0, 1)
         );
 
         $s = Sphere::from(
-            Tuple::point(0, 0, 0),
+            Point::from(0, 0, 0),
             1.0
         );
 

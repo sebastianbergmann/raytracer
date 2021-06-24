@@ -194,7 +194,7 @@ final class Matrix
             $result[$i] += $this->elements[$i][3] * $tuple->w();
         }
 
-        return Tuple::create(...$result);
+        return new Tuple(...$result);
     }
 
     public function divideAllElementsBy(float $divisor): self
