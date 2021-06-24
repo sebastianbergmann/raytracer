@@ -10,8 +10,6 @@ final class Canvas implements IteratorAggregate
 
     private int $height;
 
-    private Color $background;
-
     /**
      * @psalm-var array<int,array<int,Color>>
      */
@@ -24,11 +22,10 @@ final class Canvas implements IteratorAggregate
 
     private function __construct(int $width, int $height, Color $background)
     {
-        $this->width      = $width;
-        $this->height     = $height;
-        $this->background = $background;
+        $this->width  = $width;
+        $this->height = $height;
 
-        $this->initializePixels();
+        $this->initializePixels($background);
     }
 
     public function width(): int
@@ -56,13 +53,13 @@ final class Canvas implements IteratorAggregate
         return new CanvasIterator($this);
     }
 
-    private function initializePixels(): void
+    private function initializePixels(Color $background): void
     {
         $this->pixels = [];
 
         foreach (range(1, $this->width) as $x) {
             foreach (range(1, $this->height) as $y) {
-                $this->pixels[$x][$y] = $this->background;
+                $this->pixels[$x][$y] = $background;
             }
         }
     }
