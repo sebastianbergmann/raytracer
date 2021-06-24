@@ -130,6 +130,16 @@ final class TupleTest extends TestCase
         $this->assertSame(0.0, $v3->w());
     }
 
+    public function test_a_point_cannot_be_subtracted_from_a_vector(): void
+    {
+        $v = Tuple::vector(0, 0, 0);
+        $p = Tuple::point(0, 0, 0);
+
+        $this->expectException(RuntimeException::class);
+
+        $v->minus($p);
+    }
+
     public function test_can_be_negated(): void
     {
         $t1 = Tuple::create(1.0, -2.0, 3.0, -4.0);

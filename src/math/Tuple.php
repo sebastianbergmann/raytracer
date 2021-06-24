@@ -86,8 +86,17 @@ final class Tuple
         );
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function minus(self $that): self
     {
+        if ($this->isVector() && $that->isPoint()) {
+            throw new RuntimeException(
+                'Cannot subtract point tuple from a vector tuple'
+            );
+        }
+
         return new self(
             $this->x - $that->x(),
             $this->y - $that->y(),

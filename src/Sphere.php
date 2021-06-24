@@ -32,6 +32,8 @@ final class Sphere
 
     /**
      * @psalm-return array<empty, empty>|array{float, float}
+     *
+     * @throws RuntimeException
      */
     public function intersect(Ray $r): array
     {
