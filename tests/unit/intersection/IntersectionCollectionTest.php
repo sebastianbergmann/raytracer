@@ -18,11 +18,9 @@ final class IntersectionCollectionTest extends TestCase
 {
     public function test_aggregating_intersections(): void
     {
-        $s = Sphere::unit();
-
+        $s  = Sphere::unit();
         $i1 = Intersection::from(1, $s);
         $i2 = Intersection::from(2, $s);
-
         $xs = IntersectionCollection::from($i1, $i2);
 
         $this->assertCount(2, $xs);
