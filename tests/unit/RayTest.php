@@ -6,6 +6,10 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \SebastianBergmann\Raytracer\Ray
  *
+ * @uses \SebastianBergmann\Raytracer\Point
+ * @uses \SebastianBergmann\Raytracer\Tuple
+ * @uses \SebastianBergmann\Raytracer\Vector
+ *
  * @small
  */
 final class RayTest extends TestCase

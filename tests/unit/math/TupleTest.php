@@ -5,7 +5,9 @@ use function sqrt;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @covers \SebastianBergmann\Raytracer\Point
  * @covers \SebastianBergmann\Raytracer\Tuple
+ * @covers \SebastianBergmann\Raytracer\Vector
  *
  * @small
  */

@@ -6,7 +6,10 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \SebastianBergmann\Raytracer\Sphere
  *
+ * @uses \SebastianBergmann\Raytracer\Point
  * @uses \SebastianBergmann\Raytracer\Ray
+ * @uses \SebastianBergmann\Raytracer\Tuple
+ * @uses \SebastianBergmann\Raytracer\Vector
  *
  * @small
  */
