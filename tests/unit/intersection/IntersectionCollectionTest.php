@@ -49,4 +49,54 @@ final class IntersectionCollectionTest extends TestCase
         /* @noinspection UnusedFunctionResultInspection */
         $xs->at(2);
     }
+
+    public function test_the_hit_when_all_intersections_have_positive_t(): void
+    {
+        $s  = Sphere::unit();
+        $i1 = Intersection::from(1, $s);
+        $i2 = Intersection::from(2, $s);
+        $xs = IntersectionCollection::from($i2, $i1);
+
+        $this->assertTrue($xs->hasHit());
+        $this->assertSame($i1, $xs->hit());
+    }
+
+    public function test_the_hit_when_some_intersections_have_negative_t(): void
+    {
+        $s  = Sphere::unit();
+        $i1 = Intersection::from(-1, $s);
+        $i2 = Intersection::from(1, $s);
+        $xs = IntersectionCollection::from($i2, $i1);
+
+        $this->assertTrue($xs->hasHit());
+        $this->assertSame($i2, $xs->hit());
+    }
+
+    public function test_the_hit_when_all_intersections_have_negative_t(): void
+    {
+        $s  = Sphere::unit();
+        $i1 = Intersection::from(-2, $s);
+        $i2 = Intersection::from(-1, $s);
+        $xs = IntersectionCollection::from($i2, $i1);
+
+        $this->assertFalse($xs->hasHit());
+
+        $this->expectException(IntersectionHasNoHitException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $xs->hit();
+    }
+
+    public function test_the_hit_is_always_the_lowest_nonnegative_intersection(): void
+    {
+        $s  = Sphere::unit();
+        $i1 = Intersection::from(5, $s);
+        $i2 = Intersection::from(7, $s);
+        $i3 = Intersection::from(-3, $s);
+        $i4 = Intersection::from(2, $s);
+        $xs = IntersectionCollection::from($i1, $i2, $i3, $i4);
+
+        $this->assertTrue($xs->hasHit());
+        $this->assertSame($i4, $xs->hit());
+    }
 }

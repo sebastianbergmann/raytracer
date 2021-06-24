@@ -9,6 +9,7 @@ require __DIR__ . '/exceptions/Exception.php';
 require __DIR__ . '/intersection/Intersection.php';
 require __DIR__ . '/intersection/IntersectionCollection.php';
 require __DIR__ . '/intersection/IntersectionCollectionIterator.php';
+require __DIR__ . '/exceptions/IntersectionHasNoHitException.php';
 require __DIR__ . '/exceptions/InvalidArgumentException.php';
 require __DIR__ . '/math/Matrix.php';
 require __DIR__ . '/objects/Object_.php';
