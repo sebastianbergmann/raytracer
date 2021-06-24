@@ -47,6 +47,9 @@ final class IntersectionTest extends TestCase
         $this->assertTrue($xs->isNotEmpty());
         $this->assertFalse($xs->isEmpty());
 
+        $this->assertSame($i1, $xs->at(0));
+        $this->assertSame($i2, $xs->at(1));
+
         $number = 0;
 
         foreach ($xs as $i => $intersection) {
@@ -60,5 +63,10 @@ final class IntersectionTest extends TestCase
 
             $number++;
         }
+
+        $this->expectException(OutOfBoundsException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $xs->at(2);
     }
 }

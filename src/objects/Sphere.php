@@ -31,11 +31,9 @@ final class Sphere implements Object_
     }
 
     /**
-     * @psalm-return array<empty, empty>|array{float, float}
-     *
      * @throws RuntimeException
      */
-    public function intersect(Ray $r): array
+    public function intersect(Ray $r): IntersectionCollection
     {
         $sphereToRay = $r->origin()->minus($this->origin);
 
@@ -46,12 +44,15 @@ final class Sphere implements Object_
         $discrimiant = $b ** 2 - 4 * $a * $c;
 
         if ($discrimiant < 0) {
-            return [];
+            return IntersectionCollection::from();
         }
 
         $t1 = (-$b - sqrt($discrimiant)) / (2 * $a);
         $t2 = (-$b + sqrt($discrimiant)) / (2 * $a);
 
-        return [$t1, $t2];
+        return IntersectionCollection::from(
+            Intersection::from($t1, $this),
+            Intersection::from($t2, $this)
+        );
     }
 }

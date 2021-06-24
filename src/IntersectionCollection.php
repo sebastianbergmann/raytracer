@@ -34,6 +34,18 @@ final class IntersectionCollection implements Countable, IteratorAggregate
         return $this->intersections;
     }
 
+    /**
+     * @throws OutOfBoundsException
+     */
+    public function at(int $position): Intersection
+    {
+        if (!isset($this->intersections[$position])) {
+            throw new OutOfBoundsException;
+        }
+
+        return $this->intersections[$position];
+    }
+
     public function count(): int
     {
         return count($this->intersections);

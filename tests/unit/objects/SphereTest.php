@@ -6,6 +6,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \SebastianBergmann\Raytracer\Sphere
  *
+ * @uses \SebastianBergmann\Raytracer\Intersection
+ * @uses \SebastianBergmann\Raytracer\IntersectionCollection
  * @uses \SebastianBergmann\Raytracer\Point
  * @uses \SebastianBergmann\Raytracer\Ray
  * @uses \SebastianBergmann\Raytracer\Tuple
@@ -41,8 +43,12 @@ final class SphereTest extends TestCase
         $xs = $s->intersect($r);
 
         $this->assertCount(2, $xs);
-        $this->assertSame(4.0, $xs[0]);
-        $this->assertSame(6.0, $xs[1]);
+
+        $this->assertSame(4.0, $xs->at(0)->t());
+        $this->assertSame($s, $xs->at(0)->object());
+
+        $this->assertSame(6.0, $xs->at(1)->t());
+        $this->assertSame($s, $xs->at(1)->object());
     }
 
     public function test_a_ray_intersects_a_sphere_at_a_tangent(): void
@@ -60,8 +66,12 @@ final class SphereTest extends TestCase
         $xs = $s->intersect($r);
 
         $this->assertCount(2, $xs);
-        $this->assertSame(5.0, $xs[0]);
-        $this->assertSame(5.0, $xs[1]);
+
+        $this->assertSame(5.0, $xs->at(0)->t());
+        $this->assertSame($s, $xs->at(0)->object());
+
+        $this->assertSame(5.0, $xs->at(1)->t());
+        $this->assertSame($s, $xs->at(1)->object());
     }
 
     public function test_a_ray_misses_a_sphere(): void
@@ -96,8 +106,12 @@ final class SphereTest extends TestCase
         $xs = $s->intersect($r);
 
         $this->assertCount(2, $xs);
-        $this->assertSame(-1.0, $xs[0]);
-        $this->assertSame(1.0, $xs[1]);
+
+        $this->assertSame(-1.0, $xs->at(0)->t());
+        $this->assertSame($s, $xs->at(0)->object());
+
+        $this->assertSame(1.0, $xs->at(1)->t());
+        $this->assertSame($s, $xs->at(1)->object());
     }
 
     public function test_a_sphere_is_behind_a_ray(): void
@@ -115,7 +129,8 @@ final class SphereTest extends TestCase
         $xs = $s->intersect($r);
 
         $this->assertCount(2, $xs);
-        $this->assertSame(-6.0, $xs[0]);
-        $this->assertSame(-4.0, $xs[1]);
+
+        $this->assertSame(-6.0, $xs->at(0)->t());
+        $this->assertSame(-4.0, $xs->at(1)->t());
     }
 }
