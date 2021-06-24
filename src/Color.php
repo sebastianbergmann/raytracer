@@ -9,7 +9,7 @@ final class Color
 
     private float $blue;
 
-    public static function create(float $red, float $green, float $blue): self
+    public static function from(float $red, float $green, float $blue): self
     {
         return new self($red, $green, $blue);
     }

@@ -15,7 +15,7 @@ final class ColorTest extends TestCase
      */
     public function test_colors_are_red_green_blue_tuples(): void
     {
-        $c = Color::create(-0.5, 0.4, 1.7);
+        $c = Color::from(-0.5, 0.4, 1.7);
 
         $this->assertSame(-0.5, $c->red());
         $this->assertSame(0.4, $c->green());
@@ -24,8 +24,8 @@ final class ColorTest extends TestCase
 
     public function test_another_color_can_be_added(): void
     {
-        $c1 = Color::create(0.9, 0.6, 0.75);
-        $c2 = Color::create(0.7, 0.1, 0.25);
+        $c1 = Color::from(0.9, 0.6, 0.75);
+        $c2 = Color::from(0.7, 0.1, 0.25);
 
         $c3 = $c1->plus($c2);
 
@@ -36,8 +36,8 @@ final class ColorTest extends TestCase
 
     public function test_another_color_can_be_subtracted(): void
     {
-        $c1 = Color::create(0.9, 0.6, 0.75);
-        $c2 = Color::create(0.7, 0.1, 0.25);
+        $c1 = Color::from(0.9, 0.6, 0.75);
+        $c2 = Color::from(0.7, 0.1, 0.25);
 
         $c3 = $c1->minus($c2);
 
@@ -48,7 +48,7 @@ final class ColorTest extends TestCase
 
     public function test_can_be_multiplied_by_a_scalar(): void
     {
-        $c1 = Color::create(0.2, 0.3, 0.4);
+        $c1 = Color::from(0.2, 0.3, 0.4);
 
         $c2 = $c1->multiplyBy(2.0);
 
@@ -59,8 +59,8 @@ final class ColorTest extends TestCase
 
     public function test_the_product_of_two_colors_can_be_calculated(): void
     {
-        $c1 = Color::create(1.0, 0.2, 0.4);
-        $c2 = Color::create(0.9, 1.0, 0.1);
+        $c1 = Color::from(1.0, 0.2, 0.4);
+        $c2 = Color::from(0.9, 1.0, 0.1);
 
         $c3 = $c1->product($c2);
 
@@ -71,8 +71,8 @@ final class ColorTest extends TestCase
 
     public function test_can_be_compared_to_another_color(): void
     {
-        $c1 = Color::create(0.0, 0.0, 0.0);
-        $c2 = Color::create(1.0, 1.0, 1.0);
+        $c1 = Color::from(0.0, 0.0, 0.0);
+        $c2 = Color::from(1.0, 1.0, 1.0);
 
         $this->assertTrue($c1->equalTo($c1));
         $this->assertFalse($c1->equalTo($c2));

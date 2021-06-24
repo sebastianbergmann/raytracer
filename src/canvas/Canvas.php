@@ -17,7 +17,7 @@ final class Canvas implements IteratorAggregate
      */
     private array $pixels;
 
-    public static function create(int $width, int $height, Color $background): self
+    public static function from(int $width, int $height, Color $background): self
     {
         return new self($width, $height, $background);
     }

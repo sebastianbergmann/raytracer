@@ -17,9 +17,9 @@ final class Chapter4Test extends TestCase
     {
         $size   = 200;
         $radius = 75;
-        $black  = Color::create(0.0, 0.0, 0.0);
-        $white  = Color::create(255.0, 255.0, 255.0);
-        $canvas = Canvas::create($size, $size, $black);
+        $black  = Color::from(0.0, 0.0, 0.0);
+        $white  = Color::from(255.0, 255.0, 255.0);
+        $canvas = Canvas::from($size, $size, $black);
         $twelve = Point::from(0, 0, 1);
 
         foreach (range(1, 12) as $hour) {

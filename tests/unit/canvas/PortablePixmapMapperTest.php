@@ -16,7 +16,7 @@ final class PortablePixmapMapperTest extends TestCase
 {
     public function test_can_map_Canvas_to_PPM_string(): void
     {
-        $canvas = Canvas::create(10, 20, Color::create(0.0, 0.0, 0.0));
+        $canvas = Canvas::from(10, 20, Color::from(0.0, 0.0, 0.0));
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../../fixture/10_20_empty.ppm',
