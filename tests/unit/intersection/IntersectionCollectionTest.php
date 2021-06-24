@@ -14,23 +14,8 @@ use PHPUnit\Framework\TestCase;
  *
  * @small
  */
-final class IntersectionTest extends TestCase
+final class IntersectionCollectionTest extends TestCase
 {
-    public function test_an_intersection_encapsulates_t_and_object(): void
-    {
-        $t = 3.5;
-
-        $s = Sphere::from(
-            Point::from(0, 0, 0),
-            1.0
-        );
-
-        $i = Intersection::from($t, $s);
-
-        $this->assertSame($t, $i->t());
-        $this->assertSame($s, $i->object());
-    }
-
     public function test_aggregating_intersections(): void
     {
         $s = Sphere::from(
