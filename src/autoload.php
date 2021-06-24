@@ -15,4 +15,5 @@ require __DIR__ . '/Ray.php';
 require __DIR__ . '/exceptions/RuntimeException.php';
 require __DIR__ . '/Sphere.php';
 require __DIR__ . '/math/Vector.php';
+require __DIR__ . '/canvas/WebpMapper.php';
 // @codeCoverageIgnoreEnd
