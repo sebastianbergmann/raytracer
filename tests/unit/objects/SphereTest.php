@@ -115,4 +115,27 @@ final class SphereTest extends TestCase
         $this->assertSame(-6.0, $xs->at(0)->t());
         $this->assertSame(-4.0, $xs->at(1)->t());
     }
+
+    /**
+     * @testdox A sphere's default transformation
+     */
+    public function test_a_spheres_default_transformation(): void
+    {
+        $s = new Sphere;
+
+        $this->assertTrue($s->transformation()->equalTo(Matrix::identity(4)));
+    }
+
+    /**
+     * @testdox Changing a sphere's transformation
+     */
+    public function test_changing_a_spheres_transformation(): void
+    {
+        $t = Matrix::translation(2, 3, 4);
+
+        $s = new Sphere;
+        $s->setTransformation($t);
+
+        $this->assertTrue($s->transformation()->equalTo($t));
+    }
 }

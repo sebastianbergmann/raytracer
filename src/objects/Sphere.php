@@ -9,9 +9,12 @@ final class Sphere implements Object_
 
     private float $radius = 1.0;
 
+    private Matrix $transformation;
+
     public function __construct()
     {
-        $this->origin = Tuple::point(0, 0, 0);
+        $this->origin         = Tuple::point(0, 0, 0);
+        $this->transformation = Matrix::identity(4);
     }
 
     public function origin(): Tuple
@@ -22,6 +25,16 @@ final class Sphere implements Object_
     public function radius(): float
     {
         return $this->radius;
+    }
+
+    public function setTransformation(Matrix $transformation): void
+    {
+        $this->transformation = $transformation;
+    }
+
+    public function transformation(): Matrix
+    {
+        return $this->transformation;
     }
 
     /**
