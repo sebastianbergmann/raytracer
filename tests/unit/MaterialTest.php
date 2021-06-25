@@ -17,9 +17,12 @@ final class MaterialTest extends TestCase
 {
     private Material $material;
 
+    private Tuple $position;
+
     protected function setUp(): void
     {
         $this->material = Material::default();
+        $this->position = Tuple::point(0, 0, 0);
     }
 
     public function test_the_default_material(): void
@@ -29,5 +32,66 @@ final class MaterialTest extends TestCase
         $this->assertSame(0.9, $this->material->diffuse());
         $this->assertSame(0.9, $this->material->specular());
         $this->assertSame(200.0, $this->material->shininess());
+    }
+
+    public function test_lighting_with_the_eye_between_the_light_and_the_surface(): void
+    {
+        $eye    = Tuple::vector(0, 0, -1);
+        $normal = Tuple::vector(0, 0, -1);
+        $light  = PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1));
+
+        $result = $this->material->lighting($light, $this->position, $eye, $normal);
+
+        $this->assertTrue($result->equalTo(Color::from(1.9, 1.9, 1.9)));
+    }
+
+    /**
+     * @testdox Lighting with the eye between the light and the surface, eye offset 45°
+     */
+    public function test_lighting_with_the_eye_between_the_light_and_the_surface_eye_offset_45_degrees(): void
+    {
+        $eye    = Tuple::vector(0, sqrt(2) / 2, -sqrt(2) / 2);
+        $normal = Tuple::vector(0, 0, -1);
+        $light  = PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1));
+
+        $result = $this->material->lighting($light, $this->position, $eye, $normal);
+
+        $this->assertTrue($result->equalTo(Color::from(1.0, 1.0, 1.0)));
+    }
+
+    /**
+     * @testdox Lighting with the eye opposite the surface, light offset 45°
+     */
+    public function test_lighting_with_the_eye_opposite_the_surface_light_offset_45_degrees(): void
+    {
+        $eye    = Tuple::vector(0, 0, -1);
+        $normal = Tuple::vector(0, 0, -1);
+        $light  = PointLight::from(Tuple::point(0, 10, -10), Color::from(1, 1, 1));
+
+        $result = $this->material->lighting($light, $this->position, $eye, $normal);
+
+        $this->assertTrue($result->equalTo(Color::from(0.7364, 0.7364, 0.7364)));
+    }
+
+    public function test_lighting_with_the_eye_in_the_path_of_the_reflection_vector(): void
+    {
+        $eye    = Tuple::vector(0, -sqrt(2) / 2, -sqrt(2) / 2);
+        $normal = Tuple::vector(0, 0, -1);
+        $light  = PointLight::from(Tuple::point(0, 10, -10), Color::from(1, 1, 1));
+
+        $result = $this->material->lighting($light, $this->position, $eye, $normal);
+
+        $this->assertTrue($result->equalTo(Color::from(1.6364, 1.6364, 1.6364)));
+    }
+
+    public function test_lighting_with_the_light_behind_the_surface(): void
+    {
+        $eye    = Tuple::vector(0, 0, -1);
+        $normal = Tuple::vector(0, 0, -1);
+        $light  = PointLight::from(Tuple::point(0, 0, 110), Color::from(1, 1, 1));
+
+        $result = $this->material->lighting($light, $this->position, $eye, $normal);
+
+        $this->assertTrue($result->equalTo(Color::from(0.1, 0.1, 0.1)));
     }
 }
