@@ -17,8 +17,8 @@ final class PuttingItTogetherTest extends TestCase
     {
         $canvasSize = 200;
         $radius     = 75;
-        $black      = Color::from(0.0, 0.0, 0.0);
-        $white      = Color::from(255.0, 255.0, 255.0);
+        $black      = Color::from(0, 0, 0);
+        $white      = Color::from(1, 1, 1);
         $canvas     = Canvas::from($canvasSize, $canvasSize, $black);
         $twelve     = Tuple::point(0, 0, 1);
 
@@ -41,8 +41,8 @@ final class PuttingItTogetherTest extends TestCase
     public function test_chapter_5(): void
     {
         $canvasSize = 150;
-        $black      = Color::from(0.0, 0.0, 0.0);
-        $red        = Color::from(255.0, 0.0, 0.0);
+        $black      = Color::from(0, 0, 0);
+        $red        = Color::from(1, 0, 0);
         $canvas     = Canvas::from($canvasSize, $canvasSize, $black);
 
         $s         = new Sphere;

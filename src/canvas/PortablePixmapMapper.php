@@ -20,9 +20,9 @@ final class PortablePixmapMapper
         foreach ($canvas as $pixel) {
             $buffer .= sprintf(
                 '%d %d %d',
-                $pixel->red(),
-                $pixel->green(),
-                $pixel->blue()
+                $pixel->redAsInt(),
+                $pixel->greenAsInt(),
+                $pixel->blueAsInt()
             );
 
             $pixels++;

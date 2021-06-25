@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-use function floor;
 use function imagecolorallocate;
 use function imagecreatetruecolor;
 use function imagesetpixel;
@@ -27,9 +26,9 @@ final class WebpMapper
                 if (!isset($colors[$key])) {
                     $colors[$key] = imagecolorallocate(
                         $image,
-                        (int) floor($color->red()),
-                        (int) floor($color->green()),
-                        (int) floor($color->blue())
+                        $color->redAsInt(),
+                        $color->greenAsInt(),
+                        $color->blueAsInt()
                     );
                 }
 

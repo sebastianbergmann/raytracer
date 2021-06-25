@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function floor;
+
 final class Color
 {
     private float $red;
@@ -26,14 +28,29 @@ final class Color
         return $this->red;
     }
 
+    public function redAsInt(): int
+    {
+        return $this->floatToInt($this->red);
+    }
+
     public function green(): float
     {
         return $this->green;
     }
 
+    public function greenAsInt(): int
+    {
+        return $this->floatToInt($this->green);
+    }
+
     public function blue(): float
     {
         return $this->blue;
+    }
+
+    public function blueAsInt(): int
+    {
+        return $this->floatToInt($this->blue);
     }
 
     public function plus(self $that): self
@@ -87,5 +104,20 @@ final class Color
         }
 
         return true;
+    }
+
+    private function floatToInt(float $float): int
+    {
+        $int = (int) floor($float * 255);
+
+        if ($int < 0) {
+            return 0;
+        }
+
+        if ($int > 255) {
+            return 255;
+        }
+
+        return $int;
     }
 }
