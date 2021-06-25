@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function sqrt;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -168,5 +169,51 @@ final class SphereTest extends TestCase
         $xs = $s->intersect($r);
 
         $this->assertCount(0, $xs);
+    }
+
+    public function test_the_normal_on_a_sphere_at_a_point_on_the_x_axis(): void
+    {
+        $s = new Sphere;
+
+        $n = $s->normalAt(Tuple::point(1, 0, 0));
+
+        $this->assertTrue($n->equalTo(Tuple::vector(1, 0, 0)));
+    }
+
+    public function test_the_normal_on_a_sphere_at_a_point_on_the_y_axis(): void
+    {
+        $s = new Sphere;
+
+        $n = $s->normalAt(Tuple::point(0, 1, 0));
+
+        $this->assertTrue($n->equalTo(Tuple::vector(0, 1, 0)));
+    }
+
+    public function test_the_normal_on_a_sphere_at_a_point_on_the_z_axis(): void
+    {
+        $s = new Sphere;
+
+        $n = $s->normalAt(Tuple::point(0, 0, 1));
+
+        $this->assertTrue($n->equalTo(Tuple::vector(0, 0, 1)));
+    }
+
+    public function test_the_normal_on_a_sphere_at_a_nonaxial_point(): void
+    {
+        $s = new Sphere;
+
+        $n = $s->normalAt(Tuple::point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+
+        $this->assertTrue($n->equalTo(Tuple::vector(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3)));
+    }
+
+    public function test_the_normal_is_a_normalized_vector(): void
+    {
+        $s = new Sphere;
+
+        $n = $s->normalAt(Tuple::point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+
+        $this->assertTrue($n->isVector());
+        $this->assertTrue($n->equalTo($n->normalize()));
     }
 }

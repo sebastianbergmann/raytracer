@@ -64,4 +64,12 @@ final class Sphere implements Object_
             Intersection::from($t2, $this)
         );
     }
+
+    /**
+     * @throws RuntimeException
+     */
+    public function normalAt(Tuple $point): Tuple
+    {
+        return $point->minus($this->origin)->normalize();
+    }
 }
