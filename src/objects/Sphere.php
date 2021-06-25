@@ -5,11 +5,11 @@ use function sqrt;
 
 final class Sphere implements Object_
 {
-    private Point $origin;
+    private Tuple $origin;
 
     private float $radius;
 
-    public static function from(Point $origin, float $radius): self
+    public static function from(Tuple $origin, float $radius): self
     {
         return new self($origin, $radius);
     }
@@ -17,18 +17,18 @@ final class Sphere implements Object_
     public static function unit(): self
     {
         return new self(
-            Point::from(0, 0, 0),
+            Tuple::point(0, 0, 0),
             1.0
         );
     }
 
-    private function __construct(Point $origin, float $radius)
+    private function __construct(Tuple $origin, float $radius)
     {
         $this->origin = $origin;
         $this->radius = $radius;
     }
 
-    public function origin(): Point
+    public function origin(): Tuple
     {
         return $this->origin;
     }

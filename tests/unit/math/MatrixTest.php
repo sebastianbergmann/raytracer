@@ -217,9 +217,9 @@ final class MatrixTest extends TestCase
             ]
         );
 
-        $b = Point::from(1.0, 2.0, 3.0);
+        $b = Tuple::point(1.0, 2.0, 3.0);
 
-        $this->assertTrue($a->multiplyBy($b)->equalTo(Point::from(18.0, 24.0, 33.0)));
+        $this->assertTrue($a->multiplyBy($b)->equalTo(Tuple::point(18.0, 24.0, 33.0)));
     }
 
     public function test_other_matrices_cannot_be_multiplied_by_a_tuple(): void
@@ -232,7 +232,7 @@ final class MatrixTest extends TestCase
             ]
         );
 
-        $b = Point::from(1.0, 2.0, 3.0);
+        $b = Tuple::point(1.0, 2.0, 3.0);
 
         $this->expectException(RuntimeException::class);
 
@@ -526,25 +526,25 @@ final class MatrixTest extends TestCase
     {
         $transform = Matrix::translation(5, -3, 2);
 
-        $p = Point::from(-3, 4, 5);
+        $p = Tuple::point(-3, 4, 5);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(2, 1, 7)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 1, 7)));
     }
 
     public function test_multiplying_a_point_by_a_the_inverse_of_a_translation_matrix_moves_the_point_in_reverse(): void
     {
         $inverse = Matrix::translation(5, -3, 2)->inverse();
 
-        $p = Point::from(-3, 4, 5);
+        $p = Tuple::point(-3, 4, 5);
 
-        $this->assertTrue($inverse->multiplyBy($p)->equalTo(Point::from(-8, 7, 3)));
+        $this->assertTrue($inverse->multiplyBy($p)->equalTo(Tuple::point(-8, 7, 3)));
     }
 
     public function test_translation_does_not_affect_vectors(): void
     {
         $transform = Matrix::translation(5, -3, 2);
 
-        $v = Vector::from(-3, 4, 5);
+        $v = Tuple::vector(-3, 4, 5);
 
         $this->assertTrue($transform->multiplyBy($v)->equalTo($v));
     }
@@ -553,160 +553,160 @@ final class MatrixTest extends TestCase
     {
         $transform = Matrix::scaling(2, 3, 4);
 
-        $p = Point::from(-4, 6, 8);
+        $p = Tuple::point(-4, 6, 8);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(-8, 18, 32)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(-8, 18, 32)));
     }
 
     public function test_applying_a_scaling_matrix_to_a_vector_scales_the_vector(): void
     {
         $transform = Matrix::scaling(2, 3, 4);
 
-        $v = Vector::from(-4, 6, 8);
+        $v = Tuple::vector(-4, 6, 8);
 
-        $this->assertTrue($transform->multiplyBy($v)->equalTo(Vector::from(-8, 18, 32)));
+        $this->assertTrue($transform->multiplyBy($v)->equalTo(Tuple::vector(-8, 18, 32)));
     }
 
     public function test_applying_the_inverse_of_a_scaling_matrix_to_a_vector_scales_the_vector_in_reverse(): void
     {
         $inverse = Matrix::scaling(2, 3, 4)->inverse();
 
-        $v = Vector::from(-4, 6, 8);
+        $v = Tuple::vector(-4, 6, 8);
 
-        $this->assertTrue($inverse->multiplyBy($v)->equalTo(Vector::from(-2, 2, 2)));
+        $this->assertTrue($inverse->multiplyBy($v)->equalTo(Tuple::vector(-2, 2, 2)));
     }
 
     public function test_reflection_is_scaling_by_a_negative_value(): void
     {
         $transform = Matrix::scaling(-1, 1, 1);
 
-        $p = Point::from(2, 3, 4);
+        $p = Tuple::point(2, 3, 4);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(-2, 3, 4)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(-2, 3, 4)));
     }
 
     public function test_a_point_can_be_rotated_around_the_X_axis(): void
     {
-        $p = Point::from(0, 1, 0);
+        $p = Tuple::point(0, 1, 0);
 
         $halfQuarter = Matrix::rotationAroundX(M_PI / 4);
         $fullQuarter = Matrix::rotationAroundX(M_PI / 2);
 
-        $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Point::from(0, sqrt(2) / 2, sqrt(2) / 2)));
-        $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Point::from(0, 0, 1)));
+        $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(0, sqrt(2) / 2, sqrt(2) / 2)));
+        $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(0, 0, 1)));
     }
 
     public function test_the_inverse_of_an_X_rotation_rotates_in_the_opposite_direction(): void
     {
-        $p = Point::from(0, 1, 0);
+        $p = Tuple::point(0, 1, 0);
 
         $inverse = Matrix::rotationAroundX(M_PI / 4)->inverse();
 
-        $this->assertTrue($inverse->multiplyBy($p)->equalTo(Point::from(0, sqrt(2) / 2, -sqrt(2) / 2)));
+        $this->assertTrue($inverse->multiplyBy($p)->equalTo(Tuple::point(0, sqrt(2) / 2, -sqrt(2) / 2)));
     }
 
     public function test_a_point_can_be_rotated_around_the_Y_axis(): void
     {
-        $p = Point::from(0, 0, 1);
+        $p = Tuple::point(0, 0, 1);
 
         $halfQuarter = Matrix::rotationAroundY(M_PI / 4);
         $fullQuarter = Matrix::rotationAroundY(M_PI / 2);
 
-        $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Point::from(sqrt(2) / 2, 0, sqrt(2) / 2)));
-        $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Point::from(1, 0, 0)));
+        $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(sqrt(2) / 2, 0, sqrt(2) / 2)));
+        $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(1, 0, 0)));
     }
 
     public function test_a_point_can_be_rotated_around_the_Z_axis(): void
     {
-        $p = Point::from(0, 1, 0);
+        $p = Tuple::point(0, 1, 0);
 
         $halfQuarter = Matrix::rotationAroundZ(M_PI / 4);
         $fullQuarter = Matrix::rotationAroundZ(M_PI / 2);
 
-        $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Point::from(-sqrt(2) / 2, sqrt(2) / 2, 0)));
-        $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Point::from(-1, 0, 0)));
+        $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(-sqrt(2) / 2, sqrt(2) / 2, 0)));
+        $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(-1, 0, 0)));
     }
 
     public function test_a_shearing_transformation_moves_X_in_proportion_to_Y(): void
     {
-        $p = Point::from(2, 3, 4);
+        $p = Tuple::point(2, 3, 4);
 
         $transform = Matrix::shearing(1, 0, 0, 0, 0, 0);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(5, 3, 4)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(5, 3, 4)));
     }
 
     public function test_a_shearing_transformation_moves_X_in_proportion_to_Z(): void
     {
-        $p = Point::from(2, 3, 4);
+        $p = Tuple::point(2, 3, 4);
 
         $transform = Matrix::shearing(0, 1, 0, 0, 0, 0);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(6, 3, 4)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(6, 3, 4)));
     }
 
     public function test_a_shearing_transformation_moves_Y_in_proportion_to_X(): void
     {
-        $p = Point::from(2, 3, 4);
+        $p = Tuple::point(2, 3, 4);
 
         $transform = Matrix::shearing(0, 0, 1, 0, 0, 0);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(2, 5, 4)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 5, 4)));
     }
 
     public function test_a_shearing_transformation_moves_Y_in_proportion_to_Z(): void
     {
-        $p = Point::from(2, 3, 4);
+        $p = Tuple::point(2, 3, 4);
 
         $transform = Matrix::shearing(0, 0, 0, 1, 0, 0);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(2, 7, 4)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 7, 4)));
     }
 
     public function test_a_shearing_transformation_moves_Z_in_proportion_to_X(): void
     {
-        $p = Point::from(2, 3, 4);
+        $p = Tuple::point(2, 3, 4);
 
         $transform = Matrix::shearing(0, 0, 0, 0, 1, 0);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(2, 3, 6)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 3, 6)));
     }
 
     public function test_a_shearing_transformation_moves_Z_in_proportion_to_Y(): void
     {
-        $p = Point::from(2, 3, 4);
+        $p = Tuple::point(2, 3, 4);
 
         $transform = Matrix::shearing(0, 0, 0, 0, 0, 1);
 
-        $this->assertTrue($transform->multiplyBy($p)->equalTo(Point::from(2, 3, 7)));
+        $this->assertTrue($transform->multiplyBy($p)->equalTo(Tuple::point(2, 3, 7)));
     }
 
     public function test_individual_transformations_are_applied_in_sequence(): void
     {
-        $p = Point::from(1, 0, 1);
+        $p = Tuple::point(1, 0, 1);
         $A = Matrix::rotationAroundX(M_PI / 2);
         $B = Matrix::scaling(5, 5, 5);
         $C = Matrix::translation(10, 5, 7);
 
         $p2 = $A->multiplyBy($p);
-        $this->assertTrue($p2->equalTo(Point::from(1, -1, 0)));
+        $this->assertTrue($p2->equalTo(Tuple::point(1, -1, 0)));
 
         $p3 = $B->multiplyBy($p2);
-        $this->assertTrue($p3->equalTo(Point::from(5, -5, 0)));
+        $this->assertTrue($p3->equalTo(Tuple::point(5, -5, 0)));
 
         $p4 = $C->multiplyBy($p3);
-        $this->assertTrue($p4->equalTo(Point::from(15, 0, 7)));
+        $this->assertTrue($p4->equalTo(Tuple::point(15, 0, 7)));
     }
 
     public function test_chained_transformations_must_be_applied_in_reverse_order(): void
     {
-        $p = Point::from(1, 0, 1);
+        $p = Tuple::point(1, 0, 1);
         $A = Matrix::rotationAroundX(M_PI / 2);
         $B = Matrix::scaling(5, 5, 5);
         $C = Matrix::translation(10, 5, 7);
 
         $T = $C->multiply($B)->multiply($A);
 
-        $this->assertTrue($T->multiplyBy($p)->equalTo(Point::from(15, 0, 7)));
+        $this->assertTrue($T->multiplyBy($p)->equalTo(Tuple::point(15, 0, 7)));
     }
 }

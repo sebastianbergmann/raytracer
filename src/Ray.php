@@ -3,27 +3,27 @@ namespace SebastianBergmann\Raytracer;
 
 final class Ray
 {
-    private Point $origin;
+    private Tuple $origin;
 
-    private Vector $direction;
+    private Tuple $direction;
 
-    public static function from(Point $origin, Vector $direction): self
+    public static function from(Tuple $origin, Tuple $direction): self
     {
         return new self($origin, $direction);
     }
 
-    private function __construct(Point $origin, Vector $direction)
+    private function __construct(Tuple $origin, Tuple $direction)
     {
         $this->origin    = $origin;
         $this->direction = $direction;
     }
 
-    public function origin(): Point
+    public function origin(): Tuple
     {
         return $this->origin;
     }
 
-    public function direction(): Vector
+    public function direction(): Tuple
     {
         return $this->direction;
     }
@@ -31,7 +31,7 @@ final class Ray
     /**
      * @throws RuntimeException
      */
-    public function position(float $t): Point
+    public function position(float $t): Tuple
     {
         return $this->origin->plus($this->direction->multiplyBy($t));
     }
