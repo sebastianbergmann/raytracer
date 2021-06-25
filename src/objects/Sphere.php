@@ -11,10 +11,13 @@ final class Sphere implements Object_
 
     private Matrix $transformation;
 
+    private Material $material;
+
     public function __construct()
     {
         $this->origin         = Tuple::point(0, 0, 0);
         $this->transformation = Matrix::identity(4);
+        $this->material       = Material::default();
     }
 
     public function origin(): Tuple
@@ -35,6 +38,16 @@ final class Sphere implements Object_
     public function transformation(): Matrix
     {
         return $this->transformation;
+    }
+
+    public function setMaterial(Material $material): void
+    {
+        $this->material = $material;
+    }
+
+    public function material(): Material
+    {
+        return $this->material;
     }
 
     /**

@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @uses \SebastianBergmann\Raytracer\Intersection
  * @uses \SebastianBergmann\Raytracer\IntersectionCollection
+ * @uses \SebastianBergmann\Raytracer\Material
  * @uses \SebastianBergmann\Raytracer\Matrix
  * @uses \SebastianBergmann\Raytracer\Ray
  * @uses \SebastianBergmann\Raytracer\Tuple
@@ -236,5 +237,27 @@ final class SphereTest extends TestCase
         $n = $s->normalAt(Tuple::point(0, sqrt(2) / 2, -sqrt(2) / 2));
 
         $this->assertTrue($n->equalTo(Tuple::vector(0, 0.97014, -0.24254), 0.00001));
+    }
+
+    public function test_a_sphere_has_a_default_material(): void
+    {
+        $s = new Sphere;
+
+        $m = $s->material();
+
+        $this->assertSame(Material::default()->ambient(), $m->ambient());
+        $this->assertSame(Material::default()->diffuse(), $m->diffuse());
+        $this->assertSame(Material::default()->specular(), $m->specular());
+        $this->assertSame(Material::default()->shininess(), $m->shininess());
+    }
+
+    public function test_a_sphere_may_be_assigned_a_material(): void
+    {
+        $s = new Sphere;
+        $m = Material::from(1, 1, 1, 100);
+
+        $s->setMaterial($m);
+
+        $this->assertSame($m, $s->material());
     }
 }
