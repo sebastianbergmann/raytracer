@@ -71,4 +71,58 @@ final class PuttingItTogetherTest extends TestCase
             (new PortablePixmapMapper)->map($canvas)
         );
     }
+
+    public function test_chapter_6(): void
+    {
+        $canvasSize = 150;
+        $black      = Color::from(0.0, 0.0, 0.0);
+        $canvas     = Canvas::from($canvasSize, $canvasSize, $black);
+
+        $s = new Sphere;
+        $s->setMaterial(
+            Material::from(
+                Color::from(1, 0.2, 1),
+                0.1,
+                0.9,
+                0.9,
+                200.0
+            )
+        );
+
+        $light = PointLight::from(
+            Tuple::point(-10, 10, -10),
+            Color::from(1, 1, 1)
+        );
+
+        $rayOrigin = Tuple::point(0, 0, -5);
+
+        $wallZ     = 10;
+        $wallSize  = 7.0;
+        $pixelSize = $wallSize / $canvasSize;
+        $halfSize  = $wallSize / 2;
+
+        foreach (range(1, $canvasSize) as $x) {
+            foreach (range(1, $canvasSize) as $y) {
+                $worldX   = -$halfSize + $pixelSize * $x;
+                $worldY   = $halfSize - $pixelSize * $y;
+                $position = Tuple::point($worldX, $worldY, $wallZ);
+                $ray      = Ray::from($rayOrigin, $position->minus($rayOrigin)->normalize());
+
+                if ($s->intersect($ray)->hasHit()) {
+                    $hit    = $s->intersect($ray)->hit();
+                    $point  = $ray->position($hit->t());
+                    $normal = $hit->object()->normalAt($point);
+                    $eye    = $ray->direction()->negate();
+                    $color  = $hit->object()->material()->lighting($light, $point, $eye, $normal);
+
+                    $canvas->writePixel($x, $y, $color);
+                }
+            }
+        }
+
+        $this->assertStringEqualsFile(
+            __DIR__ . '/../fixture/chapter_6.ppm',
+            (new PortablePixmapMapper)->map($canvas)
+        );
+    }
 }
