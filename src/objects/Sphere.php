@@ -7,25 +7,11 @@ final class Sphere implements Object_
 {
     private Tuple $origin;
 
-    private float $radius;
+    private float $radius = 1.0;
 
-    public static function from(Tuple $origin, float $radius): self
+    public function __construct()
     {
-        return new self($origin, $radius);
-    }
-
-    public static function unit(): self
-    {
-        return new self(
-            Tuple::point(0, 0, 0),
-            1.0
-        );
-    }
-
-    private function __construct(Tuple $origin, float $radius)
-    {
-        $this->origin = $origin;
-        $this->radius = $radius;
+        $this->origin = Tuple::point(0, 0, 0);
     }
 
     public function origin(): Tuple

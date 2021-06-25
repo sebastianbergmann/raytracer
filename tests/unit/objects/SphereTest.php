@@ -19,13 +19,10 @@ final class SphereTest extends TestCase
 {
     public function test_creating_and_querying_a_sphere(): void
     {
-        $origin = Tuple::point(0, 0, 0);
-        $radius = 1.0;
+        $s = new Sphere;
 
-        $s = Sphere::from($origin, $radius);
-
-        $this->assertSame($origin, $s->origin());
-        $this->assertSame($radius, $s->radius());
+        $this->assertTrue($s->origin()->equalTo(Tuple::point(0, 0, 0)));
+        $this->assertSame(1.0, $s->radius());
     }
 
     public function test_a_ray_intersects_a_sphere_at_two_points(): void
@@ -35,7 +32,7 @@ final class SphereTest extends TestCase
             Tuple::vector(0, 0, 1)
         );
 
-        $s = Sphere::unit();
+        $s = new Sphere;
 
         $xs = $s->intersect($r);
 
@@ -55,7 +52,7 @@ final class SphereTest extends TestCase
             Tuple::vector(0, 0, 1)
         );
 
-        $s = Sphere::unit();
+        $s = new Sphere;
 
         $xs = $s->intersect($r);
 
@@ -75,7 +72,7 @@ final class SphereTest extends TestCase
             Tuple::vector(0, 0, 1)
         );
 
-        $s = Sphere::unit();
+        $s = new Sphere;
 
         $xs = $s->intersect($r);
 
@@ -89,7 +86,7 @@ final class SphereTest extends TestCase
             Tuple::vector(0, 0, 1)
         );
 
-        $s = Sphere::unit();
+        $s = new Sphere;
 
         $xs = $s->intersect($r);
 
@@ -109,7 +106,7 @@ final class SphereTest extends TestCase
             Tuple::vector(0, 0, 1)
         );
 
-        $s = Sphere::unit();
+        $s = new Sphere;
 
         $xs = $s->intersect($r);
 

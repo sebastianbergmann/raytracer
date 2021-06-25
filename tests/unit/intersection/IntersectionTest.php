@@ -18,7 +18,7 @@ final class IntersectionTest extends TestCase
     {
         $t = 3.5;
 
-        $s = Sphere::unit();
+        $s = new Sphere;
 
         $i = Intersection::from($t, $s);
 

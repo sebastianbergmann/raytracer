@@ -18,7 +18,7 @@ final class IntersectionCollectionTest extends TestCase
 {
     public function test_aggregating_intersections(): void
     {
-        $s  = Sphere::unit();
+        $s  = new Sphere;
         $i1 = Intersection::from(1, $s);
         $i2 = Intersection::from(2, $s);
         $xs = IntersectionCollection::from($i1, $i2);
@@ -52,7 +52,7 @@ final class IntersectionCollectionTest extends TestCase
 
     public function test_the_hit_when_all_intersections_have_positive_t(): void
     {
-        $s  = Sphere::unit();
+        $s  = new Sphere;
         $i1 = Intersection::from(1, $s);
         $i2 = Intersection::from(2, $s);
         $xs = IntersectionCollection::from($i2, $i1);
@@ -63,7 +63,7 @@ final class IntersectionCollectionTest extends TestCase
 
     public function test_the_hit_when_some_intersections_have_negative_t(): void
     {
-        $s  = Sphere::unit();
+        $s  = new Sphere;
         $i1 = Intersection::from(-1, $s);
         $i2 = Intersection::from(1, $s);
         $xs = IntersectionCollection::from($i2, $i1);
@@ -74,7 +74,7 @@ final class IntersectionCollectionTest extends TestCase
 
     public function test_the_hit_when_all_intersections_have_negative_t(): void
     {
-        $s  = Sphere::unit();
+        $s  = new Sphere;
         $i1 = Intersection::from(-2, $s);
         $i2 = Intersection::from(-1, $s);
         $xs = IntersectionCollection::from($i2, $i1);
@@ -89,7 +89,7 @@ final class IntersectionCollectionTest extends TestCase
 
     public function test_the_hit_is_always_the_lowest_nonnegative_intersection(): void
     {
-        $s  = Sphere::unit();
+        $s  = new Sphere;
         $i1 = Intersection::from(5, $s);
         $i2 = Intersection::from(7, $s);
         $i3 = Intersection::from(-3, $s);
