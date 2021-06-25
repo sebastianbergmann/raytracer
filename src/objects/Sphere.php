@@ -68,8 +68,13 @@ final class Sphere implements Object_
     /**
      * @throws RuntimeException
      */
-    public function normalAt(Tuple $point): Tuple
+    public function normalAt(Tuple $worldPoint): Tuple
     {
-        return $point->minus($this->origin)->normalize();
+        $objectPoint  = $this->transformation->inverse()->multiplyBy($worldPoint);
+        $objectNormal = $objectPoint->minus($this->origin);
+
+        $worldNormal = $this->transformation->inverse()->transpose()->multiplyBy($objectNormal);
+
+        return Tuple::vector($worldNormal->x(), $worldNormal->y(), $worldNormal->z())->normalize();
     }
 }

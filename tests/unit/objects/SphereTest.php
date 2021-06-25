@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use const M_PI;
 use function sqrt;
 use PHPUnit\Framework\TestCase;
 
@@ -215,5 +216,25 @@ final class SphereTest extends TestCase
 
         $this->assertTrue($n->isVector());
         $this->assertTrue($n->equalTo($n->normalize()));
+    }
+
+    public function test_computing_the_normal_on_a_translated_sphere(): void
+    {
+        $s = new Sphere;
+        $s->setTransformation(Matrix::translation(0, 1, 0));
+
+        $n = $s->normalAt(Tuple::point(0, 1.70711, -0.70711));
+
+        $this->assertTrue($n->equalTo(Tuple::vector(0, 0.70711, -0.70711), 0.00001));
+    }
+
+    public function test_computing_the_normal_on_a_transformed_sphere(): void
+    {
+        $s = new Sphere;
+        $s->setTransformation(Matrix::scaling(1, 0.5, 1)->multiply(Matrix::rotationAroundZ(M_PI / 5)));
+
+        $n = $s->normalAt(Tuple::point(0, sqrt(2) / 2, -sqrt(2) / 2));
+
+        $this->assertTrue($n->equalTo(Tuple::vector(0, 0.97014, -0.24254), 0.00001));
     }
 }
