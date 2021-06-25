@@ -138,4 +138,36 @@ final class SphereTest extends TestCase
 
         $this->assertTrue($s->transformation()->equalTo($t));
     }
+
+    public function test_intersecting_a_scaled_sphere_with_a_ray(): void
+    {
+        $r = Ray::from(
+            Tuple::point(0, 0, -5),
+            Tuple::vector(0, 0, 1)
+        );
+
+        $s = new Sphere;
+        $s->setTransformation(Matrix::scaling(2, 2, 2));
+
+        $xs = $s->intersect($r);
+
+        $this->assertCount(2, $xs);
+        $this->assertSame(3.0, $xs->at(0)->t());
+        $this->assertSame(7.0, $xs->at(1)->t());
+    }
+
+    public function test_intersecting_a_translated_sphere_with_a_ray(): void
+    {
+        $r = Ray::from(
+            Tuple::point(0, 0, -5),
+            Tuple::vector(0, 0, 1)
+        );
+
+        $s = new Sphere;
+        $s->setTransformation(Matrix::translation(5, 0, 0));
+
+        $xs = $s->intersect($r);
+
+        $this->assertCount(0, $xs);
+    }
 }

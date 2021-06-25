@@ -42,6 +42,8 @@ final class Sphere implements Object_
      */
     public function intersect(Ray $r): IntersectionCollection
     {
+        $r = $r->transform($this->transformation->inverse());
+
         $sphereToRay = $r->origin()->minus($this->origin);
 
         $a = $r->direction()->dot($r->direction());
