@@ -35,4 +35,15 @@ final class Ray
     {
         return $this->origin->plus($this->direction->multiplyBy($t));
     }
+
+    /**
+     * @throws RuntimeException
+     */
+    public function transform(Matrix $m): self
+    {
+        return self::from(
+            $m->multiplyBy($this->origin),
+            $m->multiplyBy($this->direction)
+        );
+    }
 }
