@@ -14,6 +14,7 @@ require __DIR__ . '/exceptions/InvalidArgumentException.php';
 require __DIR__ . '/math/Matrix.php';
 require __DIR__ . '/objects/Object_.php';
 require __DIR__ . '/exceptions/OutOfBoundsException.php';
+require __DIR__ . '/PointLight.php';
 require __DIR__ . '/canvas/PortablePixmapMapper.php';
 require __DIR__ . '/Ray.php';
 require __DIR__ . '/exceptions/RuntimeException.php';
