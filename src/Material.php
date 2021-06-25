@@ -3,6 +3,8 @@ namespace SebastianBergmann\Raytracer;
 
 final class Material
 {
+    private Color $color;
+
     private float $ambient;
 
     private float $diffuse;
@@ -13,20 +15,26 @@ final class Material
 
     public static function default(): self
     {
-        return self::from(0.1, 0.9, 0.9, 200.0);
+        return self::from(Color::from(1, 1, 1), 0.1, 0.9, 0.9, 200.0);
     }
 
-    public static function from(float $ambient, float $diffuse, float $specular, float $shininess): self
+    public static function from(Color $color, float $ambient, float $diffuse, float $specular, float $shininess): self
     {
-        return new self($ambient, $diffuse, $specular, $shininess);
+        return new self($color, $ambient, $diffuse, $specular, $shininess);
     }
 
-    private function __construct(float $ambient, float $diffuse, float $specular, float $shininess)
+    private function __construct(Color $color, float $ambient, float $diffuse, float $specular, float $shininess)
     {
+        $this->color     = $color;
         $this->ambient   = $ambient;
         $this->diffuse   = $diffuse;
         $this->specular  = $specular;
         $this->shininess = $shininess;
+    }
+
+    public function color(): Color
+    {
+        return $this->color;
     }
 
     public function ambient(): float

@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \SebastianBergmann\Raytracer\Sphere
  *
+ * @uses \SebastianBergmann\Raytracer\Color
  * @uses \SebastianBergmann\Raytracer\Intersection
  * @uses \SebastianBergmann\Raytracer\IntersectionCollection
  * @uses \SebastianBergmann\Raytracer\Material
@@ -254,7 +255,7 @@ final class SphereTest extends TestCase
     public function test_a_sphere_may_be_assigned_a_material(): void
     {
         $s = new Sphere;
-        $m = Material::from(1, 1, 1, 100);
+        $m = Material::default();
 
         $s->setMaterial($m);
 
