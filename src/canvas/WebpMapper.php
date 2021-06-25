@@ -28,8 +28,8 @@ final class WebpMapper
                     $colors[$key] = imagecolorallocate(
                         $image,
                         (int) floor($color->red()),
-                        (int) floor($color->red()),
-                        (int) floor($color->red())
+                        (int) floor($color->green()),
+                        (int) floor($color->blue())
                     );
                 }
 
