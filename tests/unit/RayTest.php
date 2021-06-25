@@ -6,9 +6,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \SebastianBergmann\Raytracer\Ray
  *
- * @uses \SebastianBergmann\Raytracer\Point
+ * @uses \SebastianBergmann\Raytracer\Matrix
  * @uses \SebastianBergmann\Raytracer\Tuple
- * @uses \SebastianBergmann\Raytracer\Vector
  *
  * @small
  */

@@ -8,10 +8,9 @@ use PHPUnit\Framework\TestCase;
  *
  * @uses \SebastianBergmann\Raytracer\Intersection
  * @uses \SebastianBergmann\Raytracer\IntersectionCollection
- * @uses \SebastianBergmann\Raytracer\Point
+ * @uses \SebastianBergmann\Raytracer\Matrix
  * @uses \SebastianBergmann\Raytracer\Ray
  * @uses \SebastianBergmann\Raytracer\Tuple
- * @uses \SebastianBergmann\Raytracer\Vector
  *
  * @small
  */
