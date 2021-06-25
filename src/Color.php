@@ -72,11 +72,20 @@ final class Color
         );
     }
 
-    public function equalTo(self $that): bool
+    public function equalTo(self $that, float $delta = 0.00001): bool
     {
-        /* @noinspection TypeUnsafeComparisonInspection */
-        return $this->red == $that->red() &&
-               $this->green == $that->green() &&
-               $this->blue == $that->blue();
+        if (abs($this->red - $that->red()) > $delta) {
+            return false;
+        }
+
+        if (abs($this->green - $that->green()) > $delta) {
+            return false;
+        }
+
+        if (abs($this->blue - $that->blue()) > $delta) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -72,9 +72,13 @@ final class ColorTest extends TestCase
     public function test_can_be_compared_to_another_color(): void
     {
         $c1 = Color::from(0.0, 0.0, 0.0);
-        $c2 = Color::from(1.0, 1.0, 1.0);
+        $c2 = Color::from(1.0, 0.0, 0.0);
+        $c3 = Color::from(0.0, 1.0, 0.0);
+        $c4 = Color::from(0.0, 0.0, 1.0);
 
         $this->assertTrue($c1->equalTo($c1));
         $this->assertFalse($c1->equalTo($c2));
+        $this->assertFalse($c1->equalTo($c3));
+        $this->assertFalse($c1->equalTo($c4));
     }
 }
