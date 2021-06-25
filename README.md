@@ -12,7 +12,7 @@ This is example code that is not production-ready. It is intended for studying a
 - [X] Chapter 2: Drawing on a Canvas
 - [X] Chapter 3: Matrices
 - [X] Chapter 4: Matrix Transformations
-- [ ] Chapter 5: Ray-Sphere Intersections
+- [X] Chapter 5: Ray-Sphere Intersections
 - [ ] Chapter 6: Light and Shading
 - [ ] Chapter 7: Making a Scene
 - [ ] Chapter 8: Shadows
