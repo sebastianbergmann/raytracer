@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
  *
  * @medium
  */
-final class Chapter4Test extends TestCase
+final class PuttingItTogetherTest extends TestCase
 {
-    public function test_we_can_draw_12_dots_on_a_circle(): void
+    public function test_chapter_4(): void
     {
         $size   = 200;
         $radius = 75;
@@ -33,7 +33,7 @@ final class Chapter4Test extends TestCase
         }
 
         $this->assertStringEqualsFile(
-            __DIR__ . '/../fixture/clock.ppm',
+            __DIR__ . '/../fixture/chapter_4.ppm',
             (new PortablePixmapMapper)->map($canvas)
         );
     }
