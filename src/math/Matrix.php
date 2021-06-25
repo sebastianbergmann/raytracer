@@ -194,7 +194,13 @@ final class Matrix
             $result[$i] += $this->elements[$i][3] * $tuple->w();
         }
 
-        return new Tuple(...$result);
+        $class = match ($tuple::class) {
+            Point::class  => Point::class,
+            Vector::class => Vector::class,
+            default       => Tuple::class
+        };
+
+        return new $class(...$result);
     }
 
     public function divideAllElementsBy(float $divisor): self
