@@ -256,4 +256,27 @@ final class TupleTest extends TestCase
         $this->assertFalse($p1->equalTo($p3));
         $this->assertFalse($p1->equalTo($p4));
     }
+
+    /**
+     * @testdox Reflecting a vector approaching at 45°
+     */
+    public function test_reflecting_a_vector_approaching_at_45_degrees(): void
+    {
+        $v = Tuple::vector(1, -1, 0);
+        $n = Tuple::vector(0, 1, 0);
+
+        $r = $v->reflect($n);
+
+        $this->assertTrue($r->equalTo(Tuple::vector(1, 1, 0)));
+    }
+
+    public function test_reflecting_a_vector_off_a_slanted_surface(): void
+    {
+        $v = Tuple::vector(0, -1, 0);
+        $n = Tuple::vector(sqrt(2) / 2, sqrt(2) / 2, 0);
+
+        $r = $v->reflect($n);
+
+        $this->assertTrue($r->equalTo(Tuple::vector(1, 0, 0)));
+    }
 }
