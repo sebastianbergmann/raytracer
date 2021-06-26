@@ -33,14 +33,23 @@ final class Intersection
      */
     public function prepare(Ray $r): PreparedComputation
     {
-        $point = $r->position($this->t);
+        $point  = $r->position($this->t);
+        $eye    = $r->direction()->negate();
+        $normal = $this->object->normalAt($point);
+        $inside = false;
+
+        if ($eye->dot($normal) < 0) {
+            $inside = true;
+            $normal = $normal->negate();
+        }
 
         return new PreparedComputation(
             $this->t,
             $this->object,
             $point,
-            $r->direction()->negate(),
-            $this->object->normalAt($point)
+            $eye,
+            $normal,
+            $inside
         );
     }
 }

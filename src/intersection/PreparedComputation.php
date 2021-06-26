@@ -13,13 +13,16 @@ final class PreparedComputation
 
     private Tuple $normal;
 
-    public function __construct(float $t, Object_ $object, Tuple $point, Tuple $eye, Tuple $normal)
+    private bool $inside;
+
+    public function __construct(float $t, Object_ $object, Tuple $point, Tuple $eye, Tuple $normal, bool $inside)
     {
         $this->t      = $t;
         $this->object = $object;
         $this->point  = $point;
         $this->eye    = $eye;
         $this->normal = $normal;
+        $this->inside = $inside;
     }
 
     public function t(): float
@@ -45,5 +48,10 @@ final class PreparedComputation
     public function normal(): Tuple
     {
         return $this->normal;
+    }
+
+    public function inside(): bool
+    {
+        return $this->inside;
     }
 }
