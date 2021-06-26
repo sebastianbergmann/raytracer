@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
  * @uses \SebastianBergmann\Raytracer\PreparedComputation
  * @uses \SebastianBergmann\Raytracer\Ray
  * @uses \SebastianBergmann\Raytracer\Sphere
+ * @uses \SebastianBergmann\Raytracer\Transformations
  * @uses \SebastianBergmann\Raytracer\Tuple
  *
  * @small

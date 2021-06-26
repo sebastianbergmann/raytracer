@@ -4,10 +4,8 @@ namespace SebastianBergmann\Raytracer;
 use function abs;
 use function array_keys;
 use function array_values;
-use function cos;
 use function count;
 use function range;
-use function sin;
 
 final class Matrix
 {
@@ -39,78 +37,6 @@ final class Matrix
         }
 
         return new self($elements);
-    }
-
-    public static function translation(float $x, float $y, float $z): self
-    {
-        return self::fromArray(
-            [
-                [1.0, 0.0, 0.0, $x],
-                [0.0, 1.0, 0.0, $y],
-                [0.0, 0.0, 1.0, $z],
-                [0.0, 0.0, 0.0, 1.0],
-            ]
-        );
-    }
-
-    public static function scaling(float $x, float $y, float $z): self
-    {
-        return self::fromArray(
-            [
-                [$x, 0.0, 0.0, 0.0],
-                [0.0,  $y, 0.0, 0.0],
-                [0.0, 0.0,  $z, 0.0],
-                [0.0, 0.0, 0.0, 1.0],
-            ]
-        );
-    }
-
-    public static function rotationAroundX(float $r): self
-    {
-        return self::fromArray(
-            [
-                [1.0, 0.0, 0.0, 0.0],
-                [0.0, cos($r), -sin($r), 0.0],
-                [0.0, sin($r), cos($r), 0.0],
-                [0.0, 0.0, 0.0, 1.0],
-            ]
-        );
-    }
-
-    public static function rotationAroundY(float $r): self
-    {
-        return self::fromArray(
-            [
-                [cos($r), 0.0, sin($r), 0.0],
-                [0.0, 1.0, 0.0, 0.0],
-                [-sin($r), 0.0, cos($r), 0.0],
-                [0.0, 0.0, 0.0, 1.0],
-            ]
-        );
-    }
-
-    public static function rotationAroundZ(float $r): self
-    {
-        return self::fromArray(
-            [
-                [cos($r), -sin($r), 0.0, 0.0],
-                [sin($r), cos($r), 0.0, 0.0],
-                [0.0, 0.0, 1.0, 0.0],
-                [0.0, 0.0, 0.0, 1.0],
-            ]
-        );
-    }
-
-    public static function shearing(float $xy, float $xz, float $yx, float $yz, float $zx, float $zy): self
-    {
-        return self::fromArray(
-            [
-                [1.0, $xy, $xz, 0.0],
-                [$yx, 1.0, $yz, 0.0],
-                [$zx, $zy, 1.0, 0.0],
-                [0.0, 0.0, 0.0, 1.0],
-            ]
-        );
     }
 
     /**
@@ -294,36 +220,6 @@ final class Matrix
     public function inverse(): self
     {
         return $this->cofactorMatrix()->transpose()->divideAllElementsBy($this->determinant());
-    }
-
-    public function translate(float $x, float $y, float $z): self
-    {
-        return $this->multiply(self::translation($x, $y, $z));
-    }
-
-    public function scale(float $x, float $y, float $z): self
-    {
-        return $this->multiply(self::scaling($x, $y, $z));
-    }
-
-    public function rotateAroundX(float $r): self
-    {
-        return $this->multiply(self::rotationAroundX($r));
-    }
-
-    public function rotateAroundY(float $r): self
-    {
-        return $this->multiply(self::rotationAroundY($r));
-    }
-
-    public function rotateAroundZ(float $r): self
-    {
-        return $this->multiply(self::rotationAroundZ($r));
-    }
-
-    public function shear(float $xy, float $xz, float $yx, float $yz, float $zx, float $zy): self
-    {
-        return $this->multiply(self::shearing($xy, $xz, $yx, $yz, $zx, $zy));
     }
 
     /**

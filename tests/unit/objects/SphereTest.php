@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @uses \SebastianBergmann\Raytracer\Material
  * @uses \SebastianBergmann\Raytracer\Matrix
  * @uses \SebastianBergmann\Raytracer\Ray
+ * @uses \SebastianBergmann\Raytracer\Transformations
  * @uses \SebastianBergmann\Raytracer\Tuple
  *
  * @small
@@ -134,7 +135,7 @@ final class SphereTest extends TestCase
      */
     public function test_changing_a_spheres_transformation(): void
     {
-        $t = Matrix::translation(2, 3, 4);
+        $t = Transformations::translation(2, 3, 4);
 
         $s = new Sphere;
         $s->setTransformation($t);
@@ -150,7 +151,7 @@ final class SphereTest extends TestCase
         );
 
         $s = new Sphere;
-        $s->setTransformation(Matrix::scaling(2, 2, 2));
+        $s->setTransformation(Transformations::scaling(2, 2, 2));
 
         $xs = $s->intersect($r);
 
@@ -167,7 +168,7 @@ final class SphereTest extends TestCase
         );
 
         $s = new Sphere;
-        $s->setTransformation(Matrix::translation(5, 0, 0));
+        $s->setTransformation(Transformations::translation(5, 0, 0));
 
         $xs = $s->intersect($r);
 
@@ -223,7 +224,7 @@ final class SphereTest extends TestCase
     public function test_computing_the_normal_on_a_translated_sphere(): void
     {
         $s = new Sphere;
-        $s->setTransformation(Matrix::translation(0, 1, 0));
+        $s->setTransformation(Transformations::translation(0, 1, 0));
 
         $n = $s->normalAt(Tuple::point(0, 1.70711, -0.70711));
 
@@ -233,7 +234,7 @@ final class SphereTest extends TestCase
     public function test_computing_the_normal_on_a_transformed_sphere(): void
     {
         $s = new Sphere;
-        $s->setTransformation(Matrix::scaling(1, 0.5, 1)->multiply(Matrix::rotationAroundZ(M_PI / 5)));
+        $s->setTransformation(Transformations::scaling(1, 0.5, 1)->multiply(Transformations::rotationAroundZ(M_PI / 5)));
 
         $n = $s->normalAt(Tuple::point(0, sqrt(2) / 2, -sqrt(2) / 2));
 

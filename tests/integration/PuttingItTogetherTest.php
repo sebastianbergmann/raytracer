@@ -23,7 +23,7 @@ final class PuttingItTogetherTest extends TestCase
         $twelve     = Tuple::point(0, 0, 1);
 
         foreach (range(1, 12) as $hour) {
-            $rotation = Matrix::rotationAroundY($hour * (M_PI / 6));
+            $rotation = Transformations::rotationAroundY($hour * (M_PI / 6));
             $point    = $rotation->multiplyBy($twelve);
 
             $x = (int) round($point->x() * $radius + $canvasSize / 2);

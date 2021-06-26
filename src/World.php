@@ -18,7 +18,7 @@ final class World
         $s1->setMaterial(Material::from(Color::from(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200.0));
 
         $s2 = new Sphere;
-        $s2->setTransformation(Matrix::scaling(0.5, 0.5, 0.5));
+        $s2->setTransformation(Transformations::scaling(0.5, 0.5, 0.5));
 
         $objects = new ObjectCollection;
         $objects->add($s1);

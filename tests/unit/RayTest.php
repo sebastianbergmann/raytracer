@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \SebastianBergmann\Raytracer\Ray
  *
  * @uses \SebastianBergmann\Raytracer\Matrix
+ * @uses \SebastianBergmann\Raytracer\Transformations
  * @uses \SebastianBergmann\Raytracer\Tuple
  *
  * @small
@@ -44,7 +45,7 @@ final class RayTest extends TestCase
             Tuple::vector(0, 1, 0)
         );
 
-        $m = Matrix::translation(3, 4, 5);
+        $m = Transformations::translation(3, 4, 5);
 
         $r2 = $r->transform($m);
 
@@ -59,7 +60,7 @@ final class RayTest extends TestCase
             Tuple::vector(0, 1, 0)
         );
 
-        $m = Matrix::scaling(2, 3, 4);
+        $m = Transformations::scaling(2, 3, 4);
 
         $r2 = $r->transform($m);
 

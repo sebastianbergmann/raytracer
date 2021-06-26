@@ -23,6 +23,7 @@ require __DIR__ . '/intersection/PreparedComputation.php';
 require __DIR__ . '/Ray.php';
 require __DIR__ . '/exceptions/RuntimeException.php';
 require __DIR__ . '/objects/Sphere.php';
+require __DIR__ . '/math/Transformations.php';
 require __DIR__ . '/math/Tuple.php';
 require __DIR__ . '/canvas/WebpMapper.php';
 require __DIR__ . '/World.php';
