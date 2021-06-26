@@ -11,7 +11,7 @@ final class World
     {
         $light = PointLight::from(
             Tuple::point(-10, 10, -10),
-            Color::from(0.8, 1.0, 0.6)
+            Color::from(1, 1, 1)
         );
 
         $s1 = new Sphere;

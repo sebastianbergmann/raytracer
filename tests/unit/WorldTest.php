@@ -53,7 +53,7 @@ final class WorldTest extends TestCase
         $this->assertSame(200.0, $w->objects()->at(1)->material()->shininess());
 
         $this->assertTrue($w->light()->position()->equalTo(Tuple::point(-10, 10, -10)));
-        $this->assertTrue($w->light()->intensity()->equalTo(Color::from(0.8, 1.0, 0.6)));
+        $this->assertTrue($w->light()->intensity()->equalTo(Color::from(1, 1, 1)));
     }
 
     public function test_intersect_a_world_with_a_ray(): void
