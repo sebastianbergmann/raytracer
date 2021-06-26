@@ -85,7 +85,7 @@ final class IntersectionCollection implements Countable, IteratorAggregate
      */
     public function hit(): Intersection
     {
-        if ($this->hit === null) {
+        if (!$this->hasHit()) {
             throw new IntersectionHasNoHitException;
         }
 
