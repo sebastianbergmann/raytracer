@@ -100,4 +100,40 @@ final class WorldTest extends TestCase
 
         $this->assertTrue($c->equalTo(Color::from(0.90498, 0.90498, 0.90498)));
     }
+
+    public function test_the_color_when_a_ray_misses(): void
+    {
+        $w = World::default();
+        $r = Ray::from(Tuple::point(0, 0, -5), Tuple::vector(0, 1, 0));
+
+        $c = $w->colorAt($r);
+
+        $this->assertTrue($c->equalTo(Color::from(0, 0, 0)));
+    }
+
+    public function test_the_color_when_a_ray_hits(): void
+    {
+        $w = World::default();
+        $r = Ray::from(Tuple::point(0, 0, -5), Tuple::vector(0, 0, 1));
+
+        $c = $w->colorAt($r);
+
+        $this->assertTrue($c->equalTo(Color::from(0.38066, 0.47583, 0.2855)));
+    }
+
+    public function test_the_color_with_an_intersection_behind_the_ray(): void
+    {
+        $w = World::default();
+        $r = Ray::from(Tuple::point(0, 0, 0.75), Tuple::vector(0, 0, -1));
+
+        $outer = $w->objects()->at(0);
+        $outer->material()->setAmbient(1);
+
+        $inner = $w->objects()->at(1);
+        $inner->material()->setAmbient(1);
+
+        $c = $w->colorAt($r);
+
+        $this->assertTrue($c->equalTo($inner->material()->color()));
+    }
 }

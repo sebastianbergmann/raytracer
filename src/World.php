@@ -64,6 +64,24 @@ final class World
         $this->light = $light;
     }
 
+    /**
+     * @throws RuntimeException
+     * @throws WorldHasNoLightException
+     */
+    public function colorAt(Ray $r): Color
+    {
+        $intersections = $this->intersect($r);
+
+        if (!$intersections->hasHit()) {
+            return Color::from(0, 0, 0);
+        }
+
+        /** @psalm-suppress MissingThrowsDocblock */
+        $hit = $intersections->hit();
+
+        return $this->shadeHit($hit->prepare($r));
+    }
+
     public function intersect(Ray $r): IntersectionCollection
     {
         $intersections = IntersectionCollection::from();
