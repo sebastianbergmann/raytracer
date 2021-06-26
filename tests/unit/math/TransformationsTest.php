@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-use const M_PI;
+use const M_PI_2;
+use const M_PI_4;
 use function sqrt;
 use PHPUnit\Framework\TestCase;
 
@@ -82,8 +83,8 @@ final class TransformationsTest extends TestCase
     {
         $p = Tuple::point(0, 1, 0);
 
-        $halfQuarter = Transformations::rotationAroundX(M_PI / 4);
-        $fullQuarter = Transformations::rotationAroundX(M_PI / 2);
+        $halfQuarter = Transformations::rotationAroundX(M_PI_4);
+        $fullQuarter = Transformations::rotationAroundX(M_PI_2);
 
         $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(0, sqrt(2) / 2, sqrt(2) / 2)));
         $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(0, 0, 1)));
@@ -93,7 +94,7 @@ final class TransformationsTest extends TestCase
     {
         $p = Tuple::point(0, 1, 0);
 
-        $inverse = Transformations::rotationAroundX(M_PI / 4)->inverse();
+        $inverse = Transformations::rotationAroundX(M_PI_4)->inverse();
 
         $this->assertTrue($inverse->multiplyBy($p)->equalTo(Tuple::point(0, sqrt(2) / 2, -sqrt(2) / 2)));
     }
@@ -102,8 +103,8 @@ final class TransformationsTest extends TestCase
     {
         $p = Tuple::point(0, 0, 1);
 
-        $halfQuarter = Transformations::rotationAroundY(M_PI / 4);
-        $fullQuarter = Transformations::rotationAroundY(M_PI / 2);
+        $halfQuarter = Transformations::rotationAroundY(M_PI_4);
+        $fullQuarter = Transformations::rotationAroundY(M_PI_2);
 
         $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(sqrt(2) / 2, 0, sqrt(2) / 2)));
         $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(1, 0, 0)));
@@ -113,8 +114,8 @@ final class TransformationsTest extends TestCase
     {
         $p = Tuple::point(0, 1, 0);
 
-        $halfQuarter = Transformations::rotationAroundZ(M_PI / 4);
-        $fullQuarter = Transformations::rotationAroundZ(M_PI / 2);
+        $halfQuarter = Transformations::rotationAroundZ(M_PI_4);
+        $fullQuarter = Transformations::rotationAroundZ(M_PI_2);
 
         $this->assertTrue($halfQuarter->multiplyBy($p)->equalTo(Tuple::point(-sqrt(2) / 2, sqrt(2) / 2, 0)));
         $this->assertTrue($fullQuarter->multiplyBy($p)->equalTo(Tuple::point(-1, 0, 0)));
@@ -177,7 +178,7 @@ final class TransformationsTest extends TestCase
     public function test_individual_transformations_are_applied_in_sequence(): void
     {
         $p = Tuple::point(1, 0, 1);
-        $A = Transformations::rotationAroundX(M_PI / 2);
+        $A = Transformations::rotationAroundX(M_PI_2);
         $B = Transformations::scaling(5, 5, 5);
         $C = Transformations::translation(10, 5, 7);
 
@@ -194,7 +195,7 @@ final class TransformationsTest extends TestCase
     public function test_chained_transformations_must_be_applied_in_reverse_order(): void
     {
         $p = Tuple::point(1, 0, 1);
-        $A = Transformations::rotationAroundX(M_PI / 2);
+        $A = Transformations::rotationAroundX(M_PI_2);
         $B = Transformations::scaling(5, 5, 5);
         $C = Transformations::translation(10, 5, 7);
 
