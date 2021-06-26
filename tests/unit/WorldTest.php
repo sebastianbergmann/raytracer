@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @uses \SebastianBergmann\Raytracer\ObjectCollection
  * @uses \SebastianBergmann\Raytracer\ObjectCollectionIterator
  * @uses \SebastianBergmann\Raytracer\PointLight
+ * @uses \SebastianBergmann\Raytracer\PreparedComputation
  * @uses \SebastianBergmann\Raytracer\Ray
  * @uses \SebastianBergmann\Raytracer\Sphere
  * @uses \SebastianBergmann\Raytracer\Tuple
@@ -69,5 +70,34 @@ final class WorldTest extends TestCase
         $this->assertSame(4.5, $xs->at(1)->t());
         $this->assertSame(5.5, $xs->at(2)->t());
         $this->assertSame(6.0, $xs->at(3)->t());
+    }
+
+    public function test_shading_an_intersection(): void
+    {
+        $w = World::default();
+        $r = Ray::from(Tuple::point(0, 0, -5), Tuple::vector(0, 0, 1));
+        $s = $w->objects()->at(0);
+
+        $c = $w->shadeHit(Intersection::from(4.0, $s)->prepare($r));
+
+        $this->assertTrue($c->equalTo(Color::from(0.38066, 0.47583, 0.2855)));
+    }
+
+    public function test_shading_an_intersection_from_the_inside(): void
+    {
+        $w = World::default();
+        $w->setLight(
+            PointLight::from(
+                Tuple::point(0, 0.25, 0),
+                Color::from(1, 1, 1)
+            )
+        );
+
+        $r = Ray::from(Tuple::point(0, 0, 0), Tuple::vector(0, 0, 1));
+        $s = $w->objects()->at(1);
+
+        $c = $w->shadeHit(Intersection::from(0.5, $s)->prepare($r));
+
+        $this->assertTrue($c->equalTo(Color::from(0.90498, 0.90498, 0.90498)));
     }
 }

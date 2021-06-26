@@ -24,17 +24,22 @@ final class World
         $objects->add($s1);
         $objects->add($s2);
 
-        return new self($objects, $light);
+        $w = new self;
+
+        $w->setObjects($objects);
+        $w->setLight($light);
+
+        return $w;
     }
 
-    public function __construct(ObjectCollection $objects = null, PointLight $light = null)
+    public function __construct()
     {
-        if ($objects === null) {
-            $objects = new ObjectCollection;
-        }
+        $this->objects = new ObjectCollection;
+    }
 
+    public function setObjects(ObjectCollection $objects): void
+    {
         $this->objects = $objects;
-        $this->light   = $light;
     }
 
     public function objects(): ObjectCollection
@@ -54,6 +59,11 @@ final class World
         return $this->light;
     }
 
+    public function setLight(PointLight $light): void
+    {
+        $this->light = $light;
+    }
+
     public function intersect(Ray $r): IntersectionCollection
     {
         $intersections = IntersectionCollection::from();
@@ -63,5 +73,19 @@ final class World
         }
 
         return $intersections;
+    }
+
+    /**
+     * @throws RuntimeException
+     * @throws WorldHasNoLightException
+     */
+    public function shadeHit(PreparedComputation $computation): Color
+    {
+        return $computation->object()->material()->lighting(
+            $this->light(),
+            $computation->point(),
+            $computation->eye(),
+            $computation->normal()
+        );
     }
 }
