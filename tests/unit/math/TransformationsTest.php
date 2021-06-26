@@ -202,4 +202,15 @@ final class TransformationsTest extends TestCase
 
         $this->assertTrue($T->multiplyBy($p)->equalTo(Tuple::point(15, 0, 7)));
     }
+
+    public function test_the_view_transformation_matrix_for_the_default_orientation(): void
+    {
+        $from = Tuple::point(0, 0, 0);
+        $to   = Tuple::point(0, 0, -1);
+        $up   = Tuple::vector(0, 1, 0);
+
+        $t = Transformations::view($from, $to, $up);
+
+        $this->assertTrue($t->equalTo(Matrix::identity(4)));
+    }
 }

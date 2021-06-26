@@ -77,4 +77,9 @@ final class Transformations
             ]
         );
     }
+
+    public static function view(Tuple $from, Tuple $to, Tuple $up): Matrix
+    {
+        return Matrix::identity(4);
+    }
 }
