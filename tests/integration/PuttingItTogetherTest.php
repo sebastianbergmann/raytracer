@@ -78,16 +78,11 @@ final class PuttingItTogetherTest extends TestCase
         $black      = Color::from(0.0, 0.0, 0.0);
         $canvas     = Canvas::from($canvasSize, $canvasSize, $black);
 
+        $material = Material::default();
+        $material->setColor(Color::from(1, 0.2, 1));
+
         $s = new Sphere;
-        $s->setMaterial(
-            Material::from(
-                Color::from(1, 0.2, 1),
-                0.1,
-                0.9,
-                0.9,
-                200.0
-            )
-        );
+        $s->setMaterial($material);
 
         $light = PointLight::from(
             Tuple::point(-10, 10, -10),
