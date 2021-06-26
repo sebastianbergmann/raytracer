@@ -7,10 +7,14 @@ use PHPUnit\Framework\TestCase;
  * @covers \SebastianBergmann\Raytracer\World
  *
  * @uses \SebastianBergmann\Raytracer\Color
+ * @uses \SebastianBergmann\Raytracer\Intersection
+ * @uses \SebastianBergmann\Raytracer\IntersectionCollection
  * @uses \SebastianBergmann\Raytracer\Material
  * @uses \SebastianBergmann\Raytracer\Matrix
  * @uses \SebastianBergmann\Raytracer\ObjectCollection
+ * @uses \SebastianBergmann\Raytracer\ObjectCollectionIterator
  * @uses \SebastianBergmann\Raytracer\PointLight
+ * @uses \SebastianBergmann\Raytracer\Ray
  * @uses \SebastianBergmann\Raytracer\Sphere
  * @uses \SebastianBergmann\Raytracer\Tuple
  *
@@ -50,5 +54,20 @@ final class WorldTest extends TestCase
 
         $this->assertTrue($w->light()->position()->equalTo(Tuple::point(-10, 10, -10)));
         $this->assertTrue($w->light()->intensity()->equalTo(Color::from(0.8, 1.0, 0.6)));
+    }
+
+    public function test_intersect_a_world_with_a_ray(): void
+    {
+        $w = World::default();
+        $r = Ray::from(Tuple::point(0, 0, -5), Tuple::vector(0, 0, 1));
+
+        $xs = $w->intersect($r);
+
+        $this->assertCount(4, $xs);
+
+        $this->assertSame(4.0, $xs->at(0)->t());
+        $this->assertSame(4.5, $xs->at(1)->t());
+        $this->assertSame(5.5, $xs->at(2)->t());
+        $this->assertSame(6.0, $xs->at(3)->t());
     }
 }

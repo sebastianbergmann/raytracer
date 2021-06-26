@@ -52,6 +52,24 @@ final class IntersectionCollectionTest extends TestCase
         $xs->at(2);
     }
 
+    public function test_can_be_merged(): void
+    {
+        $s   = new Sphere;
+        $i1  = Intersection::from(1, $s);
+        $i2  = Intersection::from(2, $s);
+        $xs1 = IntersectionCollection::from($i1);
+        $xs2 = IntersectionCollection::from($i2);
+
+        $xs3 = $xs1->merge($xs2);
+
+        $this->assertCount(2, $xs3);
+        $this->assertTrue($xs3->isNotEmpty());
+        $this->assertFalse($xs3->isEmpty());
+
+        $this->assertSame($i1, $xs3->at(0));
+        $this->assertSame($i2, $xs3->at(1));
+    }
+
     public function test_the_hit_when_all_intersections_have_positive_t(): void
     {
         $s  = new Sphere;

@@ -53,4 +53,15 @@ final class World
 
         return $this->light;
     }
+
+    public function intersect(Ray $r): IntersectionCollection
+    {
+        $intersections = IntersectionCollection::from();
+
+        foreach ($this->objects as $object) {
+            $intersections = $intersections->merge($object->intersect($r));
+        }
+
+        return $intersections;
+    }
 }

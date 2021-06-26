@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function array_merge;
 use function array_values;
 use function count;
 use function usort;
@@ -89,6 +90,16 @@ final class IntersectionCollection implements Countable, IteratorAggregate
         }
 
         return $this->hit;
+    }
+
+    public function merge(self $other): self
+    {
+        return self::from(
+            ...array_merge(
+                $this->intersections,
+                $other->asArray()
+            )
+        );
     }
 
     private function process(): void
