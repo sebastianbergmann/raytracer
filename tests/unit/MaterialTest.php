@@ -34,6 +34,51 @@ final class MaterialTest extends TestCase
         $this->assertSame(200.0, $this->material->shininess());
     }
 
+    public function test_color_can_be_changed(): void
+    {
+        $color = Color::from(0, 0, 0, );
+
+        $this->material->setColor($color);
+
+        $this->assertSame($color, $this->material->color());
+    }
+
+    public function test_ambient_can_be_changed(): void
+    {
+        $ambient = 1.0;
+
+        $this->material->setAmbient($ambient);
+
+        $this->assertSame($ambient, $this->material->ambient());
+    }
+
+    public function test_diffuse_can_be_changed(): void
+    {
+        $diffuse = 1.0;
+
+        $this->material->setDiffuse($diffuse);
+
+        $this->assertSame($diffuse, $this->material->diffuse());
+    }
+
+    public function test_specular_can_be_changed(): void
+    {
+        $specular = 1.0;
+
+        $this->material->setSpecular($specular);
+
+        $this->assertSame($specular, $this->material->specular());
+    }
+
+    public function test_shininess_can_be_changed(): void
+    {
+        $shininess = 1.0;
+
+        $this->material->setShininess($shininess);
+
+        $this->assertSame($shininess, $this->material->shininess());
+    }
+
     public function test_lighting_with_the_eye_between_the_light_and_the_surface(): void
     {
         $eye    = Tuple::vector(0, 0, -1);
