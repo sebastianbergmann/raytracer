@@ -14,6 +14,8 @@ require __DIR__ . '/exceptions/InvalidArgumentException.php';
 require __DIR__ . '/Material.php';
 require __DIR__ . '/math/Matrix.php';
 require __DIR__ . '/objects/Object_.php';
+require __DIR__ . '/objects/ObjectCollection.php';
+require __DIR__ . '/objects/ObjectCollectionIterator.php';
 require __DIR__ . '/exceptions/OutOfBoundsException.php';
 require __DIR__ . '/PointLight.php';
 require __DIR__ . '/canvas/PortablePixmapMapper.php';
@@ -22,4 +24,6 @@ require __DIR__ . '/exceptions/RuntimeException.php';
 require __DIR__ . '/objects/Sphere.php';
 require __DIR__ . '/math/Tuple.php';
 require __DIR__ . '/canvas/WebpMapper.php';
+require __DIR__ . '/World.php';
+require __DIR__ . '/exceptions/WorldHasNoLightException.php';
 // @codeCoverageIgnoreEnd
