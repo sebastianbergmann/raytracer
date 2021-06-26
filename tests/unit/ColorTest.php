@@ -22,6 +22,15 @@ final class ColorTest extends TestCase
         $this->assertSame(1.7, $c->blue());
     }
 
+    public function test_float_components_can_be_represented_as_integers(): void
+    {
+        $c = Color::from(-0.9, 0.5, 1.1);
+
+        $this->assertSame(0, $c->redAsInt());
+        $this->assertSame(127, $c->greenAsInt());
+        $this->assertSame(255, $c->blueAsInt());
+    }
+
     public function test_another_color_can_be_added(): void
     {
         $c1 = Color::from(0.9, 0.6, 0.75);
