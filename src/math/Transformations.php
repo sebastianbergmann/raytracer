@@ -78,8 +78,25 @@ final class Transformations
         );
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public static function view(Tuple $from, Tuple $to, Tuple $up): Matrix
     {
-        return Matrix::identity(4);
+        $forward = $to->minus($from)->normalize();
+        $upn     = $up->normalize();
+        $left    = $forward->cross($upn);
+        $trueUp  = $left->cross($forward);
+
+        $orientation = Matrix::fromArray(
+            [
+                [$left->x(), $left->y(), $left->z(), 0],
+                [$trueUp->x(), $trueUp->y(), $trueUp->z(), 0],
+                [-$forward->x(), -$forward->y(), -$forward->z(), 0],
+                [0, 0, 0, 1],
+            ]
+        );
+
+        return $orientation->multiply(self::translation(-$from->x(), -$from->y(), -$from->z()));
     }
 }

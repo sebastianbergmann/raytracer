@@ -213,4 +213,49 @@ final class TransformationsTest extends TestCase
 
         $this->assertTrue($t->equalTo(Matrix::identity(4)));
     }
+
+    public function test_a_view_transformation_matrix_looking_in_positive_Z_direction(): void
+    {
+        $from = Tuple::point(0, 0, 0);
+        $to   = Tuple::point(0, 0, 1);
+        $up   = Tuple::vector(0, 1, 0);
+
+        $t = Transformations::view($from, $to, $up);
+
+        $this->assertTrue($t->equalTo(Transformations::scaling(-1, 1, -1)));
+    }
+
+    public function test_the_view_transformation_moves_the_world(): void
+    {
+        $from = Tuple::point(0, 0, 8);
+        $to   = Tuple::point(0, 0, 0);
+        $up   = Tuple::vector(0, 1, 0);
+
+        $t = Transformations::view($from, $to, $up);
+
+        $this->assertTrue($t->equalTo(Transformations::translation(0, 0, -8)));
+    }
+
+    public function test_an_arbitrary_view_transformation(): void
+    {
+        $from = Tuple::point(1, 3, 2);
+        $to   = Tuple::point(4, -2, 8);
+        $up   = Tuple::vector(1, 1, 0);
+
+        $t = Transformations::view($from, $to, $up);
+
+        $this->assertTrue(
+            $t->equalTo(
+                Matrix::fromArray(
+                    [
+                        [-0.50709, 0.50709, 0.67612, -2.36643],
+                        [0.76772, 0.60609, 0.12122, -2.82843],
+                        [-0.35857, 0.59761, -0.71714, 0],
+                        [0, 0, 0, 1],
+                    ]
+                ),
+                0.00001
+            )
+        );
+    }
 }
