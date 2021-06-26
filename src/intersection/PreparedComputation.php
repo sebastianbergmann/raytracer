@@ -1,0 +1,49 @@
+<?php declare(strict_types=1);
+namespace SebastianBergmann\Raytracer;
+
+final class PreparedComputation
+{
+    private float $t;
+
+    private Object_ $object;
+
+    private Tuple $point;
+
+    private Tuple $eye;
+
+    private Tuple $normal;
+
+    public function __construct(float $t, Object_ $object, Tuple $point, Tuple $eye, Tuple $normal)
+    {
+        $this->t      = $t;
+        $this->object = $object;
+        $this->point  = $point;
+        $this->eye    = $eye;
+        $this->normal = $normal;
+    }
+
+    public function t(): float
+    {
+        return $this->t;
+    }
+
+    public function object(): Object_
+    {
+        return $this->object;
+    }
+
+    public function point(): Tuple
+    {
+        return $this->point;
+    }
+
+    public function eye(): Tuple
+    {
+        return $this->eye;
+    }
+
+    public function normal(): Tuple
+    {
+        return $this->normal;
+    }
+}

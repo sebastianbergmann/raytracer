@@ -27,4 +27,20 @@ final class Intersection
     {
         return $this->object;
     }
+
+    /**
+     * @throws RuntimeException
+     */
+    public function prepare(Ray $r): PreparedComputation
+    {
+        $point = $r->position($this->t);
+
+        return new PreparedComputation(
+            $this->t,
+            $this->object,
+            $point,
+            $r->direction()->negate(),
+            $this->object->normalAt($point)
+        );
+    }
 }
