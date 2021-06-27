@@ -107,4 +107,19 @@ final class World
             false
         );
     }
+
+    /**
+     * @throws RuntimeException
+     * @throws WorldHasNoLightException
+     */
+    public function isShadowed(Tuple $point): bool
+    {
+        $v             = $this->light()->position()->minus($point);
+        $distance      = $v->magnitude();
+        $direction     = $v->normalize();
+        $ray           = Ray::from($point, $direction);
+        $intersections = $this->intersect($ray);
+
+        return $intersections->hasHit() && $intersections->hit()->t() < $distance;
+    }
 }

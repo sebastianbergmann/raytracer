@@ -137,4 +137,36 @@ final class WorldTest extends TestCase
 
         $this->assertTrue($c->equalTo($inner->material()->color()));
     }
+
+    public function test_there_is_no_shadow_when_nothing_is_collinear_with_the_point_and_light(): void
+    {
+        $w = World::default();
+        $p = Tuple::point(0, 10, 0);
+
+        $this->assertFalse($w->isShadowed($p));
+    }
+
+    public function test_the_shadow_when_an_object_is_between_the_point_and_the_light(): void
+    {
+        $w = World::default();
+        $p = Tuple::point(10, -10, 10);
+
+        $this->assertTrue($w->isShadowed($p));
+    }
+
+    public function test_there_is_no_shadow_when_an_object_is_behind_the_light(): void
+    {
+        $w = World::default();
+        $p = Tuple::point(-20, 20, -20);
+
+        $this->assertFalse($w->isShadowed($p));
+    }
+
+    public function test_there_is_no_shadow_when_an_object_is_behind_the_point(): void
+    {
+        $w = World::default();
+        $p = Tuple::point(-2, -2, -2);
+
+        $this->assertFalse($w->isShadowed($p));
+    }
 }
