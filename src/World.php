@@ -103,7 +103,8 @@ final class World
             $this->light(),
             $computation->point(),
             $computation->eye(),
-            $computation->normal()
+            $computation->normal(),
+            false
         );
     }
 }

@@ -85,11 +85,16 @@ final class Material
     /**
      * @throws RuntimeException
      */
-    public function lighting(PointLight $light, Tuple $point, Tuple $eye, Tuple $normal): Color
+    public function lighting(PointLight $light, Tuple $point, Tuple $eye, Tuple $normal, bool $inShadow): Color
     {
-        $effectiveColor   = $this->color->product($light->intensity());
+        $effectiveColor = $this->color->product($light->intensity());
+        $ambient        = $effectiveColor->multiplyBy($this->ambient);
+
+        if ($inShadow) {
+            return $ambient;
+        }
+
         $lightv           = $light->position()->minus($point)->normalize();
-        $ambient          = $effectiveColor->multiplyBy($this->ambient);
         $light_dot_normal = $lightv->dot($normal);
 
         if ($light_dot_normal < 0) {
@@ -97,8 +102,7 @@ final class Material
             $specular = Color::from(0, 0, 0);
         } else {
             $diffuse         = $effectiveColor->multiplyBy($this->diffuse)->multiplyBy($light_dot_normal);
-            $reflect         = $lightv->negate()->reflect($normal);
-            $reflect_dot_eye = $reflect->dot($eye);
+            $reflect_dot_eye = $lightv->negate()->reflect($normal)->dot($eye);
 
             if ($reflect_dot_eye <= 0) {
                 $specular = Color::from(0, 0, 0);
