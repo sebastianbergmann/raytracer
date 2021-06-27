@@ -2,6 +2,8 @@
 namespace SebastianBergmann\Raytracer;
 
 use const M_PI;
+use const M_PI_2;
+use const M_PI_4;
 use function range;
 use function round;
 use PHPUnit\Framework\TestCase;
@@ -117,6 +119,89 @@ final class PuttingItTogetherTest extends TestCase
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_6.ppm',
+            (new PortablePixmapMapper)->map($canvas)
+        );
+    }
+
+    public function test_chapter_7(): void
+    {
+        $floor = new Sphere;
+        $floor->setTransformation(Transformations::scaling(10, 0.01, 10));
+        $floorMaterial = Material::default();
+        $floorMaterial->setColor(Color::from(1, 0.9, 0.9));
+        $floorMaterial->setSpecular(0);
+        $floor->setMaterial($floorMaterial);
+
+        $leftWall = new Sphere;
+        $leftWall->setTransformation(
+            Transformations::translation(0, 0, 5)->multiply(
+                Transformations::rotationAroundY(-M_PI_4)
+            )->multiply(
+                Transformations::rotationAroundX(M_PI_2)
+            )->multiply(
+                Transformations::scaling(10, 0.01, 10)
+            )
+        );
+        $leftWall->setMaterial($floorMaterial);
+
+        $rightWall = new Sphere;
+        $rightWall->setTransformation(
+            Transformations::translation(0, 0, 5)->multiply(
+                Transformations::rotationAroundY(M_PI_4)
+            )->multiply(
+                Transformations::rotationAroundX(M_PI_2)
+            )->multiply(
+                Transformations::scaling(10, 0.01, 10)
+            )
+        );
+        $rightWall->setMaterial($floorMaterial);
+
+        $middle = new Sphere;
+        $middle->setTransformation(Transformations::translation(-0.5, 1, 0.5));
+        $middleMaterial = Material::default();
+        $middleMaterial->setColor(Color::from(0.1, 1, 0.5));
+        $middleMaterial->setDiffuse(0.7);
+        $middleMaterial->setSpecular(0.3);
+        $middle->setMaterial($middleMaterial);
+
+        $right = new Sphere;
+        $right->setTransformation(Transformations::translation(1.5, 0.5, -0.5)->multiply(Transformations::scaling(0.5, 0.5, 0.5)));
+        $rightMaterial = Material::default();
+        $rightMaterial->setColor(Color::from(0.5, 1, 0.1));
+        $rightMaterial->setDiffuse(0.7);
+        $rightMaterial->setSpecular(0.3);
+        $right->setMaterial($rightMaterial);
+
+        $left = new Sphere;
+        $left->setTransformation(Transformations::translation(-1.5, 0.33, -0.75)->multiply(Transformations::scaling(0.33, 0.33, 0.33)));
+        $leftMaterial = Material::default();
+        $leftMaterial->setColor(Color::from(1, 0.8, 0.1));
+        $leftMaterial->setDiffuse(0.7);
+        $leftMaterial->setSpecular(0.3);
+        $left->setMaterial($leftMaterial);
+
+        $world = new World;
+        $world->objects()->add($floor);
+        $world->objects()->add($leftWall);
+        $world->objects()->add($rightWall);
+        $world->objects()->add($middle);
+        $world->objects()->add($right);
+        $world->objects()->add($left);
+        $world->setLight(PointLight::from(Tuple::point(-10, 10, -10), Color::from(1, 1, 1)));
+
+        $camera = Camera::from(100, 50, M_PI / 3);
+        $camera->setTransform(
+            Transformations::view(
+                Tuple::point(0, 1.5, -5),
+                Tuple::point(0, 1, 0),
+                Tuple::vector(0, 1, 0)
+            )
+        );
+
+        $canvas = $camera->render($world);
+
+        $this->assertStringEqualsFile(
+            __DIR__ . '/../fixture/chapter_7.ppm',
             (new PortablePixmapMapper)->map($canvas)
         );
     }

@@ -14,7 +14,7 @@ This is example code that is not production-ready. It is intended for studying a
 - [X] Chapter 4: Matrix Transformations
 - [X] Chapter 5: Ray-Sphere Intersections
 - [X] Chapter 6: Light and Shading
-- [ ] Chapter 7: Making a Scene
+- [X] Chapter 7: Making a Scene
 - [ ] Chapter 8: Shadows
 - [ ] Chapter 9: Planes
 - [ ] Chapter 10: Patterns
