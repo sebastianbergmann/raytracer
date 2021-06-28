@@ -15,6 +15,7 @@ require __DIR__ . '/exceptions/InvalidArgumentException.php';
 require __DIR__ . '/material/Material.php';
 require __DIR__ . '/math/Matrix.php';
 require __DIR__ . '/exceptions/OutOfBoundsException.php';
+require __DIR__ . '/material/Pattern.php';
 require __DIR__ . '/shapes/Shape.php';
 require __DIR__ . '/shapes/Plane.php';
 require __DIR__ . '/PointLight.php';
