@@ -23,6 +23,7 @@ require __DIR__ . '/PointLight.php';
 require __DIR__ . '/canvas/PortablePixmapMapper.php';
 require __DIR__ . '/intersection/PreparedComputation.php';
 require __DIR__ . '/math/Ray.php';
+require __DIR__ . '/material/RingPattern.php';
 require __DIR__ . '/exceptions/RuntimeException.php';
 require __DIR__ . '/shapes/ShapeCollection.php';
 require __DIR__ . '/shapes/ShapeCollectionIterator.php';

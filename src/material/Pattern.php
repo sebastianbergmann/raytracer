@@ -10,6 +10,11 @@ abstract class Pattern
         return new GradientPattern($a, $b);
     }
 
+    public static function ring(Color $a, Color $b): RingPattern
+    {
+        return new RingPattern($a, $b);
+    }
+
     public static function stripe(Color $a, Color $b): StripePattern
     {
         return new StripePattern($a, $b);
