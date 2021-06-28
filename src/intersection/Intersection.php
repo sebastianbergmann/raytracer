@@ -1,6 +1,9 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+/**
+ * @psalm-immutable
+ */
 final class Intersection
 {
     public const EPSILON = 0.00001;

@@ -7,5 +7,8 @@ interface Object_
 
     public function intersect(Ray $r): IntersectionCollection;
 
+    /**
+     * @psalm-mutation-free
+     */
     public function normalAt(Tuple $worldPoint): Tuple;
 }

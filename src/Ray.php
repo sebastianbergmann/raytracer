@@ -1,12 +1,18 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+/**
+ * @psalm-immutable
+ */
 final class Ray
 {
     private Tuple $origin;
 
     private Tuple $direction;
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function from(Tuple $origin, Tuple $direction): self
     {
         return new self($origin, $direction);

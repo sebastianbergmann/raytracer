@@ -3,6 +3,9 @@ namespace SebastianBergmann\Raytracer;
 
 use function floor;
 
+/**
+ * @psalm-immutable
+ */
 final class Color
 {
     private float $red;

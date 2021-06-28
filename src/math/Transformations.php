@@ -4,6 +4,9 @@ namespace SebastianBergmann\Raytracer;
 use function cos;
 use function sin;
 
+/**
+ * @psalm-immutable
+ */
 final class Transformations
 {
     public static function translation(float $x, float $y, float $z): Matrix

@@ -80,6 +80,7 @@ final class Sphere implements Object_
 
     /**
      * @throws RuntimeException
+     * @psalm-mutation-free
      */
     public function normalAt(Tuple $worldPoint): Tuple
     {

@@ -7,6 +7,9 @@ use function array_values;
 use function count;
 use function range;
 
+/**
+ * @psalm-immutable
+ */
 final class Matrix
 {
     /**
@@ -16,6 +19,7 @@ final class Matrix
 
     /**
      * @psalm-param array<int,array<int,float>> $elements
+     * @psalm-mutation-free
      */
     public static function fromArray(array $elements): self
     {
@@ -41,6 +45,7 @@ final class Matrix
 
     /**
      * @psalm-param array<int,array<int,float>> $elements
+     * @psalm-suppress UnusedMethodCall
      */
     public function __construct(array $elements)
     {

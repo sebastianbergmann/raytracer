@@ -8,6 +8,9 @@ use function usort;
 use Countable;
 use IteratorAggregate;
 
+/**
+ * @psalm-immutable
+ */
 final class IntersectionCollection implements Countable, IteratorAggregate
 {
     /**
@@ -15,21 +18,40 @@ final class IntersectionCollection implements Countable, IteratorAggregate
      */
     private array $intersections;
 
-    private ?Intersection $hit = null;
+    private ?Intersection $hit;
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function from(Intersection ...$intersections): self
     {
-        return new self(array_values($intersections));
+        usort(
+            $intersections,
+            static function (Intersection $a, Intersection $b): int {
+                return $a->t() <=> $b->t();
+            }
+        );
+
+        $hit = null;
+
+        foreach ($intersections as $intersection) {
+            if ($intersection->t() > 0) {
+                $hit = $intersection;
+
+                break;
+            }
+        }
+
+        return new self(array_values($intersections), $hit);
     }
 
     /**
      * @psalm-param list<Intersection> $intersections
      */
-    private function __construct(array $intersections)
+    private function __construct(array $intersections, ?Intersection $hit)
     {
         $this->intersections = $intersections;
-
-        $this->process();
+        $this->hit           = $hit;
     }
 
     /**
@@ -100,23 +122,5 @@ final class IntersectionCollection implements Countable, IteratorAggregate
                 $other->asArray()
             )
         );
-    }
-
-    private function process(): void
-    {
-        usort(
-            $this->intersections,
-            static function (Intersection $a, Intersection $b): int {
-                return $a->t() <=> $b->t();
-            }
-        );
-
-        foreach ($this->intersections as $intersection) {
-            if ($intersection->t() > 0) {
-                $this->hit = $intersection;
-
-                break;
-            }
-        }
     }
 }

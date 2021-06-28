@@ -4,6 +4,9 @@ namespace SebastianBergmann\Raytracer;
 use function abs;
 use function sqrt;
 
+/**
+ * @psalm-immutable
+ */
 final class Tuple
 {
     private float $x;
@@ -14,16 +17,25 @@ final class Tuple
 
     private float $w;
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function from(float $x, float $y, float $z, float $w): self
     {
         return new self($x, $y, $z, $w);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function point(float $x, float $y, float $z): self
     {
         return new self($x, $y, $z, 1.0);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function vector(float $x, float $y, float $z): self
     {
         return new self($x, $y, $z, 0.0);
