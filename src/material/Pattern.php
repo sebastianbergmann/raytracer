@@ -5,6 +5,11 @@ abstract class Pattern
 {
     private Matrix $transform;
 
+    public static function checkers(Color $a, Color $b): CheckersPattern
+    {
+        return new CheckersPattern($a, $b);
+    }
+
     public static function gradient(Color $a, Color $b): GradientPattern
     {
         return new GradientPattern($a, $b);
