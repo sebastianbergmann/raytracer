@@ -18,7 +18,7 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v2"
 
-      - name: "Run friendsofphp/php-cs-fixer"
+      - name: "Check coding guidelines with PHP-CS-Fixer"
         run: "./tools/php-cs-fixer fix --dry-run --show-progress=dots --using-cache=no --verbose"
 
   type-checker:
@@ -30,7 +30,7 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v2"
 
-      - name: "Run vimeo/psalm"
+      - name: "Check types with Psalm"
         run: "./tools/psalm --config=.psalm/config.xml --no-progress --shepherd --show-info=false --stats"
 
   unit-tests:
@@ -49,7 +49,7 @@ jobs:
           ini-values: ${{ env.PHP_INI_VALUES }}
           coverage: none
 
-      - name: "Run tests with phpunit/phpunit"
+      - name: "Run unit tests with PHPUnit"
         run: "./tools/phpunit --testsuite unit --testdox"
 
   integration-tests:
@@ -70,5 +70,5 @@ jobs:
           ini-values: ${{ env.PHP_INI_VALUES }}
           coverage: none
 
-      - name: "Run tests with phpunit/phpunit"
+      - name: "Run integration tests with PHPUnit"
         run: "./tools/phpunit --testsuite integration"
