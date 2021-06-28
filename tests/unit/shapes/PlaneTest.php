@@ -6,6 +6,14 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \SebastianBergmann\Raytracer\Plane
  *
+ * @uses \SebastianBergmann\Raytracer\Color
+ * @uses \SebastianBergmann\Raytracer\IntersectionCollection
+ * @uses \SebastianBergmann\Raytracer\Material
+ * @uses \SebastianBergmann\Raytracer\Matrix
+ * @uses \SebastianBergmann\Raytracer\Ray
+ * @uses \SebastianBergmann\Raytracer\Shape
+ * @uses \SebastianBergmann\Raytracer\Tuple
+ *
  * @small
  */
 final class PlaneTest extends TestCase
