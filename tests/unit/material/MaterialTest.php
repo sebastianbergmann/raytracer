@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @uses \SebastianBergmann\Raytracer\PointLight
  * @uses \SebastianBergmann\Raytracer\Shape
  * @uses \SebastianBergmann\Raytracer\Sphere
+ * @uses \SebastianBergmann\Raytracer\StripePattern
  * @uses \SebastianBergmann\Raytracer\Tuple
  *
  * @small
@@ -161,7 +162,7 @@ final class MaterialTest extends TestCase
         $material->setAmbient(1);
         $material->setDiffuse(0);
         $material->setSpecular(0);
-        $material->setPattern(Pattern::from(Color::from(1, 1, 1), Color::from(0, 0, 0)));
+        $material->setPattern(StripePattern::from(Color::from(1, 1, 1), Color::from(0, 0, 0)));
 
         $eyev    = Tuple::vector(0, 0, -1);
         $normalv = Tuple::vector(0, 0, -1);

@@ -110,7 +110,7 @@ final class PuttingItTogetherTest extends TestCase
                     $point  = $ray->position($hit->t());
                     $normal = $hit->shape()->normalAt($point);
                     $eye    = $ray->direction()->negate();
-                    $color  = $hit->shape()->material()->lighting($light, $point, $eye, $normal, false);
+                    $color  = $hit->shape()->material()->lighting($hit->shape(), $light, $point, $eye, $normal, false);
 
                     $canvas->writePixel($x, $y, $color);
                 }

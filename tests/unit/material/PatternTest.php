@@ -18,82 +18,51 @@ use PHPUnit\Framework\TestCase;
  */
 final class PatternTest extends TestCase
 {
-    private Color $black;
-
-    private Color $white;
-
-    protected function setUp(): void
+    public function test_the_default_pattern_transformation(): void
     {
-        $this->black = Color::from(0, 0, 0);
-        $this->white = Color::from(1, 1, 1);
+        $pattern = TestPattern::default();
+
+        $this->assertTrue($pattern->transform()->equalTo(Matrix::identity(4)));
     }
 
-    public function test_creating_a_stripe_pattern(): void
+    public function test_assigning_a_transformation(): void
     {
-        $pattern = Pattern::from($this->black, $this->white);
+        $pattern        = TestPattern::default();
+        $transformation = Transformations::translation(1, 2, 3);
 
-        $this->assertTrue($pattern->a()->equalTo($this->black));
-        $this->assertTrue($pattern->b()->equalTo($this->white));
+        $pattern->setTransform($transformation);
+
+        $this->assertSame($transformation, $pattern->transform());
     }
 
-    public function test_a_stripe_pattern_is_constant_in_y(): void
-    {
-        $pattern = Pattern::from($this->white, $this->black);
-
-        $this->assertTrue($pattern->stripeAt(Tuple::point(0, 0, 0))->equalTo($this->white));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(0, 1, 0))->equalTo($this->white));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(0, 2, 0))->equalTo($this->white));
-    }
-
-    public function test_a_stripe_pattern_is_constant_in_z(): void
-    {
-        $pattern = Pattern::from($this->white, $this->black);
-
-        $this->assertTrue($pattern->stripeAt(Tuple::point(0, 0, 0))->equalTo($this->white));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(0, 0, 1))->equalTo($this->white));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(0, 0, 2))->equalTo($this->white));
-    }
-
-    public function test_a_stripe_pattern_alternates_in_x(): void
-    {
-        $pattern = Pattern::from($this->white, $this->black);
-
-        $this->assertTrue($pattern->stripeAt(Tuple::point(0, 0, 0))->equalTo($this->white));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(0.9, 0, 0))->equalTo($this->white));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(1, 0, 0))->equalTo($this->black));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(-0.1, 0, 0))->equalTo($this->black));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(-1, 0, 0))->equalTo($this->black));
-        $this->assertTrue($pattern->stripeAt(Tuple::point(-1.1, 0, 0))->equalTo($this->white));
-    }
-
-    public function test_stripes_with_an_object_transformation(): void
+    public function test_a_pattern_with_an_object_transformation(): void
     {
         $object = Sphere::default();
         $object->setTransform(Transformations::scaling(2, 2, 2));
 
-        $pattern = Pattern::from($this->white, $this->black);
+        $pattern = TestPattern::default();
 
-        $this->assertTrue($pattern->stripeAtObject($object, Tuple::point(1.5, 0, 0))->equalTo($this->white));
+        $this->assertTrue($pattern->patternAt($object, Tuple::point(2, 3, 4))->equalTo(Color::from(1, 1.5, 2)));
     }
 
-    public function test_stripes_with_a_pattern_transformation(): void
+    public function test_a_pattern_with_a_pattern_transformation(): void
     {
         $object = Sphere::default();
 
-        $pattern = Pattern::from($this->white, $this->black);
+        $pattern = TestPattern::default();
         $pattern->setTransform(Transformations::scaling(2, 2, 2));
 
-        $this->assertTrue($pattern->stripeAtObject($object, Tuple::point(1.5, 0, 0))->equalTo($this->white));
+        $this->assertTrue($pattern->patternAt($object, Tuple::point(2, 3, 4))->equalTo(Color::from(1, 1.5, 2)));
     }
 
-    public function test_stripes_with_both_an_object_and_a_pattern_transformation(): void
+    public function test_a_pattern_with_both_an_object_and_a_pattern_transformation(): void
     {
         $object = Sphere::default();
         $object->setTransform(Transformations::scaling(2, 2, 2));
 
-        $pattern = Pattern::from($this->white, $this->black);
-        $pattern->setTransform(Transformations::translation(0.5, 0, 0));
+        $pattern = TestPattern::default();
+        $pattern->setTransform(Transformations::translation(0.5, 1, 1.5));
 
-        $this->assertTrue($pattern->stripeAtObject($object, Tuple::point(2.5, 0, 0))->equalTo($this->white));
+        $this->assertTrue($pattern->patternAt($object, Tuple::point(2.5, 3, 3.5))->equalTo(Color::from(0.75, 0.5, 0.25)));
     }
 }

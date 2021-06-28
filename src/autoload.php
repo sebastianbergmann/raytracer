@@ -26,6 +26,7 @@ require __DIR__ . '/exceptions/RuntimeException.php';
 require __DIR__ . '/shapes/ShapeCollection.php';
 require __DIR__ . '/shapes/ShapeCollectionIterator.php';
 require __DIR__ . '/shapes/Sphere.php';
+require __DIR__ . '/material/StripePattern.php';
 require __DIR__ . '/math/Transformations.php';
 require __DIR__ . '/math/Tuple.php';
 require __DIR__ . '/canvas/WebpMapper.php';

@@ -1,60 +1,35 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-use function floor;
-
-final class Pattern
+abstract class Pattern
 {
-    private Color $a;
-
-    private Color $b;
-
     private Matrix $transform;
 
-    public static function from(Color $a, Color $b): self
+    protected function __construct()
     {
-        return new self($a, $b);
-    }
-
-    private function __construct(Color $a, Color $b)
-    {
-        $this->a         = $a;
-        $this->b         = $b;
         $this->transform = Matrix::identity(4);
     }
 
-    public function a(): Color
+    public function transform(): Matrix
     {
-        return $this->a;
-    }
-
-    public function b(): Color
-    {
-        return $this->b;
-    }
-
-    public function stripeAt(Tuple $point): Color
-    {
-        if (floor($point->x()) % 2 === 0) {
-            return $this->a;
-        }
-
-        return $this->b;
-    }
-
-    /**
-     * @throws RuntimeException
-     */
-    public function stripeAtObject(Shape $object, Tuple $worldPoint): Color
-    {
-        $objectPoint  = $object->transform()->inverse()->multiplyBy($worldPoint);
-        $patternPoint = $this->transform->inverse()->multiplyBy($objectPoint);
-
-        return $this->stripeAt($patternPoint);
+        return $this->transform;
     }
 
     public function setTransform(Matrix $transform): void
     {
         $this->transform = $transform;
     }
+
+    /**
+     * @throws RuntimeException
+     */
+    public function patternAt(Shape $object, Tuple $worldPoint): Color
+    {
+        $objectPoint  = $object->transform()->inverse()->multiplyBy($worldPoint);
+        $patternPoint = $this->transform->inverse()->multiplyBy($objectPoint);
+
+        return $this->localPatternAt($object, $patternPoint);
+    }
+
+    abstract public function localPatternAt(Shape $object, Tuple $point): Color;
 }
