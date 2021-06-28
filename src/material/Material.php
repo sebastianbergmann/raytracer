@@ -13,6 +13,8 @@ final class Material
 
     private float $shininess;
 
+    private ?Pattern $pattern = null;
+
     public static function default(): self
     {
         return self::from(Color::from(1, 1, 1), 0.1, 0.9, 0.9, 200.0);
@@ -82,12 +84,23 @@ final class Material
         $this->shininess = $shininess;
     }
 
+    public function setPattern(Pattern $pattern): void
+    {
+        $this->pattern = $pattern;
+    }
+
     /**
      * @throws RuntimeException
      */
     public function lighting(PointLight $light, Tuple $point, Tuple $eye, Tuple $normal, bool $inShadow): Color
     {
-        $effectiveColor = $this->color->product($light->intensity());
+        if ($this->pattern !== null) {
+            $color = $this->pattern->stripeAt($point);
+        } else {
+            $color = $this->color;
+        }
+
+        $effectiveColor = $color->product($light->intensity());
         $ambient        = $effectiveColor->multiplyBy($this->ambient);
 
         if ($inShadow) {

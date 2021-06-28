@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \SebastianBergmann\Raytracer\Material
  *
  * @uses \SebastianBergmann\Raytracer\Color
+ * @uses \SebastianBergmann\Raytracer\Pattern
  * @uses \SebastianBergmann\Raytracer\PointLight
  * @uses \SebastianBergmann\Raytracer\Tuple
  *
@@ -149,5 +150,21 @@ final class MaterialTest extends TestCase
         $result = $this->material->lighting($light, $this->position, $eye, $normal, true);
 
         $this->assertTrue($result->equalTo(Color::from(0.1, 0.1, 0.1)));
+    }
+
+    public function test_lighting_with_a_pattern_applied(): void
+    {
+        $material = Material::default();
+        $material->setAmbient(1);
+        $material->setDiffuse(0);
+        $material->setSpecular(0);
+        $material->setPattern(Pattern::from(Color::from(1, 1, 1), Color::from(0, 0, 0)));
+
+        $eyev    = Tuple::vector(0, 0, -1);
+        $normalv = Tuple::vector(0, 0, -1);
+        $light   = PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1));
+
+        $this->assertTrue($material->lighting($light, Tuple::point(0.9, 0, 0), $eyev, $normalv, false)->equalTo(Color::from(1, 1, 1)));
+        $this->assertTrue($material->lighting($light, Tuple::point(1.1, 0, 0), $eyev, $normalv, false)->equalTo(Color::from(0, 0, 0)));
     }
 }
