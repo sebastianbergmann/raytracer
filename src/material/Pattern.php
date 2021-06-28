@@ -5,6 +5,11 @@ abstract class Pattern
 {
     private Matrix $transform;
 
+    public static function stripe(Color $a, Color $b): StripePattern
+    {
+        return new StripePattern($a, $b);
+    }
+
     protected function __construct()
     {
         $this->transform = Matrix::identity(4);

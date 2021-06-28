@@ -9,12 +9,7 @@ final class StripePattern extends Pattern
 
     private Color $b;
 
-    public static function from(Color $a, Color $b): self
-    {
-        return new self($a, $b);
-    }
-
-    private function __construct(Color $a, Color $b)
+    protected function __construct(Color $a, Color $b)
     {
         $this->a = $a;
         $this->b = $b;

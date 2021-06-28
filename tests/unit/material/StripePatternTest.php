@@ -31,7 +31,7 @@ final class StripePatternTest extends TestCase
 
     public function test_creating_a_stripe_pattern(): void
     {
-        $pattern = StripePattern::from($this->black, $this->white);
+        $pattern = Pattern::stripe($this->black, $this->white);
 
         $this->assertTrue($pattern->a()->equalTo($this->black));
         $this->assertTrue($pattern->b()->equalTo($this->white));
@@ -39,7 +39,7 @@ final class StripePatternTest extends TestCase
 
     public function test_a_stripe_pattern_is_constant_in_y(): void
     {
-        $pattern = StripePattern::from($this->white, $this->black);
+        $pattern = Pattern::stripe($this->white, $this->black);
 
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(0, 0, 0))->equalTo($this->white));
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(0, 1, 0))->equalTo($this->white));
@@ -48,7 +48,7 @@ final class StripePatternTest extends TestCase
 
     public function test_a_stripe_pattern_is_constant_in_z(): void
     {
-        $pattern = StripePattern::from($this->white, $this->black);
+        $pattern = Pattern::stripe($this->white, $this->black);
 
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(0, 0, 0))->equalTo($this->white));
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(0, 0, 1))->equalTo($this->white));
@@ -57,7 +57,7 @@ final class StripePatternTest extends TestCase
 
     public function test_a_stripe_pattern_alternates_in_x(): void
     {
-        $pattern = StripePattern::from($this->white, $this->black);
+        $pattern = Pattern::stripe($this->white, $this->black);
 
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(0, 0, 0))->equalTo($this->white));
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(0.9, 0, 0))->equalTo($this->white));
