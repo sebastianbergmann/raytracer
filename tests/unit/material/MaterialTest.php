@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  * @uses \SebastianBergmann\Raytracer\Matrix
  * @uses \SebastianBergmann\Raytracer\Pattern
  * @uses \SebastianBergmann\Raytracer\PointLight
+ * @uses \SebastianBergmann\Raytracer\Shape
+ * @uses \SebastianBergmann\Raytracer\Sphere
  * @uses \SebastianBergmann\Raytracer\Tuple
  *
  * @small
@@ -87,7 +89,7 @@ final class MaterialTest extends TestCase
         $normal = Tuple::vector(0, 0, -1);
         $light  = PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1));
 
-        $result = $this->material->lighting($light, $this->position, $eye, $normal, false);
+        $result = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
 
         $this->assertTrue($result->equalTo(Color::from(1.9, 1.9, 1.9)));
     }
@@ -101,7 +103,7 @@ final class MaterialTest extends TestCase
         $normal = Tuple::vector(0, 0, -1);
         $light  = PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1));
 
-        $result = $this->material->lighting($light, $this->position, $eye, $normal, false);
+        $result = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
 
         $this->assertTrue($result->equalTo(Color::from(1.0, 1.0, 1.0)));
     }
@@ -115,7 +117,7 @@ final class MaterialTest extends TestCase
         $normal = Tuple::vector(0, 0, -1);
         $light  = PointLight::from(Tuple::point(0, 10, -10), Color::from(1, 1, 1));
 
-        $result = $this->material->lighting($light, $this->position, $eye, $normal, false);
+        $result = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
 
         $this->assertTrue($result->equalTo(Color::from(0.7364, 0.7364, 0.7364)));
     }
@@ -126,7 +128,7 @@ final class MaterialTest extends TestCase
         $normal = Tuple::vector(0, 0, -1);
         $light  = PointLight::from(Tuple::point(0, 10, -10), Color::from(1, 1, 1));
 
-        $result = $this->material->lighting($light, $this->position, $eye, $normal, false);
+        $result = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
 
         $this->assertTrue($result->equalTo(Color::from(1.6364, 1.6364, 1.6364)));
     }
@@ -137,7 +139,7 @@ final class MaterialTest extends TestCase
         $normal = Tuple::vector(0, 0, -1);
         $light  = PointLight::from(Tuple::point(0, 0, 110), Color::from(1, 1, 1));
 
-        $result = $this->material->lighting($light, $this->position, $eye, $normal, false);
+        $result = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
 
         $this->assertTrue($result->equalTo(Color::from(0.1, 0.1, 0.1)));
     }
@@ -148,7 +150,7 @@ final class MaterialTest extends TestCase
         $normal = Tuple::vector(0, 0, -1);
         $light  = PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1));
 
-        $result = $this->material->lighting($light, $this->position, $eye, $normal, true);
+        $result = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, true);
 
         $this->assertTrue($result->equalTo(Color::from(0.1, 0.1, 0.1)));
     }
@@ -165,7 +167,7 @@ final class MaterialTest extends TestCase
         $normalv = Tuple::vector(0, 0, -1);
         $light   = PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1));
 
-        $this->assertTrue($material->lighting($light, Tuple::point(0.9, 0, 0), $eyev, $normalv, false)->equalTo(Color::from(1, 1, 1)));
-        $this->assertTrue($material->lighting($light, Tuple::point(1.1, 0, 0), $eyev, $normalv, false)->equalTo(Color::from(0, 0, 0)));
+        $this->assertTrue($material->lighting(Sphere::default(), $light, Tuple::point(0.9, 0, 0), $eyev, $normalv, false)->equalTo(Color::from(1, 1, 1)));
+        $this->assertTrue($material->lighting(Sphere::default(), $light, Tuple::point(1.1, 0, 0), $eyev, $normalv, false)->equalTo(Color::from(0, 0, 0)));
     }
 }

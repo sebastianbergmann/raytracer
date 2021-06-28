@@ -104,6 +104,7 @@ final class World
         $shadowed = $this->isShadowed($computation->overPoint());
 
         return $computation->shape()->material()->lighting(
+            $computation->shape(),
             $this->light(),
             $computation->overPoint(),
             $computation->eye(),

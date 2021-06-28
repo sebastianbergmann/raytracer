@@ -92,10 +92,10 @@ final class Material
     /**
      * @throws RuntimeException
      */
-    public function lighting(PointLight $light, Tuple $point, Tuple $eye, Tuple $normal, bool $inShadow): Color
+    public function lighting(Shape $object, PointLight $light, Tuple $point, Tuple $eye, Tuple $normal, bool $inShadow): Color
     {
         if ($this->pattern !== null) {
-            $color = $this->pattern->stripeAt($point);
+            $color = $this->pattern->stripeAtObject($object, $point);
         } else {
             $color = $this->color;
         }
