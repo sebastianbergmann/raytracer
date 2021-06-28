@@ -9,20 +9,23 @@ final class PreparedComputation
 
     private Tuple $point;
 
+    private Tuple $overPoint;
+
     private Tuple $eye;
 
     private Tuple $normal;
 
     private bool $inside;
 
-    public function __construct(float $t, Object_ $object, Tuple $point, Tuple $eye, Tuple $normal, bool $inside)
+    public function __construct(float $t, Object_ $object, Tuple $point, Tuple $overPoint, Tuple $eye, Tuple $normal, bool $inside)
     {
-        $this->t      = $t;
-        $this->object = $object;
-        $this->point  = $point;
-        $this->eye    = $eye;
-        $this->normal = $normal;
-        $this->inside = $inside;
+        $this->t         = $t;
+        $this->object    = $object;
+        $this->point     = $point;
+        $this->overPoint = $overPoint;
+        $this->eye       = $eye;
+        $this->normal    = $normal;
+        $this->inside    = $inside;
     }
 
     public function t(): float
@@ -38,6 +41,11 @@ final class PreparedComputation
     public function point(): Tuple
     {
         return $this->point;
+    }
+
+    public function overPoint(): Tuple
+    {
+        return $this->overPoint;
     }
 
     public function eye(): Tuple

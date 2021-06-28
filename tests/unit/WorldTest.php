@@ -169,4 +169,27 @@ final class WorldTest extends TestCase
 
         $this->assertFalse($w->isShadowed($p));
     }
+
+    /**
+     * @testdox shadeHit() is given an intersection in shadow
+     */
+    public function test_shadeHit_is_given_an_intersection_in_shadow(): void
+    {
+        $w = new World;
+        $w->setLight(PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1)));
+
+        $s1 = new Sphere;
+        $w->add($s1);
+
+        $s2 = new Sphere;
+        $s2->setTransformation(Transformations::translation(0, 0, 10));
+        $w->add($s2);
+
+        $ray   = Ray::from(Tuple::point(0, 0, 5), Tuple::vector(0, 0, 1));
+        $comps = Intersection::from(4, $s2)->prepare($ray);
+
+        $c = $w->shadeHit($comps);
+
+        $this->assertTrue($c->equalTo(Color::from(0.1, 0.1, 0.1)));
+    }
 }

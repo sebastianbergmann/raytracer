@@ -3,6 +3,8 @@ namespace SebastianBergmann\Raytracer;
 
 final class Intersection
 {
+    public const EPSILON = 0.00001;
+
     private float $t;
 
     private Object_ $object;
@@ -43,10 +45,13 @@ final class Intersection
             $normal = $normal->negate();
         }
 
+        $overPoint = $point->plus($normal->multiplyBy(self::EPSILON));
+
         return new PreparedComputation(
             $this->t,
             $this->object,
             $point,
+            $overPoint,
             $eye,
             $normal,
             $inside

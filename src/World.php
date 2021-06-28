@@ -20,13 +20,10 @@ final class World
         $s2 = new Sphere;
         $s2->setTransformation(Transformations::scaling(0.5, 0.5, 0.5));
 
-        $objects = new ObjectCollection;
-        $objects->add($s1);
-        $objects->add($s2);
-
         $w = new self;
 
-        $w->setObjects($objects);
+        $w->add($s1);
+        $w->add($s2);
         $w->setLight($light);
 
         return $w;
@@ -35,6 +32,11 @@ final class World
     public function __construct()
     {
         $this->objects = new ObjectCollection;
+    }
+
+    public function add(Object_ $object): void
+    {
+        $this->objects->add($object);
     }
 
     public function setObjects(ObjectCollection $objects): void
@@ -99,12 +101,14 @@ final class World
      */
     public function shadeHit(PreparedComputation $computation): Color
     {
+        $shadowed = $this->isShadowed($computation->overPoint());
+
         return $computation->object()->material()->lighting(
             $this->light(),
-            $computation->point(),
+            $computation->overPoint(),
             $computation->eye(),
             $computation->normal(),
-            false
+            $shadowed
         );
     }
 

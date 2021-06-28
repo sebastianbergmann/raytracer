@@ -123,7 +123,7 @@ final class PuttingItTogetherTest extends TestCase
         );
     }
 
-    public function test_chapter_7(): void
+    public function test_chapter_8(): void
     {
         $floor = new Sphere;
         $floor->setTransformation(Transformations::scaling(10, 0.01, 10));
@@ -181,12 +181,12 @@ final class PuttingItTogetherTest extends TestCase
         $left->setMaterial($leftMaterial);
 
         $world = new World;
-        $world->objects()->add($floor);
-        $world->objects()->add($leftWall);
-        $world->objects()->add($rightWall);
-        $world->objects()->add($middle);
-        $world->objects()->add($right);
-        $world->objects()->add($left);
+        $world->add($floor);
+        $world->add($leftWall);
+        $world->add($rightWall);
+        $world->add($middle);
+        $world->add($right);
+        $world->add($left);
         $world->setLight(PointLight::from(Tuple::point(-10, 10, -10), Color::from(1, 1, 1)));
 
         $camera = Camera::from(100, 50, M_PI / 3);
@@ -201,7 +201,7 @@ final class PuttingItTogetherTest extends TestCase
         $canvas = $camera->render($world);
 
         $this->assertStringEqualsFile(
-            __DIR__ . '/../fixture/chapter_7.ppm',
+            __DIR__ . '/../fixture/chapter_8.ppm',
             (new PortablePixmapMapper)->map($canvas)
         );
     }
