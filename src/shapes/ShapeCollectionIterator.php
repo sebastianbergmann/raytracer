@@ -4,18 +4,18 @@ namespace SebastianBergmann\Raytracer;
 use function count;
 use Iterator;
 
-final class ObjectCollectionIterator implements Iterator
+final class ShapeCollectionIterator implements Iterator
 {
     /**
-     * @psalm-var list<Object_>
+     * @psalm-var list<Shape>
      */
-    private array $objects;
+    private array $shapes;
 
     private int $position = 0;
 
-    public function __construct(ObjectCollection $objects)
+    public function __construct(ShapeCollection $shapes)
     {
-        $this->objects = $objects->asArray();
+        $this->shapes = $shapes->asArray();
     }
 
     public function rewind(): void
@@ -25,7 +25,7 @@ final class ObjectCollectionIterator implements Iterator
 
     public function valid(): bool
     {
-        return $this->position < count($this->objects);
+        return $this->position < count($this->shapes);
     }
 
     public function key(): int
@@ -33,9 +33,9 @@ final class ObjectCollectionIterator implements Iterator
         return $this->position;
     }
 
-    public function current(): Object_
+    public function current(): Shape
     {
-        return $this->objects[$this->position];
+        return $this->shapes[$this->position];
     }
 
     public function next(): void

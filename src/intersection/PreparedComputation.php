@@ -8,7 +8,7 @@ final class PreparedComputation
 {
     private float $t;
 
-    private Object_ $object;
+    private Shape $shape;
 
     private Tuple $point;
 
@@ -20,10 +20,10 @@ final class PreparedComputation
 
     private bool $inside;
 
-    public function __construct(float $t, Object_ $object, Tuple $point, Tuple $overPoint, Tuple $eye, Tuple $normal, bool $inside)
+    public function __construct(float $t, Shape $shape, Tuple $point, Tuple $overPoint, Tuple $eye, Tuple $normal, bool $inside)
     {
         $this->t         = $t;
-        $this->object    = $object;
+        $this->shape     = $shape;
         $this->point     = $point;
         $this->overPoint = $overPoint;
         $this->eye       = $eye;
@@ -36,9 +36,9 @@ final class PreparedComputation
         return $this->t;
     }
 
-    public function object(): Object_
+    public function shape(): Shape
     {
-        return $this->object;
+        return $this->shape;
     }
 
     public function point(): Tuple

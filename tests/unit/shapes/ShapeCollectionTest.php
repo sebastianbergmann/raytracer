@@ -4,25 +4,26 @@ namespace SebastianBergmann\Raytracer;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \SebastianBergmann\Raytracer\ObjectCollection
- * @covers \SebastianBergmann\Raytracer\ObjectCollectionIterator
+ * @covers \SebastianBergmann\Raytracer\ShapeCollection
+ * @covers \SebastianBergmann\Raytracer\ShapeCollectionIterator
  *
  * @uses \SebastianBergmann\Raytracer\Color
  * @uses \SebastianBergmann\Raytracer\Material
  * @uses \SebastianBergmann\Raytracer\Matrix
+ * @uses \SebastianBergmann\Raytracer\Shape
  * @uses \SebastianBergmann\Raytracer\Sphere
  * @uses \SebastianBergmann\Raytracer\Tuple
  *
  * @small
  */
-final class ObjectCollectionTest extends TestCase
+final class ShapeCollectionTest extends TestCase
 {
     public function test_aggregating_objects(): void
     {
-        $s1 = new Sphere;
-        $s2 = new Sphere;
+        $s1 = Sphere::default();
+        $s2 = Sphere::default();
 
-        $objects = new ObjectCollection;
+        $objects = new ShapeCollection;
         $objects->add($s1);
         $objects->add($s2);
 

@@ -5,41 +5,41 @@ use function count;
 use Countable;
 use IteratorAggregate;
 
-final class ObjectCollection implements Countable, IteratorAggregate
+final class ShapeCollection implements Countable, IteratorAggregate
 {
     /**
-     * @psalm-var list<Object_>
+     * @psalm-var list<Shape>
      */
-    private array $objects = [];
+    private array $shapes = [];
 
-    public function add(Object_ $object): void
+    public function add(Shape $shape): void
     {
-        $this->objects[] = $object;
+        $this->shapes[] = $shape;
     }
 
     /**
-     * @psalm-return list<Object_>
+     * @psalm-return list<Shape>
      */
     public function asArray(): array
     {
-        return $this->objects;
+        return $this->shapes;
     }
 
     /**
      * @throws OutOfBoundsException
      */
-    public function at(int $position): Object_
+    public function at(int $position): Shape
     {
-        if (!isset($this->objects[$position])) {
+        if (!isset($this->shapes[$position])) {
             throw new OutOfBoundsException;
         }
 
-        return $this->objects[$position];
+        return $this->shapes[$position];
     }
 
     public function count(): int
     {
-        return count($this->objects);
+        return count($this->shapes);
     }
 
     public function isEmpty(): bool
@@ -52,8 +52,8 @@ final class ObjectCollection implements Countable, IteratorAggregate
         return $this->count() > 0;
     }
 
-    public function getIterator(): ObjectCollectionIterator
+    public function getIterator(): ShapeCollectionIterator
     {
-        return new ObjectCollectionIterator($this);
+        return new ShapeCollectionIterator($this);
     }
 }

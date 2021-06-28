@@ -15,11 +15,12 @@ use PHPUnit\Framework\TestCase;
  * @uses \SebastianBergmann\Raytracer\IntersectionCollection
  * @uses \SebastianBergmann\Raytracer\Material
  * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\ObjectCollection
- * @uses \SebastianBergmann\Raytracer\ObjectCollectionIterator
  * @uses \SebastianBergmann\Raytracer\PointLight
  * @uses \SebastianBergmann\Raytracer\PreparedComputation
  * @uses \SebastianBergmann\Raytracer\Ray
+ * @uses \SebastianBergmann\Raytracer\Shape
+ * @uses \SebastianBergmann\Raytracer\ShapeCollection
+ * @uses \SebastianBergmann\Raytracer\ShapeCollectionIterator
  * @uses \SebastianBergmann\Raytracer\Sphere
  * @uses \SebastianBergmann\Raytracer\Transformations
  * @uses \SebastianBergmann\Raytracer\Tuple

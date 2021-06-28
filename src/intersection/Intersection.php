@@ -10,17 +10,20 @@ final class Intersection
 
     private float $t;
 
-    private Object_ $object;
+    private Shape $shape;
 
-    public static function from(float $t, Object_ $object): self
+    /**
+     * @psalm-mutation-free
+     */
+    public static function from(float $t, Shape $shape): self
     {
-        return new self($t, $object);
+        return new self($t, $shape);
     }
 
-    private function __construct(float $t, Object_ $object)
+    private function __construct(float $t, Shape $shape)
     {
-        $this->t      = $t;
-        $this->object = $object;
+        $this->t     = $t;
+        $this->shape = $shape;
     }
 
     public function t(): float
@@ -28,9 +31,9 @@ final class Intersection
         return $this->t;
     }
 
-    public function object(): Object_
+    public function shape(): Shape
     {
-        return $this->object;
+        return $this->shape;
     }
 
     /**
@@ -40,7 +43,7 @@ final class Intersection
     {
         $point  = $r->position($this->t);
         $eye    = $r->direction()->negate();
-        $normal = $this->object->normalAt($point);
+        $normal = $this->shape->normalAt($point);
         $inside = false;
 
         if ($eye->dot($normal) < 0) {
@@ -52,7 +55,7 @@ final class Intersection
 
         return new PreparedComputation(
             $this->t,
-            $this->object,
+            $this->shape,
             $point,
             $overPoint,
             $eye,

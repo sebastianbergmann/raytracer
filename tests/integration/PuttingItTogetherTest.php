@@ -47,7 +47,7 @@ final class PuttingItTogetherTest extends TestCase
         $red        = Color::from(1, 0, 0);
         $canvas     = Canvas::from($canvasSize, $canvasSize, $black);
 
-        $s         = new Sphere;
+        $s         = Sphere::default();
         $rayOrigin = Tuple::point(0, 0, -5);
 
         $wallZ     = 10;
@@ -83,7 +83,7 @@ final class PuttingItTogetherTest extends TestCase
         $material = Material::default();
         $material->setColor(Color::from(1, 0.2, 1));
 
-        $s = new Sphere;
+        $s = Sphere::default();
         $s->setMaterial($material);
 
         $light = PointLight::from(
@@ -108,9 +108,9 @@ final class PuttingItTogetherTest extends TestCase
                 if ($s->intersect($ray)->hasHit()) {
                     $hit    = $s->intersect($ray)->hit();
                     $point  = $ray->position($hit->t());
-                    $normal = $hit->object()->normalAt($point);
+                    $normal = $hit->shape()->normalAt($point);
                     $eye    = $ray->direction()->negate();
-                    $color  = $hit->object()->material()->lighting($light, $point, $eye, $normal, false);
+                    $color  = $hit->shape()->material()->lighting($light, $point, $eye, $normal, false);
 
                     $canvas->writePixel($x, $y, $color);
                 }
@@ -125,15 +125,15 @@ final class PuttingItTogetherTest extends TestCase
 
     public function test_chapter_8(): void
     {
-        $floor = new Sphere;
-        $floor->setTransformation(Transformations::scaling(10, 0.01, 10));
+        $floor = Sphere::default();
+        $floor->setTransform(Transformations::scaling(10, 0.01, 10));
         $floorMaterial = Material::default();
         $floorMaterial->setColor(Color::from(1, 0.9, 0.9));
         $floorMaterial->setSpecular(0);
         $floor->setMaterial($floorMaterial);
 
-        $leftWall = new Sphere;
-        $leftWall->setTransformation(
+        $leftWall = Sphere::default();
+        $leftWall->setTransform(
             Transformations::translation(0, 0, 5)->multiply(
                 Transformations::rotationAroundY(-M_PI_4)
             )->multiply(
@@ -144,8 +144,8 @@ final class PuttingItTogetherTest extends TestCase
         );
         $leftWall->setMaterial($floorMaterial);
 
-        $rightWall = new Sphere;
-        $rightWall->setTransformation(
+        $rightWall = Sphere::default();
+        $rightWall->setTransform(
             Transformations::translation(0, 0, 5)->multiply(
                 Transformations::rotationAroundY(M_PI_4)
             )->multiply(
@@ -156,24 +156,24 @@ final class PuttingItTogetherTest extends TestCase
         );
         $rightWall->setMaterial($floorMaterial);
 
-        $middle = new Sphere;
-        $middle->setTransformation(Transformations::translation(-0.5, 1, 0.5));
+        $middle = Sphere::default();
+        $middle->setTransform(Transformations::translation(-0.5, 1, 0.5));
         $middleMaterial = Material::default();
         $middleMaterial->setColor(Color::from(0.1, 1, 0.5));
         $middleMaterial->setDiffuse(0.7);
         $middleMaterial->setSpecular(0.3);
         $middle->setMaterial($middleMaterial);
 
-        $right = new Sphere;
-        $right->setTransformation(Transformations::translation(1.5, 0.5, -0.5)->multiply(Transformations::scaling(0.5, 0.5, 0.5)));
+        $right = Sphere::default();
+        $right->setTransform(Transformations::translation(1.5, 0.5, -0.5)->multiply(Transformations::scaling(0.5, 0.5, 0.5)));
         $rightMaterial = Material::default();
         $rightMaterial->setColor(Color::from(0.5, 1, 0.1));
         $rightMaterial->setDiffuse(0.7);
         $rightMaterial->setSpecular(0.3);
         $right->setMaterial($rightMaterial);
 
-        $left = new Sphere;
-        $left->setTransformation(Transformations::translation(-1.5, 0.33, -0.75)->multiply(Transformations::scaling(0.33, 0.33, 0.33)));
+        $left = Sphere::default();
+        $left->setTransform(Transformations::translation(-1.5, 0.33, -0.75)->multiply(Transformations::scaling(0.33, 0.33, 0.33)));
         $leftMaterial = Material::default();
         $leftMaterial->setColor(Color::from(1, 0.8, 0.1));
         $leftMaterial->setDiffuse(0.7);

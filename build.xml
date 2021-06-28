@@ -7,6 +7,13 @@
             <arg path="src/autoload.php" />
             <arg path="src" />
         </exec>
+
+        <exec executable="${basedir}/tools/phpab" taskname="phpab">
+            <arg value="--static" />
+            <arg value="--output" />
+            <arg path="tests/autoload.php" />
+            <arg path="tests/fakes" />
+        </exec>
     </target>
 
     <target name="update-tools" description="Update tools">

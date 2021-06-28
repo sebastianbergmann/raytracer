@@ -3,7 +3,7 @@ namespace SebastianBergmann\Raytracer;
 
 final class World
 {
-    private ObjectCollection $objects;
+    private ShapeCollection $shapes;
 
     private ?PointLight $light = null;
 
@@ -14,11 +14,11 @@ final class World
             Color::from(1, 1, 1)
         );
 
-        $s1 = new Sphere;
+        $s1 = Sphere::default();
         $s1->setMaterial(Material::from(Color::from(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200.0));
 
-        $s2 = new Sphere;
-        $s2->setTransformation(Transformations::scaling(0.5, 0.5, 0.5));
+        $s2 = Sphere::default();
+        $s2->setTransform(Transformations::scaling(0.5, 0.5, 0.5));
 
         $w = new self;
 
@@ -31,22 +31,22 @@ final class World
 
     public function __construct()
     {
-        $this->objects = new ObjectCollection;
+        $this->shapes = new ShapeCollection;
     }
 
-    public function add(Object_ $object): void
+    public function add(Shape $shape): void
     {
-        $this->objects->add($object);
+        $this->shapes->add($shape);
     }
 
-    public function setObjects(ObjectCollection $objects): void
+    public function setShapes(ShapeCollection $shapes): void
     {
-        $this->objects = $objects;
+        $this->shapes = $shapes;
     }
 
-    public function objects(): ObjectCollection
+    public function shapes(): ShapeCollection
     {
-        return $this->objects;
+        return $this->shapes;
     }
 
     /**
@@ -88,8 +88,8 @@ final class World
     {
         $intersections = IntersectionCollection::from();
 
-        foreach ($this->objects as $object) {
-            $intersections = $intersections->merge($object->intersect($r));
+        foreach ($this->shapes as $shape) {
+            $intersections = $intersections->merge($shape->intersect($r));
         }
 
         return $intersections;
@@ -103,7 +103,7 @@ final class World
     {
         $shadowed = $this->isShadowed($computation->overPoint());
 
-        return $computation->object()->material()->lighting(
+        return $computation->shape()->material()->lighting(
             $this->light(),
             $computation->overPoint(),
             $computation->eye(),

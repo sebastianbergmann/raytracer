@@ -11,11 +11,12 @@ use PHPUnit\Framework\TestCase;
  * @uses \SebastianBergmann\Raytracer\IntersectionCollection
  * @uses \SebastianBergmann\Raytracer\Material
  * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\ObjectCollection
- * @uses \SebastianBergmann\Raytracer\ObjectCollectionIterator
  * @uses \SebastianBergmann\Raytracer\PointLight
  * @uses \SebastianBergmann\Raytracer\PreparedComputation
  * @uses \SebastianBergmann\Raytracer\Ray
+ * @uses \SebastianBergmann\Raytracer\Shape
+ * @uses \SebastianBergmann\Raytracer\ShapeCollection
+ * @uses \SebastianBergmann\Raytracer\ShapeCollectionIterator
  * @uses \SebastianBergmann\Raytracer\Sphere
  * @uses \SebastianBergmann\Raytracer\Transformations
  * @uses \SebastianBergmann\Raytracer\Tuple
@@ -28,7 +29,7 @@ final class WorldTest extends TestCase
     {
         $w = new World;
 
-        $this->assertTrue($w->objects()->isEmpty());
+        $this->assertTrue($w->shapes()->isEmpty());
 
         $this->expectException(WorldHasNoLightException::class);
 
@@ -40,19 +41,19 @@ final class WorldTest extends TestCase
     {
         $w = World::default();
 
-        $this->assertCount(2, $w->objects());
+        $this->assertCount(2, $w->shapes());
 
-        $this->assertTrue($w->objects()->at(0)->material()->color()->equalTo(Color::from(0.8, 1.0, 0.6)));
-        $this->assertSame(0.1, $w->objects()->at(0)->material()->ambient());
-        $this->assertSame(0.7, $w->objects()->at(0)->material()->diffuse());
-        $this->assertSame(0.2, $w->objects()->at(0)->material()->specular());
-        $this->assertSame(200.0, $w->objects()->at(0)->material()->shininess());
+        $this->assertTrue($w->shapes()->at(0)->material()->color()->equalTo(Color::from(0.8, 1.0, 0.6)));
+        $this->assertSame(0.1, $w->shapes()->at(0)->material()->ambient());
+        $this->assertSame(0.7, $w->shapes()->at(0)->material()->diffuse());
+        $this->assertSame(0.2, $w->shapes()->at(0)->material()->specular());
+        $this->assertSame(200.0, $w->shapes()->at(0)->material()->shininess());
 
-        $this->assertTrue($w->objects()->at(1)->material()->color()->equalTo(Color::from(1, 1, 1)));
-        $this->assertSame(0.1, $w->objects()->at(1)->material()->ambient());
-        $this->assertSame(0.9, $w->objects()->at(1)->material()->diffuse());
-        $this->assertSame(0.9, $w->objects()->at(1)->material()->specular());
-        $this->assertSame(200.0, $w->objects()->at(1)->material()->shininess());
+        $this->assertTrue($w->shapes()->at(1)->material()->color()->equalTo(Color::from(1, 1, 1)));
+        $this->assertSame(0.1, $w->shapes()->at(1)->material()->ambient());
+        $this->assertSame(0.9, $w->shapes()->at(1)->material()->diffuse());
+        $this->assertSame(0.9, $w->shapes()->at(1)->material()->specular());
+        $this->assertSame(200.0, $w->shapes()->at(1)->material()->shininess());
 
         $this->assertTrue($w->light()->position()->equalTo(Tuple::point(-10, 10, -10)));
         $this->assertTrue($w->light()->intensity()->equalTo(Color::from(1, 1, 1)));
@@ -77,7 +78,7 @@ final class WorldTest extends TestCase
     {
         $w = World::default();
         $r = Ray::from(Tuple::point(0, 0, -5), Tuple::vector(0, 0, 1));
-        $s = $w->objects()->at(0);
+        $s = $w->shapes()->at(0);
 
         $c = $w->shadeHit(Intersection::from(4.0, $s)->prepare($r));
 
@@ -95,7 +96,7 @@ final class WorldTest extends TestCase
         );
 
         $r = Ray::from(Tuple::point(0, 0, 0), Tuple::vector(0, 0, 1));
-        $s = $w->objects()->at(1);
+        $s = $w->shapes()->at(1);
 
         $c = $w->shadeHit(Intersection::from(0.5, $s)->prepare($r));
 
@@ -127,10 +128,10 @@ final class WorldTest extends TestCase
         $w = World::default();
         $r = Ray::from(Tuple::point(0, 0, 0.75), Tuple::vector(0, 0, -1));
 
-        $outer = $w->objects()->at(0);
+        $outer = $w->shapes()->at(0);
         $outer->material()->setAmbient(1);
 
-        $inner = $w->objects()->at(1);
+        $inner = $w->shapes()->at(1);
         $inner->material()->setAmbient(1);
 
         $c = $w->colorAt($r);
@@ -178,11 +179,11 @@ final class WorldTest extends TestCase
         $w = new World;
         $w->setLight(PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1)));
 
-        $s1 = new Sphere;
+        $s1 = Sphere::default();
         $w->add($s1);
 
-        $s2 = new Sphere;
-        $s2->setTransformation(Transformations::translation(0, 0, 10));
+        $s2 = Sphere::default();
+        $s2->setTransform(Transformations::translation(0, 0, 10));
         $w->add($s2);
 
         $ray   = Ray::from(Tuple::point(0, 0, 5), Tuple::vector(0, 0, 1));
