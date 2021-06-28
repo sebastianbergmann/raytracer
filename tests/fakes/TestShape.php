@@ -10,12 +10,12 @@ final class TestShape extends Shape
         return $this->savedRay;
     }
 
-    protected function localNormalAt(Tuple $point): Tuple
+    public function localNormalAt(Tuple $point): Tuple
     {
         return Tuple::vector($point->x(), $point->y(), $point->z());
     }
 
-    protected function localIntersect(Ray $ray): IntersectionCollection
+    public function localIntersect(Ray $ray): IntersectionCollection
     {
         $this->savedRay = $ray;
 

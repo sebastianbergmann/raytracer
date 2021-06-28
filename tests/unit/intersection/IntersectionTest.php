@@ -73,7 +73,7 @@ final class IntersectionTest extends TestCase
 
         $comps = Intersection::from(5, $shape)->prepare($ray);
 
-        $this->assertLessThan(-Intersection::EPSILON / 2, $comps->overPoint()->z());
+        $this->assertLessThan(-0.00001 / 2, $comps->overPoint()->z());
         $this->assertGreaterThan($comps->overPoint()->z(), $comps->point()->z());
     }
 }

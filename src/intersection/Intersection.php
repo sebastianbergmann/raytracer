@@ -6,8 +6,6 @@ namespace SebastianBergmann\Raytracer;
  */
 final class Intersection
 {
-    public const EPSILON = 0.00001;
-
     private float $t;
 
     private Shape $shape;
@@ -51,7 +49,7 @@ final class Intersection
             $normal = $normal->negate();
         }
 
-        $overPoint = $point->plus($normal->multiplyBy(self::EPSILON));
+        $overPoint = $point->plus($normal->multiplyBy(0.00001));
 
         return new PreparedComputation(
             $this->t,

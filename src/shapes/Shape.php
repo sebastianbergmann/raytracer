@@ -78,10 +78,10 @@ abstract class Shape
     /**
      * @psalm-mutation-free
      */
-    abstract protected function localIntersect(Ray $ray): IntersectionCollection;
+    abstract public function localIntersect(Ray $ray): IntersectionCollection;
 
     /**
      * @psalm-mutation-free
      */
-    abstract protected function localNormalAt(Tuple $point): Tuple;
+    abstract public function localNormalAt(Tuple $point): Tuple;
 }
