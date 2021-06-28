@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \SebastianBergmann\Raytracer\Plane
  *
  * @uses \SebastianBergmann\Raytracer\Color
+ * @uses \SebastianBergmann\Raytracer\Intersection
  * @uses \SebastianBergmann\Raytracer\IntersectionCollection
  * @uses \SebastianBergmann\Raytracer\Material
  * @uses \SebastianBergmann\Raytracer\Matrix
