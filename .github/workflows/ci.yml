@@ -29,8 +29,8 @@ jobs:
       - name: "Run vimeo/psalm"
         run: "./tools/psalm --config=.psalm/config.xml --no-progress --shepherd --show-info=false --stats"
 
-  tests:
-    name: "Tests"
+  unit-tests:
+    name: "Unit Tests"
 
     runs-on: "ubuntu-latest"
 
@@ -46,4 +46,25 @@ jobs:
           ini-values: memory_limit=-1, assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit=1255, opcache.jit_buffer_size=32M
 
       - name: "Run tests with phpunit/phpunit"
-        run: "./tools/phpunit --testdox"
+        run: "./tools/phpunit --testsuite unit --testdox"
+
+  integration-tests:
+    name: "Integration Tests"
+
+    needs: unit-tests
+
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Install PHP with extensions"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: '8.1'
+          coverage: none
+          ini-values: memory_limit=-1, assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit=1255, opcache.jit_buffer_size=32M
+
+      - name: "Run tests with phpunit/phpunit"
+        run: "./tools/phpunit --testsuite integration"
