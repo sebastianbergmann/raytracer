@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \SebastianBergmann\Raytracer\Material
  *
  * @uses \SebastianBergmann\Raytracer\Color
+ * @uses \SebastianBergmann\Raytracer\Matrix
  * @uses \SebastianBergmann\Raytracer\Pattern
  * @uses \SebastianBergmann\Raytracer\PointLight
  * @uses \SebastianBergmann\Raytracer\Tuple
