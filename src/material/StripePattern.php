@@ -17,16 +17,6 @@ final class StripePattern extends Pattern
         parent::__construct();
     }
 
-    public function a(): Color
-    {
-        return $this->a;
-    }
-
-    public function b(): Color
-    {
-        return $this->b;
-    }
-
     public function localPatternAt(Shape $object, Tuple $point): Color
     {
         if (floor($point->x()) % 2 === 0) {
