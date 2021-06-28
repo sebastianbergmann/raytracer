@@ -205,4 +205,35 @@ final class PuttingItTogetherTest extends TestCase
             (new PortablePixmapMapper)->map($canvas)
         );
     }
+
+    public function test_chapter_10(): void
+    {
+        $boing = Sphere::default();
+        $boing->setTransform(Transformations::translation(-0.5, 1, 0.5));
+        $boingMaterial = Material::default();
+        $boingPattern  = Pattern::checkers(Color::from(1, 1, 1), Color::from(1, 0, 0));
+        $boingPattern->setTransform(Transformations::scaling(0.5, 0.5, 0.5));
+        $boingMaterial->setPattern($boingPattern);
+        $boing->setMaterial($boingMaterial);
+
+        $world = new World;
+        $world->add($boing);
+        $world->setLight(PointLight::from(Tuple::point(-10, 10, -10), Color::from(1, 1, 1)));
+
+        $camera = Camera::from(100, 50, M_PI / 3);
+        $camera->setTransform(
+            Transformations::view(
+                Tuple::point(0, 1.5, -5),
+                Tuple::point(0, 1, 0),
+                Tuple::vector(0, 1, 0)
+            )
+        );
+
+        $canvas = $camera->render($world);
+
+        $this->assertStringEqualsFile(
+            __DIR__ . '/../fixture/chapter_10.ppm',
+            (new PortablePixmapMapper)->map($canvas)
+        );
+    }
 }

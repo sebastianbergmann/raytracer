@@ -17,7 +17,7 @@ This is example code that is not production-ready. It is intended for studying a
 - [X] Chapter 7: Making a Scene
 - [X] Chapter 8: Shadows
 - [X] Chapter 9: Planes
-- [ ] Chapter 10: Patterns
+- [X] Chapter 10: Patterns
 - [ ] Chapter 11: Reflection and Refraction
 - [ ] Chapter 12: Cubes
 - [ ] Chapter 13: Cylinders
