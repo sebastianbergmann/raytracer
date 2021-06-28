@@ -1,3 +1,8 @@
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg?style=flat-square)](https://php.net/)
+[![CI Status](https://github.com/sebastianbergmann/raytracer/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/sebastianbergmann/raytracer/actions)
+[![Type Coverage](https://shepherd.dev/github/sebastianbergmann/raytracer/coverage.svg)](https://shepherd.dev/github/sebastianbergmann/raytracer)
+
+
 # Raytracer
 
 Code written while reading the book "The Ray Tracer Challenge: A Test-Driven Guide to Your First 3D Renderer" by Jamis Buck.
