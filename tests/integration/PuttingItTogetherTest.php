@@ -35,6 +35,11 @@ final class PuttingItTogetherTest extends TestCase
         }
 
         $this->assertStringEqualsFile(
+            __DIR__ . '/../fixture/chapter_4.ansi',
+            (new AnsiMapper)->map($canvas)
+        );
+
+        $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_4.ppm',
             (new PortablePixmapMapper)->map($canvas)
         );
@@ -67,6 +72,11 @@ final class PuttingItTogetherTest extends TestCase
                 }
             }
         }
+
+        $this->assertStringEqualsFile(
+            __DIR__ . '/../fixture/chapter_5.ansi',
+            (new AnsiMapper)->map($canvas)
+        );
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_5.ppm',
@@ -116,6 +126,11 @@ final class PuttingItTogetherTest extends TestCase
                 }
             }
         }
+
+        $this->assertStringEqualsFile(
+            __DIR__ . '/../fixture/chapter_6.ansi',
+            (new AnsiMapper)->map($canvas)
+        );
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_6.ppm',
@@ -201,6 +216,11 @@ final class PuttingItTogetherTest extends TestCase
         $canvas = $camera->render($world);
 
         $this->assertStringEqualsFile(
+            __DIR__ . '/../fixture/chapter_8.ansi',
+            (new AnsiMapper)->map($canvas)
+        );
+
+        $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_8.ppm',
             (new PortablePixmapMapper)->map($canvas)
         );
@@ -230,6 +250,11 @@ final class PuttingItTogetherTest extends TestCase
         );
 
         $canvas = $camera->render($world);
+
+        $this->assertStringEqualsFile(
+            __DIR__ . '/../fixture/chapter_10.ansi',
+            (new AnsiMapper)->map($canvas)
+        );
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_10.ppm',
