@@ -12,7 +12,7 @@ final class AnsiMapper
 {
     public function map(Canvas $canvas, string $target): void
     {
-        $buffer = '';
+        $buffer = "\x1b[2J\x1b[H";
 
         foreach (range(1, $canvas->height(), 2) as $y) {
             foreach (range(1, $canvas->width()) as $x) {
