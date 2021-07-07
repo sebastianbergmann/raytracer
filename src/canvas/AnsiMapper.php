@@ -5,12 +5,9 @@ use const PHP_EOL;
 use function file_put_contents;
 use function sprintf;
 
-/**
- * @codeCoverageIgnore
- */
 final class AnsiMapper
 {
-    public function map(Canvas $canvas, string $target): void
+    public function map(Canvas $canvas): string
     {
         $buffer = "\x1b[2J\x1b[H";
 
@@ -33,9 +30,14 @@ final class AnsiMapper
             $buffer .= PHP_EOL;
         }
 
-        file_put_contents(
-            $target,
-            $buffer . "\x1b[0"
-        );
+        return $buffer . "\x1b[0";
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function mapToFile(Canvas $canvas, string $target): void
+    {
+        file_put_contents($target, $this->map($canvas));
     }
 }
