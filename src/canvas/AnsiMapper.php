@@ -35,7 +35,7 @@ final class AnsiMapper
 
         file_put_contents(
             $target,
-            $buffer
+            $buffer . "\x1b[0"
         );
     }
 }
