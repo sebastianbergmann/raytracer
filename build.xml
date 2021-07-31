@@ -2,14 +2,12 @@
 <project name="raytracer" default="generate-autoloader">
     <target name="generate-autoloader" description="Generate autoloader with PHPAB">
         <exec executable="${basedir}/tools/phpab" taskname="phpab">
-            <arg value="--static" />
             <arg value="--output" />
             <arg path="src/autoload.php" />
             <arg path="src" />
         </exec>
 
         <exec executable="${basedir}/tools/phpab" taskname="phpab">
-            <arg value="--static" />
             <arg value="--output" />
             <arg path="tests/autoload.php" />
             <arg path="tests/fakes" />
