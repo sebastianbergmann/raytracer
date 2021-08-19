@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use function iterator_to_array;
+use function range;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,8 +28,8 @@ final class CanvasTest extends TestCase
         $canvas = Canvas::from(10, 20, Color::from(0.0, 0.0, 0.0));
         $black  = Color::from(0.0, 0.0, 0.0);
 
-        for ($x = 1; $x <= 10; $x++) {
-            for ($y = 1; $y <= 20; $y++) {
+        foreach (range(1, 10) as $x) {
+            foreach (range(1, 20) as $y) {
                 $this->assertTrue($canvas->pixelAt($x, $y)->equalTo($black));
             }
         }
