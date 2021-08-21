@@ -72,3 +72,29 @@ jobs:
 
       - name: "Run integration tests with PHPUnit"
         run: "./tools/phpunit --testsuite integration"
+
+  code-coverage:
+    name: "Code Coverage"
+
+    needs: unit-tests
+
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Install PHP with extensions"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          ini-values: ${{ env.PHP_INI_VALUES }}
+          coverage: pcov
+
+      - name: "Collect code coverage with PHPUnit"
+        run: "./tools/phpunit --testsuite unit --coverage-clover coverage.xml"
+
+      - name: Send code coverage to Codecov.io
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage.xml
