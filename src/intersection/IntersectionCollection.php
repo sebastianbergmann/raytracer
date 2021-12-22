@@ -2,7 +2,6 @@
 namespace SebastianBergmann\Raytracer;
 
 use function array_merge;
-use function array_values;
 use function count;
 use function usort;
 use Countable;
@@ -42,7 +41,7 @@ final class IntersectionCollection implements Countable, IteratorAggregate
             }
         }
 
-        return new self(array_values($intersections), $hit);
+        return new self($intersections, $hit);
     }
 
     /**
