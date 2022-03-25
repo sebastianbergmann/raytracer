@@ -21,7 +21,6 @@ use PHPUnit\Framework\TestCase;
 final class MaterialTest extends TestCase
 {
     private Material $material;
-
     private Tuple $position;
 
     protected function setUp(): void

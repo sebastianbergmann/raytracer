@@ -7,7 +7,6 @@ use function sqrt;
 final class RingPattern extends Pattern
 {
     private Color $a;
-
     private Color $b;
 
     protected function __construct(Color $a, Color $b)

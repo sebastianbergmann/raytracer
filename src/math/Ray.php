@@ -7,7 +7,6 @@ namespace SebastianBergmann\Raytracer;
 final class Ray
 {
     private Tuple $origin;
-
     private Tuple $direction;
 
     /**

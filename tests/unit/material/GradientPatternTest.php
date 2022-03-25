@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 final class GradientPatternTest extends TestCase
 {
     private Color $black;
-
     private Color $white;
 
     protected function setUp(): void

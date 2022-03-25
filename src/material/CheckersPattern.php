@@ -4,7 +4,6 @@ namespace SebastianBergmann\Raytracer;
 final class CheckersPattern extends Pattern
 {
     private Color $a;
-
     private Color $b;
 
     protected function __construct(Color $a, Color $b)

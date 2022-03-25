@@ -10,11 +10,8 @@ use function sqrt;
 final class Tuple
 {
     private float $x;
-
     private float $y;
-
     private float $z;
-
     private float $w;
 
     /**

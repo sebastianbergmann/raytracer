@@ -7,7 +7,6 @@ namespace SebastianBergmann\Raytracer;
 final class Intersection
 {
     private float $t;
-
     private Shape $shape;
 
     /**

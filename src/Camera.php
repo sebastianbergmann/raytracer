@@ -7,21 +7,13 @@ use function tan;
 final class Camera
 {
     private int $horizontalSize;
-
     private int $verticalSize;
-
     private float $fieldOfView;
-
     private Matrix $transform;
-
     private float $halfView;
-
     private float $aspect;
-
     private float $cameraHalfWidth;
-
     private float $cameraHalfHeight;
-
     private float $pixelSize;
 
     public static function from(int $horizontalSize, int $verticalSize, float $fieldOfView): self

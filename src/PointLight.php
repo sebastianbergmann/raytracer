@@ -7,7 +7,6 @@ namespace SebastianBergmann\Raytracer;
 final class PointLight
 {
     private Tuple $position;
-
     private Color $intensity;
 
     public static function from(Tuple $position, Color $intensity): self

@@ -6,7 +6,6 @@ use function sqrt;
 final class Sphere extends Shape
 {
     private Tuple $origin;
-
     private float $radius = 1.0;
 
     protected function __construct(Matrix $transform, Material $material)

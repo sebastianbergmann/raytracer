@@ -10,7 +10,6 @@ final class ShapeCollectionIterator implements Iterator
      * @psalm-var list<Shape>
      */
     private array $shapes;
-
     private int $position = 0;
 
     public function __construct(ShapeCollection $shapes)

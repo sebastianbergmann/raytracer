@@ -20,7 +20,6 @@ use PHPUnit\Framework\TestCase;
 final class StripePatternTest extends TestCase
 {
     private Color $black;
-
     private Color $white;
 
     protected function setUp(): void

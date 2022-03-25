@@ -7,7 +7,6 @@ use IteratorAggregate;
 final class Canvas implements IteratorAggregate
 {
     private int $width;
-
     private int $height;
 
     /**

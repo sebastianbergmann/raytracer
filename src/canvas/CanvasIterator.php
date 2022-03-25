@@ -6,11 +6,8 @@ use Iterator;
 final class CanvasIterator implements Iterator
 {
     private Canvas $canvas;
-
     private int $x = 1;
-
     private int $y = 1;
-
     private int $p = 1;
 
     public function __construct(Canvas $canvas)

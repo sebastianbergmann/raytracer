@@ -7,17 +7,11 @@ namespace SebastianBergmann\Raytracer;
 final class PreparedComputation
 {
     private float $t;
-
     private Shape $shape;
-
     private Tuple $point;
-
     private Tuple $overPoint;
-
     private Tuple $eye;
-
     private Tuple $normal;
-
     private bool $inside;
 
     public function __construct(float $t, Shape $shape, Tuple $point, Tuple $overPoint, Tuple $eye, Tuple $normal, bool $inside)

@@ -6,7 +6,6 @@ use function floor;
 final class GradientPattern extends Pattern
 {
     private Color $a;
-
     private Color $b;
 
     protected function __construct(Color $a, Color $b)

@@ -4,7 +4,6 @@ namespace SebastianBergmann\Raytracer;
 final class World
 {
     private ShapeCollection $shapes;
-
     private ?PointLight $light = null;
 
     public static function default(): self

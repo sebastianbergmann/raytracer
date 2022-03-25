@@ -10,7 +10,6 @@ final class IntersectionCollectionIterator implements Iterator
      * @psalm-var list<Intersection>
      */
     private array $intersections;
-
     private int $position = 0;
 
     public function __construct(IntersectionCollection $intersections)

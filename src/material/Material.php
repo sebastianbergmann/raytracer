@@ -4,15 +4,10 @@ namespace SebastianBergmann\Raytracer;
 final class Material
 {
     private Color $color;
-
     private float $ambient;
-
     private float $diffuse;
-
     private float $specular;
-
     private float $shininess;
-
     private ?Pattern $pattern = null;
 
     public static function default(): self

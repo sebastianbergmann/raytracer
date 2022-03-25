@@ -16,7 +16,6 @@ final class IntersectionCollection implements Countable, IteratorAggregate
      * @psalm-var list<Intersection>
      */
     private array $intersections;
-
     private ?Intersection $hit;
 
     /**
@@ -26,7 +25,8 @@ final class IntersectionCollection implements Countable, IteratorAggregate
     {
         usort(
             $intersections,
-            static function (Intersection $a, Intersection $b): int {
+            static function (Intersection $a, Intersection $b): int
+            {
                 return $a->t() <=> $b->t();
             }
         );

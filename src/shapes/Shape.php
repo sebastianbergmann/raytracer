@@ -4,7 +4,6 @@ namespace SebastianBergmann\Raytracer;
 abstract class Shape
 {
     private Matrix $transform;
-
     private Material $material;
 
     public static function default(): static

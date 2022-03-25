@@ -10,9 +10,7 @@ use function floor;
 final class Color
 {
     private float $red;
-
     private float $green;
-
     private float $blue;
 
     public static function from(float $red, float $green, float $blue): self
