@@ -45,13 +45,15 @@ $config->setFinder($finder)
                 'yield',
             ],
         ],
-        'braces' => true,
+        'braces' => [
+            'position_after_anonymous_constructs' => 'next',
+        ],
         'cast_spaces' => true,
         'class_attributes_separation' => [
             'elements' => [
                 'const' => 'one',
                 'method' => 'one',
-                'property' => 'one'
+                'property' => 'only_if_meta'
             ]
         ],
         'class_definition' => true,
@@ -109,7 +111,10 @@ $config->setFinder($finder)
         'native_function_casing' => false,
         'native_function_invocation' => false,
         'native_function_type_declaration_casing' => true,
-        'new_with_braces' => false,
+        'new_with_braces' => [
+            'named_class' => false,
+            'anonymous_class' => false,
+        ],
         'no_alias_functions' => true,
         'no_alias_language_construct_call' => true,
         'no_alternative_syntax' => true,
