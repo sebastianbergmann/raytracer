@@ -38,11 +38,6 @@ final class World
         $this->shapes->add($shape);
     }
 
-    public function setShapes(ShapeCollection $shapes): void
-    {
-        $this->shapes = $shapes;
-    }
-
     public function shapes(): ShapeCollection
     {
         return $this->shapes;
