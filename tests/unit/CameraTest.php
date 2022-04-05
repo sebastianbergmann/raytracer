@@ -42,6 +42,10 @@ final class CameraTest extends TestCase
         $this->assertSame($verticalSize, $camera->verticalSize());
         $this->assertSame($fieldOfView, $camera->fieldOfView());
         $this->assertTrue($camera->transform()->equalTo(Matrix::identity(4)));
+        $this->assertEqualsWithDelta(0.999, $camera->halfView(), 0.001);
+        $this->assertEqualsWithDelta(1.333, $camera->aspect(), 0.001);
+        $this->assertEqualsWithDelta(0.999, $camera->cameraHalfWidth(), 0.001);
+        $this->assertSame(0.75, $camera->cameraHalfHeight());
     }
 
     public function test_the_pixel_size_for_a_horizontal_canvas(): void
