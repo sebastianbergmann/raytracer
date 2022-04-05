@@ -10,6 +10,6 @@ final class TestPattern extends Pattern
 
     public function localPatternAt(Shape $object, Tuple $point): Color
     {
-        return Color::from($point->x(), $point->y(), $point->z());
+        return Color::from($point->x, $point->y, $point->z);
     }
 }

@@ -28,8 +28,8 @@ final class PuttingItTogetherTest extends TestCase
             $rotation = Transformations::rotationAroundY($hour * (M_PI / 6));
             $point    = $rotation->multiplyBy($twelve);
 
-            $x = (int) round($point->x() * $radius + $canvasSize / 2);
-            $y = (int) round($point->z() * $radius + $canvasSize / 2);
+            $x = (int) round($point->x * $radius + $canvasSize / 2);
+            $y = (int) round($point->z * $radius + $canvasSize / 2);
 
             $canvas->writePixel($x, $y, $white);
         }

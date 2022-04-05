@@ -119,10 +119,10 @@ final class Matrix
         $result = [0.0, 0.0, 0.0, 0.0];
 
         foreach (range(0, 3) as $i) {
-            $result[$i] += $this->elements[$i][0] * $tuple->x();
-            $result[$i] += $this->elements[$i][1] * $tuple->y();
-            $result[$i] += $this->elements[$i][2] * $tuple->z();
-            $result[$i] += $this->elements[$i][3] * $tuple->w();
+            $result[$i] += $this->elements[$i][0] * $tuple->x;
+            $result[$i] += $this->elements[$i][1] * $tuple->y;
+            $result[$i] += $this->elements[$i][2] * $tuple->z;
+            $result[$i] += $this->elements[$i][3] * $tuple->w;
         }
 
         return Tuple::from(...$result);

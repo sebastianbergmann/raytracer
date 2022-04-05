@@ -9,10 +9,10 @@ use function sqrt;
  */
 final class Tuple
 {
-    private float $x;
-    private float $y;
-    private float $z;
-    private float $w;
+    public readonly float $x;
+    public readonly float $y;
+    public readonly float $z;
+    public readonly float $w;
 
     /**
      * @psalm-mutation-free
@@ -46,26 +46,6 @@ final class Tuple
         $this->w = $w;
     }
 
-    public function x(): float
-    {
-        return $this->x;
-    }
-
-    public function y(): float
-    {
-        return $this->y;
-    }
-
-    public function z(): float
-    {
-        return $this->z;
-    }
-
-    public function w(): float
-    {
-        return $this->w;
-    }
-
     public function isPoint(): bool
     {
         return $this->w === 1.0;
@@ -88,10 +68,10 @@ final class Tuple
         }
 
         return new self(
-            $this->x + $that->x(),
-            $this->y + $that->y(),
-            $this->z + $that->z(),
-            $this->w + $that->w()
+            $this->x + $that->x,
+            $this->y + $that->y,
+            $this->z + $that->z,
+            $this->w + $that->w
         );
     }
 
@@ -107,10 +87,10 @@ final class Tuple
         }
 
         return new self(
-            $this->x - $that->x(),
-            $this->y - $that->y(),
-            $this->z - $that->z(),
-            $this->w - $that->w()
+            $this->x - $that->x,
+            $this->y - $that->y,
+            $this->z - $that->z,
+            $this->w - $that->w
         );
     }
 
@@ -163,32 +143,32 @@ final class Tuple
 
     public function dot(self $that): float
     {
-        return $this->x * $that->x() +
-               $this->y * $that->y() +
-               $this->z * $that->z() +
-               $this->w * $that->w();
+        return $this->x * $that->x +
+               $this->y * $that->y +
+               $this->z * $that->z +
+               $this->w * $that->w;
     }
 
     public function cross(self $that): self
     {
         return self::vector(
-            $this->y * $that->z() - $this->z * $that->y(),
-            $this->z * $that->x() - $this->x * $that->z(),
-            $this->x * $that->y() - $this->y * $that->x()
+            $this->y * $that->z - $this->z * $that->y,
+            $this->z * $that->x - $this->x * $that->z,
+            $this->x * $that->y - $this->y * $that->x
         );
     }
 
     public function equalTo(self $that, float $delta = 0.00000000000001): bool
     {
-        if (abs($this->x - $that->x()) > $delta) {
+        if (abs($this->x - $that->x) > $delta) {
             return false;
         }
 
-        if (abs($this->y - $that->y()) > $delta) {
+        if (abs($this->y - $that->y) > $delta) {
             return false;
         }
 
-        if (abs($this->z - $that->z()) > $delta) {
+        if (abs($this->z - $that->z) > $delta) {
             return false;
         }
 

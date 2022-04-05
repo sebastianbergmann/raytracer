@@ -12,13 +12,13 @@ final class Plane extends Shape
      */
     public function localIntersect(Ray $ray): IntersectionCollection
     {
-        if (abs($ray->direction()->y()) < 0.00001) {
+        if (abs($ray->direction()->y) < 0.00001) {
             return IntersectionCollection::from();
         }
 
         return IntersectionCollection::from(
             Intersection::from(
-                -$ray->origin()->y() / $ray->direction()->y(),
+                -$ray->origin()->y / $ray->direction()->y,
                 $this
             )
         );

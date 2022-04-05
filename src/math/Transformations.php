@@ -93,13 +93,13 @@ final class Transformations
 
         $orientation = Matrix::fromArray(
             [
-                [$left->x(), $left->y(), $left->z(), 0],
-                [$trueUp->x(), $trueUp->y(), $trueUp->z(), 0],
-                [-$forward->x(), -$forward->y(), -$forward->z(), 0],
+                [$left->x, $left->y, $left->z, 0],
+                [$trueUp->x, $trueUp->y, $trueUp->z, 0],
+                [-$forward->x, -$forward->y, -$forward->z, 0],
                 [0, 0, 0, 1],
             ]
         );
 
-        return $orientation->multiply(self::translation(-$from->x(), -$from->y(), -$from->z()));
+        return $orientation->multiply(self::translation(-$from->x, -$from->y, -$from->z));
     }
 }

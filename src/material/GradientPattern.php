@@ -19,7 +19,7 @@ final class GradientPattern extends Pattern
     public function localPatternAt(Shape $object, Tuple $point): Color
     {
         $distance = $this->b->minus($this->a);
-        $fraction = $point->x() - floor($point->x());
+        $fraction = $point->x - floor($point->x);
 
         return $this->a->plus($distance->multiplyBy($fraction));
     }

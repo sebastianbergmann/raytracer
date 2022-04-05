@@ -19,7 +19,7 @@ final class RingPattern extends Pattern
 
     public function localPatternAt(Shape $object, Tuple $point): Color
     {
-        if (floor(sqrt($point->x() ** 2 + $point->z() ** 2)) % 2 === 0) {
+        if (floor(sqrt($point->x ** 2 + $point->z ** 2)) % 2 === 0) {
             return $this->a;
         }
 

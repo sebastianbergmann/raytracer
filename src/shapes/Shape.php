@@ -71,7 +71,7 @@ abstract class Shape
         $localNormal = $this->localNormalAt($localPoint);
         $worldNormal = $this->transform->inverse()->transpose()->multiplyBy($localNormal);
 
-        return Tuple::vector($worldNormal->x(), $worldNormal->y(), $worldNormal->z())->normalize();
+        return Tuple::vector($worldNormal->x, $worldNormal->y, $worldNormal->z)->normalize();
     }
 
     /**

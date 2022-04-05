@@ -58,6 +58,6 @@ final class Sphere extends Shape
      */
     public function localNormalAt(Tuple $point): Tuple
     {
-        return Tuple::vector($point->x(), $point->y(), $point->z());
+        return Tuple::vector($point->x, $point->y, $point->z);
     }
 }
