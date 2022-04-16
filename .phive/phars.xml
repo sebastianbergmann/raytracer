@@ -5,4 +5,5 @@
   <phar name="psalm" version="^4.22" installed="4.22.0" location="./tools/psalm" copy="true"/>
   <phar name="phpunit" version="^9.5" installed="9.5.20" location="./tools/phpunit" copy="true"/>
   <phar name="infection" version="^0.26" installed="0.26.6" location="./tools/infection" copy="true"/>
+  <phar name="phpbench" version="^1.2" installed="1.2.5" location="./tools/phpbench" copy="true"/>
 </phive>
