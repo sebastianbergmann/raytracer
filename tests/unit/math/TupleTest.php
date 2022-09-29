@@ -180,6 +180,7 @@ final class TupleTest extends TestCase
 
     /**
      * @dataProvider magnitudeProvider
+     *
      * @testdox The magnitude of vector ($x, $y, $z) is calculated to be $magnitude
      */
     public function test_the_magnitude_of_a_vector_can_be_calculated(float $magnitude, float $x, float $y, float $z): void
@@ -200,6 +201,7 @@ final class TupleTest extends TestCase
 
     /**
      * @dataProvider normalizationProvider
+     *
      * @testdox The vector ($x1, $y1, $z1) is normalized to ($x2, $y2, $z2)
      */
     public function test_a_vector_can_be_normalized(float $x1, float $y1, float $z1, float $x2, float $y2, float $z2): void
