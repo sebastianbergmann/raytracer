@@ -40,7 +40,7 @@ final class MaterialTest extends TestCase
 
     public function test_color_can_be_changed(): void
     {
-        $color = Color::from(0, 0, 0, );
+        $color = Color::from(0, 0, 0);
 
         $this->material->setColor($color);
 

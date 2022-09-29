@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function floor;
+
 final class CheckersPattern extends Pattern
 {
     private Color $a;

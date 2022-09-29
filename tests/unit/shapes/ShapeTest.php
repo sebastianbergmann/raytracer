@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use const M_PI;
+use function sqrt;
 use PHPUnit\Framework\TestCase;
 
 /**

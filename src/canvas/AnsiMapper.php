@@ -3,6 +3,7 @@ namespace SebastianBergmann\Raytracer;
 
 use const PHP_EOL;
 use function file_put_contents;
+use function range;
 use function sprintf;
 
 final class AnsiMapper
