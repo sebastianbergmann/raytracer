@@ -52,14 +52,14 @@ final class CameraTest extends TestCase
     {
         $camera = Camera::from(200, 125, M_PI_2);
 
-        $this->assertSame(0.01, $camera->pixelSize());
+        $this->assertEqualsWithDelta(0.01, $camera->pixelSize(), 0.00000000000000001);
     }
 
     public function test_the_pixel_size_for_a_vertical_canvas(): void
     {
         $camera = Camera::from(125, 200, M_PI_2);
 
-        $this->assertSame(0.01, $camera->pixelSize());
+        $this->assertEqualsWithDelta(0.01, $camera->pixelSize(), 0.00000000000000001);
     }
 
     public function test_constructing_a_ray_through_the_center_of_the_canvas(): void

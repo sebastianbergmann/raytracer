@@ -50,9 +50,9 @@ final class ColorTest extends TestCase
 
         $c3 = $c1->minus($c2);
 
-        $this->assertSame(0.2, $c3->red());
-        $this->assertSame(0.5, $c3->green());
-        $this->assertSame(0.5, $c3->blue());
+        $this->assertEqualsWithDelta(0.2, $c3->red(), 0.0000000000000001);
+        $this->assertEqualsWithDelta(0.5, $c3->green(), 0.0000000000000001);
+        $this->assertEqualsWithDelta(0.5, $c3->blue(), 0.0000000000000001);
     }
 
     public function test_can_be_multiplied_by_a_scalar(): void
@@ -73,9 +73,9 @@ final class ColorTest extends TestCase
 
         $c3 = $c1->product($c2);
 
-        $this->assertSame(0.9, $c3->red());
-        $this->assertSame(0.2, $c3->green());
-        $this->assertSame(0.04, $c3->blue());
+        $this->assertEqualsWithDelta(0.9, $c3->red(), 0.00000000000000001);
+        $this->assertEqualsWithDelta(0.2, $c3->green(), 0.00000000000000001);
+        $this->assertEqualsWithDelta(0.04, $c3->blue(), 0.00000000000000001);
     }
 
     public function test_can_be_compared_to_another_color(): void
