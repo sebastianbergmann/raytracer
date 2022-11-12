@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phive xmlns="https://phar.io/phive">
   <phar name="phpab" version="^1.27" installed="1.27.1" location="./tools/phpab" copy="true"/>
-  <phar name="php-cs-fixer" version="^3.8" installed="3.11.0" location="./tools/php-cs-fixer" copy="true"/>
-  <phar name="psalm" version="^4.22" installed="4.27.0" location="./tools/psalm" copy="true"/>
-  <phar name="phpunit" version="^9.5" installed="9.5.25" location="./tools/phpunit" copy="true"/>
-  <phar name="infection" version="^0.26" installed="0.26.15" location="./tools/infection" copy="true"/>
+  <phar name="php-cs-fixer" version="^3.8" installed="3.13.0" location="./tools/php-cs-fixer" copy="true"/>
+  <phar name="psalm" version="^4.22" installed="4.30.0" location="./tools/psalm" copy="true"/>
+  <phar name="phpunit" version="^9.5" installed="9.5.26" location="./tools/phpunit" copy="true"/>
+  <phar name="infection" version="^0.26" installed="0.26.16" location="./tools/infection" copy="true"/>
   <phar name="phpbench" version="^1.2" installed="1.2.5" location="./tools/phpbench" copy="true"/>
 </phive>
