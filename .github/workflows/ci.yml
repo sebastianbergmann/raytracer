@@ -5,7 +5,7 @@ on:
 name: "CI"
 
 env:
-  PHP_VERSION: "8.1"
+  PHP_VERSION: "8.2"
   PHP_INI_VALUES: memory_limit=-1, assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit=1255, opcache.jit_buffer_size=32M
 
 jobs:
