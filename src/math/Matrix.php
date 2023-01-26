@@ -127,7 +127,12 @@ final class Matrix
             $result[$i] += $this->elements[$i][3] * $tuple->w;
         }
 
-        return Tuple::from(...$result);
+        return Tuple::from(
+            $result[0],
+            $result[1],
+            $result[2],
+            $result[3]
+        );
     }
 
     public function divideAllElementsBy(float $divisor): self
