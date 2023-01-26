@@ -8,6 +8,8 @@ use Countable;
 use IteratorAggregate;
 
 /**
+ * @template-implements IteratorAggregate<int, Intersection>
+ *
  * @psalm-immutable
  */
 final class IntersectionCollection implements Countable, IteratorAggregate

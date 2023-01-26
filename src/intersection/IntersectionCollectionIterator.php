@@ -4,6 +4,9 @@ namespace SebastianBergmann\Raytracer;
 use function count;
 use Iterator;
 
+/**
+ * @template-implements Iterator<int, Intersection>
+ */
 final class IntersectionCollectionIterator implements Iterator
 {
     /**

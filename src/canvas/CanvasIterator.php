@@ -3,6 +3,9 @@ namespace SebastianBergmann\Raytracer;
 
 use Iterator;
 
+/**
+ * @template-implements Iterator<int, Color>
+ */
 final class CanvasIterator implements Iterator
 {
     private Canvas $canvas;

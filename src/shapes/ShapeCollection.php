@@ -5,6 +5,9 @@ use function count;
 use Countable;
 use IteratorAggregate;
 
+/**
+ * @template-implements IteratorAggregate<int, Shape>
+ */
 final class ShapeCollection implements Countable, IteratorAggregate
 {
     /**

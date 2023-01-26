@@ -4,6 +4,9 @@ namespace SebastianBergmann\Raytracer;
 use function range;
 use IteratorAggregate;
 
+/**
+ * @template-implements IteratorAggregate<int, Color>
+ */
 final class Canvas implements IteratorAggregate
 {
     private int $width;
