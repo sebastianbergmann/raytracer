@@ -11,6 +11,25 @@ use PHPUnit\Framework\TestCase;
  */
 final class TupleTest extends TestCase
 {
+    public static function magnitudeProvider(): array
+    {
+        return [
+            [1.0, 1.0, 0.0, 0.0],
+            [1.0, 0.0, 1.0, 0.0],
+            [1.0, 0.0, 0.0, 1.0],
+            [sqrt(14), 1.0, 2.0, 3.0],
+            [sqrt(14), -1.0, -2.0, -3.0],
+        ];
+    }
+
+    public static function normalizationProvider(): array
+    {
+        return [
+            [4.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+            [1.0, 2.0, 3.0, 1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14)],
+        ];
+    }
+
     /**
      * @testdox A tuple with w=1.0 is a point
      */
@@ -188,17 +207,6 @@ final class TupleTest extends TestCase
         $this->assertSame($magnitude, Tuple::vector($x, $y, $z)->magnitude());
     }
 
-    public function magnitudeProvider(): array
-    {
-        return [
-            [1.0, 1.0, 0.0, 0.0],
-            [1.0, 0.0, 1.0, 0.0],
-            [1.0, 0.0, 0.0, 1.0],
-            [sqrt(14), 1.0, 2.0, 3.0],
-            [sqrt(14), -1.0, -2.0, -3.0],
-        ];
-    }
-
     /**
      * @dataProvider normalizationProvider
      *
@@ -212,14 +220,6 @@ final class TupleTest extends TestCase
         $this->assertSame($y2, $n->y);
         $this->assertSame($z2, $n->z);
         $this->assertSame(1.0, $n->magnitude());
-    }
-
-    public function normalizationProvider(): array
-    {
-        return [
-            [4.0, 0.0, 0.0, 1.0, 0.0, 0.0],
-            [1.0, 2.0, 3.0, 1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14)],
-        ];
     }
 
     public function test_the_dot_product_of_two_vectors_can_be_calculated(): void
