@@ -15,7 +15,7 @@ final class MatrixTest extends TestCase
     public static function matrixInversionProvider(): array
     {
         return [
-            '4x4 matrix' => [
+            '4x4 matrix'             => [
                 Matrix::fromArray(
                     [
                         [0.21805, 0.45113, 0.24060, -0.04511],
@@ -33,7 +33,7 @@ final class MatrixTest extends TestCase
                     ]
                 ),
             ],
-            'another 4x4 matrix' => [
+            'another 4x4 matrix'     => [
                 Matrix::fromArray(
                     [
                         [-0.15385, -0.15385, -0.28205, -0.53846],
