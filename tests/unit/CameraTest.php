@@ -4,30 +4,29 @@ namespace SebastianBergmann\Raytracer;
 use const M_PI_2;
 use const M_PI_4;
 use function sqrt;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Camera
- *
- * @uses \SebastianBergmann\Raytracer\Canvas
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\Intersection
- * @uses \SebastianBergmann\Raytracer\IntersectionCollection
- * @uses \SebastianBergmann\Raytracer\Material
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\PointLight
- * @uses \SebastianBergmann\Raytracer\PreparedComputation
- * @uses \SebastianBergmann\Raytracer\Ray
- * @uses \SebastianBergmann\Raytracer\Shape
- * @uses \SebastianBergmann\Raytracer\ShapeCollection
- * @uses \SebastianBergmann\Raytracer\ShapeCollectionIterator
- * @uses \SebastianBergmann\Raytracer\Sphere
- * @uses \SebastianBergmann\Raytracer\Transformations
- * @uses \SebastianBergmann\Raytracer\Tuple
- * @uses \SebastianBergmann\Raytracer\World
- *
- * @small
- */
+#[CoversClass(Camera::class)]
+#[UsesClass(Canvas::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(Intersection::class)]
+#[UsesClass(IntersectionCollection::class)]
+#[UsesClass(Material::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(PointLight::class)]
+#[UsesClass(PreparedComputation::class)]
+#[UsesClass(Ray::class)]
+#[UsesClass(Shape::class)]
+#[UsesClass(ShapeCollection::class)]
+#[UsesClass(ShapeCollectionIterator::class)]
+#[UsesClass(Sphere::class)]
+#[UsesClass(Transformations::class)]
+#[UsesClass(Tuple::class)]
+#[UsesClass(World::class)]
+#[Small]
 final class CameraTest extends TestCase
 {
     public function test_constructing_a_camera(): void

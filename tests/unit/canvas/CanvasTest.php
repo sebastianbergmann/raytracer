@@ -3,16 +3,15 @@ namespace SebastianBergmann\Raytracer;
 
 use function iterator_to_array;
 use function range;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Canvas
- * @covers \SebastianBergmann\Raytracer\CanvasIterator
- *
- * @uses \SebastianBergmann\Raytracer\Color
- *
- * @small
- */
+#[CoversClass(Canvas::class)]
+#[CoversClass(CanvasIterator::class)]
+#[UsesClass(Color::class)]
+#[Small]
 final class CanvasTest extends TestCase
 {
     public function test_has_width_and_height(): void

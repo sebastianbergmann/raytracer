@@ -1,22 +1,21 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Intersection
- * @covers \SebastianBergmann\Raytracer\IntersectionCollection
- * @covers \SebastianBergmann\Raytracer\IntersectionCollectionIterator
- *
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\Material
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\Shape
- * @uses \SebastianBergmann\Raytracer\Sphere
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Intersection::class)]
+#[CoversClass(IntersectionCollection::class)]
+#[CoversClass(IntersectionCollectionIterator::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(Material::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(Shape::class)]
+#[UsesClass(Sphere::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class IntersectionCollectionTest extends TestCase
 {
     public function test_aggregating_intersections(): void

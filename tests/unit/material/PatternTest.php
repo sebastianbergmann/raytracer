@@ -1,21 +1,20 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Pattern
- *
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\Material
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\Shape
- * @uses \SebastianBergmann\Raytracer\Sphere
- * @uses \SebastianBergmann\Raytracer\Transformations
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Pattern::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(Material::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(Shape::class)]
+#[UsesClass(Sphere::class)]
+#[UsesClass(Transformations::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class PatternTest extends TestCase
 {
     public function test_the_default_pattern_transformation(): void

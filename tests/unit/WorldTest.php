@@ -1,28 +1,28 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\World
- *
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\Intersection
- * @uses \SebastianBergmann\Raytracer\IntersectionCollection
- * @uses \SebastianBergmann\Raytracer\Material
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\PointLight
- * @uses \SebastianBergmann\Raytracer\PreparedComputation
- * @uses \SebastianBergmann\Raytracer\Ray
- * @uses \SebastianBergmann\Raytracer\Shape
- * @uses \SebastianBergmann\Raytracer\ShapeCollection
- * @uses \SebastianBergmann\Raytracer\ShapeCollectionIterator
- * @uses \SebastianBergmann\Raytracer\Sphere
- * @uses \SebastianBergmann\Raytracer\Transformations
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(World::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(Intersection::class)]
+#[UsesClass(IntersectionCollection::class)]
+#[UsesClass(Material::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(PointLight::class)]
+#[UsesClass(PreparedComputation::class)]
+#[UsesClass(Ray::class)]
+#[UsesClass(Shape::class)]
+#[UsesClass(ShapeCollection::class)]
+#[UsesClass(ShapeCollectionIterator::class)]
+#[UsesClass(Sphere::class)]
+#[UsesClass(Transformations::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class WorldTest extends TestCase
 {
     public function test_creating_a_world(): void
@@ -171,9 +171,7 @@ final class WorldTest extends TestCase
         $this->assertFalse($w->isShadowed($p));
     }
 
-    /**
-     * @testdox shadeHit() is given an intersection in shadow
-     */
+    #[TestDox('shadeHit() is given an intersection in shadow')]
     public function test_shadeHit_is_given_an_intersection_in_shadow(): void
     {
         $w = new World;

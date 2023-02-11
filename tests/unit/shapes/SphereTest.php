@@ -2,23 +2,22 @@
 namespace SebastianBergmann\Raytracer;
 
 use function sqrt;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Sphere
- *
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\Intersection
- * @uses \SebastianBergmann\Raytracer\IntersectionCollection
- * @uses \SebastianBergmann\Raytracer\Material
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\Ray
- * @uses \SebastianBergmann\Raytracer\Shape
- * @uses \SebastianBergmann\Raytracer\Transformations
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Sphere::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(Intersection::class)]
+#[UsesClass(IntersectionCollection::class)]
+#[UsesClass(Material::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(Ray::class)]
+#[UsesClass(Shape::class)]
+#[UsesClass(Transformations::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class SphereTest extends TestCase
 {
     public function test_creating_and_querying_a_sphere(): void

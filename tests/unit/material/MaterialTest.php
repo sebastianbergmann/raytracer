@@ -2,22 +2,22 @@
 namespace SebastianBergmann\Raytracer;
 
 use function sqrt;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Material
- *
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\Pattern
- * @uses \SebastianBergmann\Raytracer\PointLight
- * @uses \SebastianBergmann\Raytracer\Shape
- * @uses \SebastianBergmann\Raytracer\Sphere
- * @uses \SebastianBergmann\Raytracer\StripePattern
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Material::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(Pattern::class)]
+#[UsesClass(PointLight::class)]
+#[UsesClass(Shape::class)]
+#[UsesClass(Sphere::class)]
+#[UsesClass(StripePattern::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class MaterialTest extends TestCase
 {
     private Material $material;
@@ -94,9 +94,7 @@ final class MaterialTest extends TestCase
         $this->assertTrue($result->equalTo(Color::from(1.9, 1.9, 1.9)));
     }
 
-    /**
-     * @testdox Lighting with the eye between the light and the surface, eye offset 45°
-     */
+    #[TestDox('Lighting with the eye between the light and the surface, eye offset 45°')]
     public function test_lighting_with_the_eye_between_the_light_and_the_surface_eye_offset_45_degrees(): void
     {
         $eye    = Tuple::vector(0, sqrt(2) / 2, -sqrt(2) / 2);
@@ -108,9 +106,7 @@ final class MaterialTest extends TestCase
         $this->assertTrue($result->equalTo(Color::from(1.0, 1.0, 1.0)));
     }
 
-    /**
-     * @testdox Lighting with the eye opposite the surface, light offset 45°
-     */
+    #[TestDox('Lighting with the eye opposite the surface, light offset 45°')]
     public function test_lighting_with_the_eye_opposite_the_surface_light_offset_45_degrees(): void
     {
         $eye    = Tuple::vector(0, 0, -1);

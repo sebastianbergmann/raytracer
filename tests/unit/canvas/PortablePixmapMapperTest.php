@@ -1,17 +1,16 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\PortablePixmapMapper
- *
- * @uses \SebastianBergmann\Raytracer\Canvas
- * @uses \SebastianBergmann\Raytracer\CanvasIterator
- * @uses \SebastianBergmann\Raytracer\Color
- *
- * @small
- */
+#[CoversClass(PortablePixmapMapper::class)]
+#[UsesClass(Canvas::class)]
+#[UsesClass(CanvasIterator::class)]
+#[UsesClass(Color::class)]
+#[Small]
 final class PortablePixmapMapperTest extends TestCase
 {
     public function test_can_map_Canvas_to_PPM_string(): void

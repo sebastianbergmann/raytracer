@@ -1,16 +1,15 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\AnsiMapper
- *
- * @uses \SebastianBergmann\Raytracer\Canvas
- * @uses \SebastianBergmann\Raytracer\Color
- *
- * @small
- */
+#[CoversClass(AnsiMapper::class)]
+#[UsesClass(Canvas::class)]
+#[UsesClass(Color::class)]
+#[Small]
 final class AnsiMapperTest extends TestCase
 {
     public function test_can_map_Canvas_to_ANSI_string(): void

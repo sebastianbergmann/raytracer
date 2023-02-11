@@ -1,13 +1,12 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- *
- * @medium
- */
+#[Medium]
+#[CoversNothing]
 final class PuttingItTogetherTest extends TestCase
 {
     public function test_chapter_4(): void

@@ -1,22 +1,21 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Plane
- *
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\Intersection
- * @uses \SebastianBergmann\Raytracer\IntersectionCollection
- * @uses \SebastianBergmann\Raytracer\Material
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\Ray
- * @uses \SebastianBergmann\Raytracer\Shape
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Plane::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(Intersection::class)]
+#[UsesClass(IntersectionCollection::class)]
+#[UsesClass(Material::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(Ray::class)]
+#[UsesClass(Shape::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class PlaneTest extends TestCase
 {
     public function test_the_normal_of_a_plane_is_constant_everywhere(): void

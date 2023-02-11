@@ -1,16 +1,15 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\PointLight
- *
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(PointLight::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class PointLightTest extends TestCase
 {
     public function test_a_point_light_has_a_position_and_intensity(): void

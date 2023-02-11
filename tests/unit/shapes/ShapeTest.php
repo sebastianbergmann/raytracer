@@ -3,21 +3,20 @@ namespace SebastianBergmann\Raytracer;
 
 use const M_PI;
 use function sqrt;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Shape
- *
- * @uses \SebastianBergmann\Raytracer\Color
- * @uses \SebastianBergmann\Raytracer\IntersectionCollection
- * @uses \SebastianBergmann\Raytracer\Material
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\Ray
- * @uses \SebastianBergmann\Raytracer\Transformations
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Shape::class)]
+#[UsesClass(Color::class)]
+#[UsesClass(IntersectionCollection::class)]
+#[UsesClass(Material::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(Ray::class)]
+#[UsesClass(Transformations::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class ShapeTest extends TestCase
 {
     public function test_the_default_transformation(): void

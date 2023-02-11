@@ -1,18 +1,16 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Color
- *
- * @small
- */
+#[CoversClass(Color::class)]
+#[Small]
 final class ColorTest extends TestCase
 {
-    /**
-     * @testdox Colors are (red, green, blue) tuples
-     */
+    #[TestDox('Colors are (red, green, blue) tuples')]
     public function test_colors_are_red_green_blue_tuples(): void
     {
         $c = Color::from(-0.5, 0.4, 1.7);

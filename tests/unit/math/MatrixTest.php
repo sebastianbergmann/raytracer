@@ -1,15 +1,16 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Matrix
- *
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Matrix::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class MatrixTest extends TestCase
 {
     public static function matrixInversionProvider(): array
@@ -467,9 +468,7 @@ final class MatrixTest extends TestCase
         $this->assertTrue($a->invertible());
     }
 
-    /**
-     * @testdox A non-invertible matrix is recognized as non-invertible
-     */
+    #[TestDox('A non-invertible matrix is recognized as non-invertible')]
     public function test_a_noninvertible_matrix_is_recognized_as_noninvertible(): void
     {
         $a = Matrix::fromArray(
@@ -485,9 +484,7 @@ final class MatrixTest extends TestCase
         $this->assertFalse($a->invertible());
     }
 
-    /**
-     * @dataProvider matrixInversionProvider
-     */
+    #[DataProvider('matrixInversionProvider')]
     public function test_the_inverse_of_a_matrix_can_be_calculated_for(Matrix $expected, Matrix $matrix): void
     {
         $this->assertTrue($matrix->inverse()->equalTo($expected, 0.01));

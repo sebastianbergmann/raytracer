@@ -2,13 +2,14 @@
 namespace SebastianBergmann\Raytracer;
 
 use function sqrt;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Tuple::class)]
+#[Small]
 final class TupleTest extends TestCase
 {
     public static function magnitudeProvider(): array
@@ -30,9 +31,7 @@ final class TupleTest extends TestCase
         ];
     }
 
-    /**
-     * @testdox A tuple with w=1.0 is a point
-     */
+    #[TestDox('A tuple with w=1.0 is a point')]
     public function test_a_tuple_with_w_equal_to_one_is_a_point(): void
     {
         $p = Tuple::point(4.3, -4.2, 3.1);
@@ -45,9 +44,7 @@ final class TupleTest extends TestCase
         $this->assertFalse($p->isVector());
     }
 
-    /**
-     * @testdox A tuple with w=0.0 is a vector
-     */
+    #[TestDox('A tuple with w=0.0 is a vector')]
     public function test_a_tuple_with_w_equal_to_zero_is_a_vector(): void
     {
         $v = Tuple::vector(4.3, -4.2, 3.1);
@@ -60,9 +57,7 @@ final class TupleTest extends TestCase
         $this->assertTrue($v->isVector());
     }
 
-    /**
-     * @testdox A tuple with w!=1.0 and w!=0.0 is neither a point nor a vector
-     */
+    #[TestDox('A tuple with w!=1.0 and w!=0.0 is neither a point nor a vector')]
     public function test_can_be_generic(): void
     {
         $t = Tuple::from(1.0, -2.0, 3.0, -4.0);
@@ -197,21 +192,15 @@ final class TupleTest extends TestCase
         $this->assertSame(-2.0, $t2->w);
     }
 
-    /**
-     * @dataProvider magnitudeProvider
-     *
-     * @testdox The magnitude of vector ($x, $y, $z) is calculated to be $magnitude
-     */
+    #[DataProvider('magnitudeProvider')]
+    #[TestDox('The magnitude of vector ($x, $y, $z) is calculated to be $magnitude')]
     public function test_the_magnitude_of_a_vector_can_be_calculated(float $magnitude, float $x, float $y, float $z): void
     {
         $this->assertSame($magnitude, Tuple::vector($x, $y, $z)->magnitude());
     }
 
-    /**
-     * @dataProvider normalizationProvider
-     *
-     * @testdox The vector ($x1, $y1, $z1) is normalized to ($x2, $y2, $z2)
-     */
+    #[DataProvider('normalizationProvider')]
+    #[TestDox('The vector ($x1, $y1, $z1) is normalized to ($x2, $y2, $z2)')]
     public function test_a_vector_can_be_normalized(float $x1, float $y1, float $z1, float $x2, float $y2, float $z2): void
     {
         $n = Tuple::vector($x1, $y1, $z1)->normalize();
@@ -259,9 +248,7 @@ final class TupleTest extends TestCase
         $this->assertFalse($p1->equalTo($p4));
     }
 
-    /**
-     * @testdox Reflecting a vector approaching at 45°
-     */
+    #[TestDox('Reflecting a vector approaching at 45°')]
     public function test_reflecting_a_vector_approaching_at_45_degrees(): void
     {
         $v = Tuple::vector(1, -1, 0);

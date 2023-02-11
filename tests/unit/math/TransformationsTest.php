@@ -4,16 +4,15 @@ namespace SebastianBergmann\Raytracer;
 use const M_PI_2;
 use const M_PI_4;
 use function sqrt;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Transformations
- *
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Transformations::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class TransformationsTest extends TestCase
 {
     public function test_multiplying_a_point_by_a_translation_matrix_moves_the_point(): void

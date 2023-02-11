@@ -1,17 +1,16 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Raytracer\Ray
- *
- * @uses \SebastianBergmann\Raytracer\Matrix
- * @uses \SebastianBergmann\Raytracer\Transformations
- * @uses \SebastianBergmann\Raytracer\Tuple
- *
- * @small
- */
+#[CoversClass(Ray::class)]
+#[UsesClass(Matrix::class)]
+#[UsesClass(Transformations::class)]
+#[UsesClass(Tuple::class)]
+#[Small]
 final class RayTest extends TestCase
 {
     public function test_creating_and_querying_a_ray(): void
