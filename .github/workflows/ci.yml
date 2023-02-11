@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
 
       - name: "Check coding guidelines with PHP-CS-Fixer"
         run: "./tools/php-cs-fixer fix --dry-run --show-progress=dots --using-cache=no --verbose"
@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
 
       - name: "Check types with Psalm"
         run: "./tools/psalm --config=.psalm/config.xml --no-progress --shepherd --show-info=false --stats"
@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
 
       - name: "Install PHP with extensions"
         uses: "shivammathur/setup-php@v2"
@@ -61,7 +61,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
 
       - name: "Install PHP with extensions"
         uses: "shivammathur/setup-php@v2"
@@ -82,7 +82,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
 
       - name: "Install PHP with extensions"
         uses: "shivammathur/setup-php@v2"
