@@ -3,7 +3,7 @@
   <phar name="phpab" version="^1.27" installed="1.27.2" location="./tools/phpab" copy="true"/>
   <phar name="php-cs-fixer" version="^3.8" installed="3.16.0" location="./tools/php-cs-fixer" copy="true"/>
   <phar name="psalm" version="^5.6" installed="5.9.0" location="./tools/psalm" copy="true"/>
-  <phar name="phpunit" version="^10.0" installed="10.1.0" location="./tools/phpunit" copy="true"/>
+  <phar name="phpunit" version="^10.0" installed="10.1.1" location="./tools/phpunit" copy="true"/>
   <phar name="infection" version="^0.26" installed="0.26.20" location="./tools/infection" copy="true"/>
   <phar name="phpbench" version="^1.2" installed="1.2.10" location="./tools/phpbench" copy="true"/>
 </phive>
