@@ -10,7 +10,7 @@ final class World
     {
         $light = PointLight::from(
             Tuple::point(-10, 10, -10),
-            Color::from(1, 1, 1)
+            Color::from(1, 1, 1),
         );
 
         $s1 = Sphere::default();
@@ -103,7 +103,7 @@ final class World
             $computation->overPoint(),
             $computation->eye(),
             $computation->normal(),
-            $shadowed
+            $shadowed,
         );
     }
 

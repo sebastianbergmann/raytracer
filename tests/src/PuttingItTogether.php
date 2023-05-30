@@ -76,7 +76,7 @@ final class PuttingItTogether
 
         $light = PointLight::from(
             Tuple::point(-10, 10, -10),
-            Color::from(1, 1, 1)
+            Color::from(1, 1, 1),
         );
 
         $rayOrigin = Tuple::point(0, 0, -5);
@@ -120,24 +120,24 @@ final class PuttingItTogether
         $leftWall = Sphere::default();
         $leftWall->setTransform(
             Transformations::translation(0, 0, 5)->multiply(
-                Transformations::rotationAroundY(-M_PI_4)
+                Transformations::rotationAroundY(-M_PI_4),
             )->multiply(
-                Transformations::rotationAroundX(M_PI_2)
+                Transformations::rotationAroundX(M_PI_2),
             )->multiply(
-                Transformations::scaling(10, 0.01, 10)
-            )
+                Transformations::scaling(10, 0.01, 10),
+            ),
         );
         $leftWall->setMaterial($floorMaterial);
 
         $rightWall = Sphere::default();
         $rightWall->setTransform(
             Transformations::translation(0, 0, 5)->multiply(
-                Transformations::rotationAroundY(M_PI_4)
+                Transformations::rotationAroundY(M_PI_4),
             )->multiply(
-                Transformations::rotationAroundX(M_PI_2)
+                Transformations::rotationAroundX(M_PI_2),
             )->multiply(
-                Transformations::scaling(10, 0.01, 10)
-            )
+                Transformations::scaling(10, 0.01, 10),
+            ),
         );
         $rightWall->setMaterial($floorMaterial);
 
@@ -179,8 +179,8 @@ final class PuttingItTogether
             Transformations::view(
                 Tuple::point(0, 1.5, -5),
                 Tuple::point(0, 1, 0),
-                Tuple::vector(0, 1, 0)
-            )
+                Tuple::vector(0, 1, 0),
+            ),
         );
 
         return $camera->render($world);
@@ -205,8 +205,8 @@ final class PuttingItTogether
             Transformations::view(
                 Tuple::point(0, 1.5, -5),
                 Tuple::point(0, 1, 0),
-                Tuple::vector(0, 1, 0)
-            )
+                Tuple::vector(0, 1, 0),
+            ),
         );
 
         return $camera->render($world);

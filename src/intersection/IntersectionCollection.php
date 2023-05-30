@@ -30,7 +30,7 @@ final class IntersectionCollection implements Countable, IteratorAggregate
             static function (Intersection $a, Intersection $b): int
             {
                 return $a->t() <=> $b->t();
-            }
+            },
         );
 
         $hit = null;
@@ -120,8 +120,8 @@ final class IntersectionCollection implements Countable, IteratorAggregate
         return self::from(
             ...array_merge(
                 $this->intersections,
-                $other->asArray()
-            )
+                $other->asArray(),
+            ),
         );
     }
 }

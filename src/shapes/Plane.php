@@ -19,8 +19,8 @@ final class Plane extends Shape
         return IntersectionCollection::from(
             Intersection::from(
                 -$ray->origin()->y / $ray->direction()->y,
-                $this
-            )
+                $this,
+            ),
         );
     }
 

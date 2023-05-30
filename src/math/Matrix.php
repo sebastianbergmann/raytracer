@@ -114,7 +114,7 @@ final class Matrix
     {
         if ($this->size() !== 4) {
             throw new RuntimeException(
-                'Multiplication of matrix and tuple is only implemented for 4x4 matrices'
+                'Multiplication of matrix and tuple is only implemented for 4x4 matrices',
             );
         }
 
@@ -131,7 +131,7 @@ final class Matrix
             $result[0],
             $result[1],
             $result[2],
-            $result[3]
+            $result[3],
         );
     }
 
@@ -244,7 +244,7 @@ final class Matrix
         foreach ($elements as $row) {
             if (count($row) !== $numberOfRows) {
                 throw new InvalidArgumentException(
-                    'Elements do not describe a MxM matrix'
+                    'Elements do not describe a MxM matrix',
                 );
             }
         }

@@ -28,7 +28,7 @@ final class RayTest extends TestCase
     {
         $r = Ray::from(
             Tuple::point(2, 3, 4),
-            Tuple::vector(1, 0, 0)
+            Tuple::vector(1, 0, 0),
         );
 
         $this->assertTrue($r->position(0)->equalTo(Tuple::point(2, 3, 4)));
@@ -41,7 +41,7 @@ final class RayTest extends TestCase
     {
         $r = Ray::from(
             Tuple::point(1, 2, 3),
-            Tuple::vector(0, 1, 0)
+            Tuple::vector(0, 1, 0),
         );
 
         $m = Transformations::translation(3, 4, 5);
@@ -56,7 +56,7 @@ final class RayTest extends TestCase
     {
         $r = Ray::from(
             Tuple::point(1, 2, 3),
-            Tuple::vector(0, 1, 0)
+            Tuple::vector(0, 1, 0),
         );
 
         $m = Transformations::scaling(2, 3, 4);

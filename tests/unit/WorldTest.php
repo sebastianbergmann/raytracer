@@ -91,8 +91,8 @@ final class WorldTest extends TestCase
         $w->setLight(
             PointLight::from(
                 Tuple::point(0, 0.25, 0),
-                Color::from(1, 1, 1)
-            )
+                Color::from(1, 1, 1),
+            ),
         );
 
         $r = Ray::from(Tuple::point(0, 0, 0), Tuple::vector(0, 0, 1));

@@ -10,7 +10,7 @@ abstract class Shape
     {
         return self::from(
             Matrix::identity(4),
-            Material::default()
+            Material::default(),
         );
     }
 

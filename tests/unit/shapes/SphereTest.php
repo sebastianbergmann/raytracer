@@ -32,7 +32,7 @@ final class SphereTest extends TestCase
     {
         $r = Ray::from(
             Tuple::point(0, 0, -5),
-            Tuple::vector(0, 0, 1)
+            Tuple::vector(0, 0, 1),
         );
 
         $s = Sphere::default();
@@ -52,7 +52,7 @@ final class SphereTest extends TestCase
     {
         $r = Ray::from(
             Tuple::point(0, 1, -5),
-            Tuple::vector(0, 0, 1)
+            Tuple::vector(0, 0, 1),
         );
 
         $s = Sphere::default();
@@ -72,7 +72,7 @@ final class SphereTest extends TestCase
     {
         $r = Ray::from(
             Tuple::point(0, 2, -5),
-            Tuple::vector(0, 0, 1)
+            Tuple::vector(0, 0, 1),
         );
 
         $xs = Sphere::default()->intersect($r);
@@ -84,7 +84,7 @@ final class SphereTest extends TestCase
     {
         $r = Ray::from(
             Tuple::point(0, 0, 0),
-            Tuple::vector(0, 0, 1)
+            Tuple::vector(0, 0, 1),
         );
 
         $s = Sphere::default();
@@ -104,7 +104,7 @@ final class SphereTest extends TestCase
     {
         $r = Ray::from(
             Tuple::point(0, 0, 5),
-            Tuple::vector(0, 0, 1)
+            Tuple::vector(0, 0, 1),
         );
 
         $xs = Sphere::default()->intersect($r);

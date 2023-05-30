@@ -28,7 +28,7 @@ final class WebpMapper
                         $image,
                         $color->redAsInt(),
                         $color->greenAsInt(),
-                        $color->blueAsInt()
+                        $color->blueAsInt(),
                     );
                 }
 
@@ -36,7 +36,7 @@ final class WebpMapper
                     $image,
                     $x,
                     $y,
-                    $colors[$key]
+                    $colors[$key],
                 );
             }
         }

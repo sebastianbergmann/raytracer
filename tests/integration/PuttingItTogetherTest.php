@@ -15,12 +15,12 @@ final class PuttingItTogetherTest extends TestCase
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_4.ansi',
-            (new AnsiMapper)->map($canvas)
+            (new AnsiMapper)->map($canvas),
         );
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_4.ppm',
-            (new PortablePixmapMapper)->map($canvas)
+            (new PortablePixmapMapper)->map($canvas),
         );
     }
 
@@ -30,12 +30,12 @@ final class PuttingItTogetherTest extends TestCase
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_5.ansi',
-            (new AnsiMapper)->map($canvas)
+            (new AnsiMapper)->map($canvas),
         );
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_5.ppm',
-            (new PortablePixmapMapper)->map($canvas)
+            (new PortablePixmapMapper)->map($canvas),
         );
     }
 
@@ -45,12 +45,12 @@ final class PuttingItTogetherTest extends TestCase
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_6.ansi',
-            (new AnsiMapper)->map($canvas)
+            (new AnsiMapper)->map($canvas),
         );
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_6.ppm',
-            (new PortablePixmapMapper)->map($canvas)
+            (new PortablePixmapMapper)->map($canvas),
         );
     }
 
@@ -60,12 +60,12 @@ final class PuttingItTogetherTest extends TestCase
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_8.ansi',
-            (new AnsiMapper)->map($canvas)
+            (new AnsiMapper)->map($canvas),
         );
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_8.ppm',
-            (new PortablePixmapMapper)->map($canvas)
+            (new PortablePixmapMapper)->map($canvas),
         );
     }
 
@@ -75,12 +75,12 @@ final class PuttingItTogetherTest extends TestCase
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_10.ansi',
-            (new AnsiMapper)->map($canvas)
+            (new AnsiMapper)->map($canvas),
         );
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixture/chapter_10.ppm',
-            (new PortablePixmapMapper)->map($canvas)
+            (new PortablePixmapMapper)->map($canvas),
         );
     }
 }

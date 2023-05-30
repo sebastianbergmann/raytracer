@@ -18,7 +18,7 @@ final class AnsiMapperTest extends TestCase
 
         $this->assertStringEqualsFile(
             __DIR__ . '/../../fixture/10_20_empty.ansi',
-            (new AnsiMapper)->map($canvas)
+            (new AnsiMapper)->map($canvas),
         );
     }
 }

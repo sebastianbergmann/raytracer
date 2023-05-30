@@ -48,7 +48,7 @@ final class Ray
     {
         return self::from(
             $m->multiplyBy($this->origin),
-            $m->multiplyBy($this->direction)
+            $m->multiplyBy($this->direction),
         );
     }
 }

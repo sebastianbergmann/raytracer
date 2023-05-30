@@ -60,7 +60,7 @@ final class Color
         return new self(
             $this->red + $that->red(),
             $this->green + $that->green(),
-            $this->blue + $that->blue()
+            $this->blue + $that->blue(),
         );
     }
 
@@ -69,7 +69,7 @@ final class Color
         return new self(
             $this->red - $that->red(),
             $this->green - $that->green(),
-            $this->blue - $that->blue()
+            $this->blue - $that->blue(),
         );
     }
 
@@ -78,7 +78,7 @@ final class Color
         return new self(
             $factor * $this->red,
             $factor * $this->green,
-            $factor * $this->blue
+            $factor * $this->blue,
         );
     }
 
@@ -87,7 +87,7 @@ final class Color
         return new self(
             $this->red * $that->red(),
             $this->green * $that->green(),
-            $this->blue * $that->blue()
+            $this->blue * $that->blue(),
         );
     }
 

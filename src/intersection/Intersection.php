@@ -57,7 +57,7 @@ final class Intersection
             $overPoint,
             $eye,
             $normal,
-            $inside
+            $inside,
         );
     }
 }

@@ -17,7 +17,7 @@ final class Transformations
                 [0.0, 1.0, 0.0, $y],
                 [0.0, 0.0, 1.0, $z],
                 [0.0, 0.0, 0.0, 1.0],
-            ]
+            ],
         );
     }
 
@@ -29,7 +29,7 @@ final class Transformations
                 [0.0,  $y, 0.0, 0.0],
                 [0.0, 0.0,  $z, 0.0],
                 [0.0, 0.0, 0.0, 1.0],
-            ]
+            ],
         );
     }
 
@@ -41,7 +41,7 @@ final class Transformations
                 [0.0, cos($r), -sin($r), 0.0],
                 [0.0, sin($r), cos($r), 0.0],
                 [0.0, 0.0, 0.0, 1.0],
-            ]
+            ],
         );
     }
 
@@ -53,7 +53,7 @@ final class Transformations
                 [0.0, 1.0, 0.0, 0.0],
                 [-sin($r), 0.0, cos($r), 0.0],
                 [0.0, 0.0, 0.0, 1.0],
-            ]
+            ],
         );
     }
 
@@ -65,7 +65,7 @@ final class Transformations
                 [sin($r), cos($r), 0.0, 0.0],
                 [0.0, 0.0, 1.0, 0.0],
                 [0.0, 0.0, 0.0, 1.0],
-            ]
+            ],
         );
     }
 
@@ -77,7 +77,7 @@ final class Transformations
                 [$yx, 1.0, $yz, 0.0],
                 [$zx, $zy, 1.0, 0.0],
                 [0.0, 0.0, 0.0, 1.0],
-            ]
+            ],
         );
     }
 
@@ -97,7 +97,7 @@ final class Transformations
                 [$trueUp->x, $trueUp->y, $trueUp->z, 0],
                 [-$forward->x, -$forward->y, -$forward->z, 0],
                 [0, 0, 0, 1],
-            ]
+            ],
         );
 
         return $orientation->multiply(self::translation(-$from->x, -$from->y, -$from->z));

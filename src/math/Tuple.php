@@ -63,7 +63,7 @@ final class Tuple
     {
         if ($this->isPoint() && $that->isPoint()) {
             throw new RuntimeException(
-                'Cannot add point tuple to another point tuple'
+                'Cannot add point tuple to another point tuple',
             );
         }
 
@@ -71,7 +71,7 @@ final class Tuple
             $this->x + $that->x,
             $this->y + $that->y,
             $this->z + $that->z,
-            $this->w + $that->w
+            $this->w + $that->w,
         );
     }
 
@@ -82,7 +82,7 @@ final class Tuple
     {
         if ($this->isVector() && $that->isPoint()) {
             throw new RuntimeException(
-                'Cannot subtract point tuple from a vector tuple'
+                'Cannot subtract point tuple from a vector tuple',
             );
         }
 
@@ -90,7 +90,7 @@ final class Tuple
             $this->x - $that->x,
             $this->y - $that->y,
             $this->z - $that->z,
-            $this->w - $that->w
+            $this->w - $that->w,
         );
     }
 
@@ -100,7 +100,7 @@ final class Tuple
             -1 * $this->x,
             -1 * $this->y,
             -1 * $this->z,
-            -1 * $this->w
+            -1 * $this->w,
         );
     }
 
@@ -110,7 +110,7 @@ final class Tuple
             $factor * $this->x,
             $factor * $this->y,
             $factor * $this->z,
-            $factor * $this->w
+            $factor * $this->w,
         );
     }
 
@@ -120,7 +120,7 @@ final class Tuple
             $this->x / $divisor,
             $this->y / $divisor,
             $this->z / $divisor,
-            $this->w / $divisor
+            $this->w / $divisor,
         );
     }
 
@@ -137,7 +137,7 @@ final class Tuple
             $this->x / $magnitude,
             $this->y / $magnitude,
             $this->z / $magnitude,
-            $this->w / $magnitude
+            $this->w / $magnitude,
         );
     }
 
@@ -154,7 +154,7 @@ final class Tuple
         return self::vector(
             $this->y * $that->z - $this->z * $that->y,
             $this->z * $that->x - $this->x * $that->z,
-            $this->x * $that->y - $this->y * $that->x
+            $this->x * $that->y - $this->y * $that->x,
         );
     }
 

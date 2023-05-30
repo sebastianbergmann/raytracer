@@ -12,7 +12,7 @@ final class PortablePixmapMapper
         $buffer = sprintf(
             "P3\n%d %d\n255\n",
             $canvas->width(),
-            $canvas->height()
+            $canvas->height(),
         );
 
         $pixels = 0;
@@ -22,7 +22,7 @@ final class PortablePixmapMapper
                 '%d %d %d',
                 $pixel->redAsInt(),
                 $pixel->greenAsInt(),
-                $pixel->blueAsInt()
+                $pixel->blueAsInt(),
             );
 
             $pixels++;

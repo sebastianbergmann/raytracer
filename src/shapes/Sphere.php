@@ -49,7 +49,7 @@ final class Sphere extends Shape
 
         return IntersectionCollection::from(
             Intersection::from($t1, $this),
-            Intersection::from($t2, $this)
+            Intersection::from($t2, $this),
         );
     }
 
