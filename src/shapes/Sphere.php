@@ -5,24 +5,14 @@ use function sqrt;
 
 final class Sphere extends Shape
 {
-    private Tuple $origin;
-    private float $radius = 1.0;
-
-    protected function __construct(Matrix $transform, Material $material)
-    {
-        $this->origin = Tuple::point(0, 0, 0);
-
-        parent::__construct($transform, $material);
-    }
-
     public function origin(): Tuple
     {
-        return $this->origin;
+        return Tuple::point(0, 0, 0);
     }
 
     public function radius(): float
     {
-        return $this->radius;
+        return 1.0;
     }
 
     /**
@@ -32,7 +22,7 @@ final class Sphere extends Shape
      */
     public function localIntersect(Ray $ray): IntersectionCollection
     {
-        $sphereToRay = $ray->origin()->minus($this->origin);
+        $sphereToRay = $ray->origin()->minus($this->origin());
 
         $a = $ray->direction()->dot($ray->direction());
         $b = 2 * $ray->direction()->dot($sphereToRay);

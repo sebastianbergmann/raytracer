@@ -22,7 +22,7 @@ abstract class Shape
         return new static($transform, $material);
     }
 
-    protected function __construct(Matrix $transform, Material $material)
+    final protected function __construct(Matrix $transform, Material $material)
     {
         $this->transform = $transform;
         $this->material  = $material;
