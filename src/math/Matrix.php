@@ -127,6 +127,9 @@ final class Matrix
             $result[$i] += $this->elements[$i][3] * $tuple->w;
         }
 
+        /**
+         * @psalm-suppress PossiblyUndefinedArrayOffset
+         */
         return Tuple::from(
             $result[0],
             $result[1],
