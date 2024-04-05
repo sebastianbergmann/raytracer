@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.21.1@8c473e2437be8b6a8fd8f630f0f11a16b114c494">
+<files psalm-version="5.23.1@8471a896ccea3526b26d082f4461eeea467f10a4">
   <file src="src/math/Matrix.php">
     <PossiblyNullArgument>
-      <code>$result[1]</code>
-      <code>$result[2]</code>
-      <code>$result[3]</code>
+      <code><![CDATA[$result[1]]]></code>
+      <code><![CDATA[$result[2]]]></code>
+      <code><![CDATA[$result[3]]]></code>
     </PossiblyNullArgument>
     <PossiblyUndefinedArrayOffset>
-      <code>$result[1]</code>
-      <code>$result[2]</code>
-      <code>$result[3]</code>
+      <code><![CDATA[$result[1]]]></code>
+      <code><![CDATA[$result[2]]]></code>
+      <code><![CDATA[$result[3]]]></code>
     </PossiblyUndefinedArrayOffset>
+  </file>
+  <file src="src/shapes/Sphere.php">
+    <ImpureMethodCall>
+      <code><![CDATA[origin]]></code>
+    </ImpureMethodCall>
   </file>
 </files>
