@@ -12,11 +12,18 @@ use function range;
  */
 final class WebpMapper
 {
+    /**
+     * @throws RuntimeException
+     */
     public function map(Canvas $canvas, string $target): void
     {
         $colors = [];
 
         $image = imagecreatetruecolor($canvas->width(), $canvas->height());
+
+        if ($image === false) {
+            throw new RuntimeException('Cannot create image');
+        }
 
         foreach (range(1, $canvas->width()) as $x) {
             foreach (range(1, $canvas->height()) as $y) {
@@ -24,12 +31,18 @@ final class WebpMapper
                 $key   = $color->red() . $color->green() . $color->blue();
 
                 if (!isset($colors[$key])) {
-                    $colors[$key] = imagecolorallocate(
+                    $allocatedColor = imagecolorallocate(
                         $image,
                         $color->redAsInt(),
                         $color->greenAsInt(),
                         $color->blueAsInt(),
                     );
+
+                    if ($allocatedColor === false) {
+                        throw new RuntimeException('Cannot create image');
+                    }
+
+                    $colors[$key] = $allocatedColor;
                 }
 
                 imagesetpixel(
