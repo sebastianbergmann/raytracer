@@ -14,9 +14,6 @@ abstract class Shape
         );
     }
 
-    /**
-     * @psalm-suppress UnsafeInstantiation
-     */
     public static function from(Matrix $transform, Material $material): static
     {
         return new static($transform, $material);
@@ -49,8 +46,6 @@ abstract class Shape
     }
 
     /**
-     * @psalm-mutation-free
-     *
      * @throws RuntimeException
      */
     public function intersect(Ray $ray): IntersectionCollection
@@ -61,8 +56,6 @@ abstract class Shape
     }
 
     /**
-     * @psalm-mutation-free
-     *
      * @throws RuntimeException
      */
     public function normalAt(Tuple $worldPoint): Tuple
@@ -74,13 +67,7 @@ abstract class Shape
         return Tuple::vector($worldNormal->x, $worldNormal->y, $worldNormal->z)->normalize();
     }
 
-    /**
-     * @psalm-mutation-free
-     */
     abstract public function localIntersect(Ray $ray): IntersectionCollection;
 
-    /**
-     * @psalm-mutation-free
-     */
     abstract public function localNormalAt(Tuple $point): Tuple;
 }

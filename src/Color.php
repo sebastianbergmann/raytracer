@@ -5,7 +5,7 @@ use function abs;
 use function floor;
 
 /**
- * @psalm-immutable
+ * @immutable
  */
 final class Color
 {

@@ -6,8 +6,6 @@ use function abs;
 final class Plane extends Shape
 {
     /**
-     * @psalm-mutation-free
-     *
      * @throws RuntimeException
      */
     public function localIntersect(Ray $ray): IntersectionCollection
@@ -24,9 +22,6 @@ final class Plane extends Shape
         );
     }
 
-    /**
-     * @psalm-mutation-free
-     */
     public function localNormalAt(Tuple $point): Tuple
     {
         return Tuple::vector(0, 1, 0);

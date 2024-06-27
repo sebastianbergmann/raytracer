@@ -2,7 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 /**
- * @psalm-immutable
+ * @immutable
  */
 final class PreparedComputation
 {

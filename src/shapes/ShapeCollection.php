@@ -11,7 +11,7 @@ use IteratorAggregate;
 final class ShapeCollection implements Countable, IteratorAggregate
 {
     /**
-     * @psalm-var list<Shape>
+     * @var list<Shape>
      */
     private array $shapes = [];
 
@@ -21,7 +21,7 @@ final class ShapeCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * @psalm-return list<Shape>
+     * @return list<Shape>
      */
     public function asArray(): array
     {

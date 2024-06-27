@@ -8,19 +8,17 @@ use function count;
 use function range;
 
 /**
- * @psalm-immutable
+ * @immutable
  */
 final class Matrix
 {
     /**
-     * @psalm-var array<int,array<int,float>>
+     * @var array<int,array<int,float>>
      */
     private array $elements;
 
     /**
-     * @psalm-param array<int,array<int,float>> $elements
-     *
-     * @psalm-mutation-free
+     * @param array<int,array<int,float>> $elements
      */
     public static function fromArray(array $elements): self
     {
@@ -45,9 +43,7 @@ final class Matrix
     }
 
     /**
-     * @psalm-param array<int,array<int,float>> $elements
-     *
-     * @psalm-suppress UnusedMethodCall
+     * @param array<int,array<int,float>> $elements
      */
     public function __construct(array $elements)
     {
@@ -127,9 +123,6 @@ final class Matrix
             $result[$i] += $this->elements[$i][3] * $tuple->w;
         }
 
-        /**
-         * @psalm-suppress PossiblyUndefinedArrayOffset
-         */
         return Tuple::from(
             $result[0],
             $result[1],

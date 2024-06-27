@@ -10,7 +10,7 @@ use Iterator;
 final class IntersectionCollectionIterator implements Iterator
 {
     /**
-     * @psalm-var list<Intersection>
+     * @var list<Intersection>
      */
     private array $intersections;
     private int $position = 0;

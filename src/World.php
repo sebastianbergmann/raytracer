@@ -72,7 +72,6 @@ final class World
             return Color::from(0, 0, 0);
         }
 
-        /** @psalm-suppress MissingThrowsDocblock */
         $hit = $intersections->hit();
 
         return $this->shadeHit($hit->prepare($r));

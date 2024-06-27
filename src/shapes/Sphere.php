@@ -16,8 +16,6 @@ final class Sphere extends Shape
     }
 
     /**
-     * @psalm-mutation-free
-     *
      * @throws RuntimeException
      */
     public function localIntersect(Ray $ray): IntersectionCollection
@@ -43,9 +41,6 @@ final class Sphere extends Shape
         );
     }
 
-    /**
-     * @psalm-mutation-free
-     */
     public function localNormalAt(Tuple $point): Tuple
     {
         return Tuple::vector($point->x, $point->y, $point->z);

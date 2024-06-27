@@ -21,17 +21,23 @@ jobs:
       - name: "Check coding guidelines with PHP-CS-Fixer"
         run: "./tools/php-cs-fixer fix --dry-run --show-progress=dots --using-cache=no --verbose"
 
-  type-checker:
-    name: "Type Checker"
+  static-analysis:
+    name: Static Analysis
 
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
 
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: "Check types with Psalm"
-        run: "./tools/psalm --config=.psalm/config.xml --no-progress --shepherd --show-info=false --stats"
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          coverage: none
+
+      - name: Run PHPStan
+        run: ./tools/phpstan analyse --no-progress --error-format=github
 
   unit-tests:
     name: "Unit Tests"

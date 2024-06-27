@@ -2,16 +2,13 @@
 namespace SebastianBergmann\Raytracer;
 
 /**
- * @psalm-immutable
+ * @immutable
  */
 final class Intersection
 {
     private float $t;
     private Shape $shape;
 
-    /**
-     * @psalm-mutation-free
-     */
     public static function from(float $t, Shape $shape): self
     {
         return new self($t, $shape);

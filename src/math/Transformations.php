@@ -5,7 +5,7 @@ use function cos;
 use function sin;
 
 /**
- * @psalm-immutable
+ * @immutable
  */
 final class Transformations
 {

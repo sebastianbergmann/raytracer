@@ -10,19 +10,16 @@ use IteratorAggregate;
 /**
  * @template-implements IteratorAggregate<int, Intersection>
  *
- * @psalm-immutable
+ * @immutable
  */
 final class IntersectionCollection implements Countable, IteratorAggregate
 {
     /**
-     * @psalm-var list<Intersection>
+     * @var list<Intersection>
      */
     private array $intersections;
     private ?Intersection $hit;
 
-    /**
-     * @psalm-mutation-free
-     */
     public static function from(Intersection ...$intersections): self
     {
         usort(
@@ -47,7 +44,7 @@ final class IntersectionCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * @psalm-param list<Intersection> $intersections
+     * @param list<Intersection> $intersections
      */
     private function __construct(array $intersections, ?Intersection $hit)
     {
@@ -56,7 +53,7 @@ final class IntersectionCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * @psalm-return list<Intersection>
+     * @return list<Intersection>
      */
     public function asArray(): array
     {
@@ -96,7 +93,7 @@ final class IntersectionCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * @psalm-assert-if-true !null $this->hit
+     * @phpstan-assert-if-true !null $this->hit
      */
     public function hasHit(): bool
     {

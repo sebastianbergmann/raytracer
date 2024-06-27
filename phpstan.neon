@@ -1,0 +1,10 @@
+parameters:
+    level: 9
+    paths:
+        - src
+        - tests/fakes
+        - tests/unit
+        - tests/integration
+    bootstrapFiles:
+        - tools/phpunit.phar
+        - tests/bootstrap.php

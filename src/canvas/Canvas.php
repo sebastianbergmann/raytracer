@@ -13,7 +13,7 @@ final class Canvas implements IteratorAggregate
     private int $height;
 
     /**
-     * @psalm-var array<int,array<int,Color>>
+     * @var array<int,array<int,Color>>
      */
     private array $pixels;
 

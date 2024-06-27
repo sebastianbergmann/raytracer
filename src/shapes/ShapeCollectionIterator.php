@@ -10,7 +10,7 @@ use Iterator;
 final class ShapeCollectionIterator implements Iterator
 {
     /**
-     * @psalm-var list<Shape>
+     * @var list<Shape>
      */
     private array $shapes;
     private int $position = 0;

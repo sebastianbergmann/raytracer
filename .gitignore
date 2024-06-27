@@ -2,7 +2,6 @@
 /.idea
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
-/.psalm/cache
 /.phpunit.cache
 /vendor
 /composer.lock
