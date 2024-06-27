@@ -13,6 +13,9 @@ use PHPUnit\Framework\TestCase;
 #[Small]
 final class MatrixTest extends TestCase
 {
+    /**
+     * @return non-empty-array<non-empty-string, array{0: Matrix, 1: Matrix}>
+     */
     public static function matrixInversionProvider(): array
     {
         return [

@@ -12,6 +12,9 @@ use PHPUnit\Framework\TestCase;
 #[Small]
 final class TupleTest extends TestCase
 {
+    /**
+     * @return non-empty-list<array{0: float, 1: float, 2: float, 3: float}>
+     */
     public static function magnitudeProvider(): array
     {
         return [
@@ -23,6 +26,9 @@ final class TupleTest extends TestCase
         ];
     }
 
+    /**
+     * @return non-empty-list<array{0: float, 1: float, 2: float, 3: float}>
+     */
     public static function normalizationProvider(): array
     {
         return [
