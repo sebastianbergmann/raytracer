@@ -95,7 +95,7 @@ jobs:
         with:
           php-version: ${{ env.PHP_VERSION }}
           ini-values: ${{ env.PHP_INI_VALUES }}
-          coverage: pcov
+          coverage: xdebug
 
       - name: "Collect code coverage with PHPUnit"
         run: "./tools/phpunit --testsuite unit --coverage-clover coverage.xml"
