@@ -4,6 +4,7 @@ namespace SebastianBergmann\Raytracer;
 use function iterator_to_array;
 use function range;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -11,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Canvas::class)]
 #[CoversClass(CanvasIterator::class)]
 #[UsesClass(Color::class)]
+#[Group('canvas')]
 #[Small]
 final class CanvasTest extends TestCase
 {

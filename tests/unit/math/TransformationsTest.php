@@ -5,6 +5,7 @@ use const M_PI_2;
 use const M_PI_4;
 use function sqrt;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -12,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Transformations::class)]
 #[UsesClass(Matrix::class)]
 #[UsesClass(Tuple::class)]
+#[Group('math')]
 #[Small]
 final class TransformationsTest extends TestCase
 {

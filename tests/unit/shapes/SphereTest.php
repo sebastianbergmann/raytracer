@@ -3,6 +3,7 @@ namespace SebastianBergmann\Raytracer;
 
 use function sqrt;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -17,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Shape::class)]
 #[UsesClass(Transformations::class)]
 #[UsesClass(Tuple::class)]
+#[Group('shape')]
 #[Small]
 final class SphereTest extends TestCase
 {

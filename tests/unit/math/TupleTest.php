@@ -4,11 +4,13 @@ namespace SebastianBergmann\Raytracer;
 use function sqrt;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Tuple::class)]
+#[Group('math')]
 #[Small]
 final class TupleTest extends TestCase
 {

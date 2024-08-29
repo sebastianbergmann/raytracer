@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -15,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Ray::class)]
 #[UsesClass(Shape::class)]
 #[UsesClass(Tuple::class)]
+#[Group('shape')]
 #[Small]
 final class PlaneTest extends TestCase
 {

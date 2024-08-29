@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -10,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Canvas::class)]
 #[UsesClass(CanvasIterator::class)]
 #[UsesClass(Color::class)]
+#[Group('canvas')]
 #[Small]
 final class PortablePixmapMapperTest extends TestCase
 {

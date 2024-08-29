@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Shape::class)]
 #[UsesClass(Sphere::class)]
 #[UsesClass(Tuple::class)]
+#[Group('material')]
 #[Small]
 final class StripePatternTest extends TestCase
 {
