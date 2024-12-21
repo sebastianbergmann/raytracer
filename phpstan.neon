@@ -1,5 +1,5 @@
 parameters:
-    level: 9
+    level: 10
     paths:
         - src
         - tests/fakes
@@ -8,3 +8,8 @@ parameters:
     bootstrapFiles:
         - tools/phpunit.phar
         - tests/bootstrap.php
+    excludePaths:
+        - src/autoload.php
+    ignoreErrors:
+        # Ignore errors caused by defensive programming
+        - '#Call to method .* with .* will always evaluate to false.#'
