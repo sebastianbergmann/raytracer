@@ -30,6 +30,9 @@ final class Color
         return $this->red;
     }
 
+    /**
+     * @return int<0, 255>
+     */
     public function redAsInt(): int
     {
         return $this->floatToInt($this->red);
@@ -40,6 +43,9 @@ final class Color
         return $this->green;
     }
 
+    /**
+     * @return int<0, 255>
+     */
     public function greenAsInt(): int
     {
         return $this->floatToInt($this->green);
@@ -50,6 +56,9 @@ final class Color
         return $this->blue;
     }
 
+    /**
+     * @return int<0, 255>
+     */
     public function blueAsInt(): int
     {
         return $this->floatToInt($this->blue);
@@ -108,6 +117,9 @@ final class Color
         return true;
     }
 
+    /**
+     * @return int<0, 255>
+     */
     private function floatToInt(float $float): int
     {
         $int = (int) floor($float * 255);

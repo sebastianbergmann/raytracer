@@ -6,7 +6,14 @@ use function tan;
 
 final class Camera
 {
+    /**
+     * @var positive-int
+     */
     private int $horizontalSize;
+
+    /**
+     * @var positive-int
+     */
     private int $verticalSize;
     private float $fieldOfView;
     private Matrix $transform;
@@ -16,11 +23,19 @@ final class Camera
     private float $cameraHalfHeight;
     private float $pixelSize;
 
+    /**
+     * @param positive-int $horizontalSize
+     * @param positive-int $verticalSize
+     */
     public static function from(int $horizontalSize, int $verticalSize, float $fieldOfView): self
     {
         return new self($horizontalSize, $verticalSize, $fieldOfView, Matrix::identity(4));
     }
 
+    /**
+     * @param positive-int $horizontalSize
+     * @param positive-int $verticalSize
+     */
     private function __construct(int $horizontalSize, int $verticalSize, float $fieldOfView, Matrix $transform)
     {
         $this->horizontalSize = $horizontalSize;
@@ -42,11 +57,17 @@ final class Camera
         $this->pixelSize = ($this->cameraHalfWidth * 2) / $this->horizontalSize;
     }
 
+    /**
+     * @return positive-int
+     */
     public function horizontalSize(): int
     {
         return $this->horizontalSize;
     }
 
+    /**
+     * @return positive-int
+     */
     public function verticalSize(): int
     {
         return $this->verticalSize;

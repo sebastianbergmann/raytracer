@@ -9,8 +9,20 @@ use Iterator;
 final class CanvasIterator implements Iterator
 {
     private Canvas $canvas;
+
+    /**
+     * @var positive-int
+     */
     private int $x = 1;
+
+    /**
+     * @var positive-int
+     */
     private int $y = 1;
+
+    /**
+     * @var positive-int
+     */
     private int $p = 1;
 
     public function __construct(Canvas $canvas)
