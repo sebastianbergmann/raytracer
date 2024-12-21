@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Sphere::class)]
 #[UsesClass(Tuple::class)]
 #[Group('material')]
-
 #[Small]
 final class GradientPatternTest extends TestCase
 {
