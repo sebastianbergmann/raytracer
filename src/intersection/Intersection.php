@@ -1,10 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-/**
- * @immutable
- */
-final class Intersection
+final readonly class Intersection
 {
     private float $t;
     private Shape $shape;

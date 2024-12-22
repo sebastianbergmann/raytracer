@@ -4,10 +4,7 @@ namespace SebastianBergmann\Raytracer;
 use function cos;
 use function sin;
 
-/**
- * @immutable
- */
-final class Transformations
+final readonly class Transformations
 {
     public static function translation(float $x, float $y, float $z): Matrix
     {

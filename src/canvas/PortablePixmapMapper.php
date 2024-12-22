@@ -5,7 +5,7 @@ use const PHP_EOL;
 use function file_put_contents;
 use function sprintf;
 
-final class PortablePixmapMapper
+final readonly class PortablePixmapMapper
 {
     public function map(Canvas $canvas): string
     {

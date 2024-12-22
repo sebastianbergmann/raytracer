@@ -7,10 +7,7 @@ use function array_values;
 use function count;
 use function range;
 
-/**
- * @immutable
- */
-final class Matrix
+final readonly class Matrix
 {
     /**
      * @var array<int,array<int,float>>

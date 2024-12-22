@@ -8,7 +8,7 @@ use Iterator;
  */
 final class CanvasIterator implements Iterator
 {
-    private Canvas $canvas;
+    private readonly Canvas $canvas;
 
     /**
      * @var positive-int

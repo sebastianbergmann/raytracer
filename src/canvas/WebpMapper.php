@@ -10,7 +10,7 @@ use function range;
 /**
  * @codeCoverageIgnore
  */
-final class WebpMapper
+final readonly class WebpMapper
 {
     /**
      * @throws RuntimeException

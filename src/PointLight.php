@@ -1,10 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-/**
- * @immutable
- */
-final class PointLight
+final readonly class PointLight
 {
     private Tuple $position;
     private Color $intensity;

@@ -9,19 +9,19 @@ final class Camera
     /**
      * @var positive-int
      */
-    private int $horizontalSize;
+    private readonly int $horizontalSize;
 
     /**
      * @var positive-int
      */
-    private int $verticalSize;
-    private float $fieldOfView;
+    private readonly int $verticalSize;
+    private readonly float $fieldOfView;
     private Matrix $transform;
-    private float $halfView;
-    private float $aspect;
-    private float $cameraHalfWidth;
-    private float $cameraHalfHeight;
-    private float $pixelSize;
+    private readonly float $halfView;
+    private readonly float $aspect;
+    private readonly float $cameraHalfWidth;
+    private readonly float $cameraHalfHeight;
+    private readonly float $pixelSize;
 
     /**
      * @param positive-int $horizontalSize

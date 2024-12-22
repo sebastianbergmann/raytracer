@@ -4,15 +4,12 @@ namespace SebastianBergmann\Raytracer;
 use function abs;
 use function sqrt;
 
-/**
- * @immutable
- */
-final class Tuple
+final readonly class Tuple
 {
-    public readonly float $x;
-    public readonly float $y;
-    public readonly float $z;
-    public readonly float $w;
+    public float $x;
+    public float $y;
+    public float $z;
+    public float $w;
 
     public static function from(float $x, float $y, float $z, float $w): self
     {

@@ -1,10 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-/**
- * @immutable
- */
-final class PreparedComputation
+final readonly class PreparedComputation
 {
     private float $t;
     private Shape $shape;

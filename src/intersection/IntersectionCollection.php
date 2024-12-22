@@ -12,7 +12,7 @@ use IteratorAggregate;
  *
  * @immutable
  */
-final class IntersectionCollection implements Countable, IteratorAggregate
+final readonly class IntersectionCollection implements Countable, IteratorAggregate
 {
     /**
      * @var list<Intersection>

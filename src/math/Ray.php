@@ -1,10 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-/**
- * @immutable
- */
-final class Ray
+final readonly class Ray
 {
     private Tuple $origin;
     private Tuple $direction;

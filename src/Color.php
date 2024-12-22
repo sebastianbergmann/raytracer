@@ -4,10 +4,7 @@ namespace SebastianBergmann\Raytracer;
 use function abs;
 use function floor;
 
-/**
- * @immutable
- */
-final class Color
+final readonly class Color
 {
     private float $red;
     private float $green;

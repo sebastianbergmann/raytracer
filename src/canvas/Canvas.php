@@ -12,12 +12,12 @@ final class Canvas implements IteratorAggregate
     /**
      * @var positive-int
      */
-    private int $width;
+    private readonly int $width;
 
     /**
      * @var positive-int
      */
-    private int $height;
+    private readonly int $height;
 
     /**
      * @var array<int,array<int,Color>>
