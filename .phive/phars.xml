@@ -2,8 +2,8 @@
 <phive xmlns="https://phar.io/phive">
   <phar name="phpab" version="^1.29" installed="1.29.3" location="./tools/phpab" copy="true"/>
   <phar name="php-cs-fixer" version="^3.68" installed="3.68.5" location="./tools/php-cs-fixer" copy="true"/>
-  <phar name="phpunit" version="^12.0" installed="12.0.1" location="./tools/phpunit" copy="true"/>
-  <phar name="infection" version="^0.29" installed="0.29.10" location="./tools/infection" copy="true"/>
+  <phar name="phpunit" version="^12.0" installed="12.0.2" location="./tools/phpunit" copy="true"/>
+  <phar name="infection" version="^0.29" installed="0.29.11" location="./tools/infection" copy="true"/>
   <phar name="phpbench" version="^1.4" installed="1.4.0" location="./tools/phpbench" copy="true"/>
-  <phar name="phpstan" version="^2.1" installed="2.1.2" location="./tools/phpstan" copy="true"/>
+  <phar name="phpstan" version="^2.1" installed="2.1.4" location="./tools/phpstan" copy="true"/>
 </phive>
