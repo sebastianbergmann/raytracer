@@ -3,6 +3,7 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.0/phpunit.xsd"
          bootstrap="tests/bootstrap.php"
          cacheDirectory=".phpunit.cache"
+         extensionsDirectory="tools/phpunit-extensions"
          executionOrder="depends,defects"
          requireCoverageMetadata="true"
          beStrictAboutCoverageMetadata="true"
@@ -31,4 +32,11 @@
             <file>src/autoload.php</file>
         </exclude>
     </source>
+
+    <extensions>
+        <bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension">
+            <parameter name="maximum-count" value="5"/>
+            <parameter name="maximum-duration" value="250"/>
+        </bootstrap>
+    </extensions>
 </phpunit>
