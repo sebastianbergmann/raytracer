@@ -3,6 +3,7 @@
     "phpUnit": {
         "customPath": "tools/phpunit"
     },
+    "testFrameworkOptions": "--no-extensions",
     "bootstrap": "src/autoload.php",
     "source": {
         "directories": [
