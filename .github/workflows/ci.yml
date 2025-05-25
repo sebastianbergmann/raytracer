@@ -114,7 +114,7 @@ jobs:
           coverage: xdebug
 
       - name: Collect code coverage with PHPUnit
-        run: ./vendor/bin/phpunit --log-junit test-results.xml --coverage-clover=code-coverage.xml
+        run: ./tools/phpunit --log-junit test-results.xml --coverage-clover=code-coverage.xml
 
       - name: Upload test results to Codecov.io
         if: ${{ !cancelled() }}
