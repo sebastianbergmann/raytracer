@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.2/phpunit.xsd"
-         bootstrap="tests/bootstrap.php"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.3/phpunit.xsd"
+         bootstrap="src/autoload.php"
          cacheDirectory=".phpunit.cache"
          extensionsDirectory="tools/phpunit-extensions"
          executionOrder="depends,defects"
@@ -12,11 +12,11 @@
          failOnAllIssues="true"
          colors="true">
     <testsuites>
-        <testsuite name="unit">
+        <testsuite name="unit" bootstrap="tests/src/unit/autoload.php">
             <directory>tests/unit</directory>
         </testsuite>
 
-        <testsuite name="integration">
+        <testsuite name="integration" bootstrap="tests/src/integration/autoload.php">
             <directory>tests/integration</directory>
         </testsuite>
     </testsuites>

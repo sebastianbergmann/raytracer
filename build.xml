@@ -9,9 +9,14 @@
 
         <exec executable="${basedir}/tools/phpab" taskname="phpab">
             <arg value="--output" />
-            <arg path="tests/autoload.php" />
-            <arg path="tests/fakes" />
-            <arg path="tests/src" />
+            <arg path="tests/src/unit/autoload.php" />
+            <arg path="tests/src/unit" />
+        </exec>
+
+        <exec executable="${basedir}/tools/phpab" taskname="phpab">
+            <arg value="--output" />
+            <arg path="tests/src/integration/autoload.php" />
+            <arg path="tests/src/integration" />
         </exec>
     </target>
 
