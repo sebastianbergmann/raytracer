@@ -12,7 +12,7 @@ final class GeneratedConfig
 	public const EXTENSIONS = array (
   'phpstan/phpstan-strict-rules' => 
   array (
-    'install_path' => '/usr/local/src/raytracer/tools/.phpstan/vendor/phpstan/phpstan-strict-rules',
+    'install_path' => '/Users/sb/Work/OpenSource/raytracer/tools/.phpstan/vendor/phpstan/phpstan-strict-rules',
     'relative_install_path' => '../../phpstan-strict-rules',
     'extra' => 
     array (
@@ -26,7 +26,7 @@ final class GeneratedConfig
   ),
   'tomasvotruba/type-coverage' => 
   array (
-    'install_path' => '/usr/local/src/raytracer/tools/.phpstan/vendor/tomasvotruba/type-coverage',
+    'install_path' => '/Users/sb/Work/OpenSource/raytracer/tools/.phpstan/vendor/tomasvotruba/type-coverage',
     'relative_install_path' => '../../../tomasvotruba/type-coverage',
     'extra' => 
     array (
