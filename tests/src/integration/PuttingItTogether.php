@@ -4,6 +4,7 @@ namespace SebastianBergmann\Raytracer;
 use const M_PI;
 use const M_PI_2;
 use const M_PI_4;
+use function assert;
 use function range;
 use function round;
 
@@ -24,6 +25,9 @@ final class PuttingItTogether
 
             $x = (int) round($point->x * $radius + $canvasSize / 2);
             $y = (int) round($point->z * $radius + $canvasSize / 2);
+
+            assert($x >= 1);
+            assert($y >= 1);
 
             $canvas->writePixel($x, $y, $white);
         }
