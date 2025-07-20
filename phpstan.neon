@@ -3,15 +3,19 @@ parameters:
 
     paths:
         - src
-        - tests/fakes
+        - tests/src
         - tests/unit
         - tests/integration
     excludePaths:
         - src/autoload.php
+        - tests/src/unit/autoload.php
+        - tests/src/integration/autoload.php
 
     bootstrapFiles:
         - tools/phpunit.phar
-        - tests/bootstrap.php
+        - src/autoload.php
+        - tests/src/unit/autoload.php
+        - tests/src/integration/autoload.php
 
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
     reportAlwaysTrueInLastCondition: true
