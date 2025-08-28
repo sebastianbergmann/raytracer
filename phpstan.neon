@@ -17,6 +17,8 @@ parameters:
         - tests/src/unit/autoload.php
         - tests/src/integration/autoload.php
 
+    resultCachePath: %tmpDir%/raytracer.php
+
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
     reportAlwaysTrueInLastCondition: true
     reportPossiblyNonexistentConstantArrayOffset: true
