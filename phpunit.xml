@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.3/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
          bootstrap="src/autoload.php"
          cacheDirectory=".phpunit.cache"
-         extensionsDirectory="tools/phpunit-extensions"
          executionOrder="depends,defects"
          requireCoverageMetadata="true"
          beStrictAboutCoverageMetadata="true"
@@ -30,11 +29,4 @@
             <file>src/autoload.php</file>
         </exclude>
     </source>
-
-    <extensions>
-        <bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension">
-            <parameter name="maximum-count" value="5"/>
-            <parameter name="maximum-duration" value="250"/>
-        </bootstrap>
-    </extensions>
 </phpunit>
