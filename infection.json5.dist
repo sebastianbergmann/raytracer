@@ -3,7 +3,11 @@
     "phpUnit": {
         "customPath": "tools/phpunit"
     },
-    "bootstrap": "src/autoload.php",
+    "staticAnalysisTool": "phpstan",
+    "phpStan": {
+        "customPath": "tools/phpstan"
+    },
+    "threads": "max",
     "source": {
         "directories": [
             "src"
