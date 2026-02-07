@@ -1,9 +1,8 @@
 {
-    "$schema": "https://raw.githubusercontent.com/infection/infection/0.28.1/resources/schema.json",
+    "$schema": "https://raw.githubusercontent.com/infection/infection/0.32.3/resources/schema.json",
     "phpUnit": {
         "customPath": "tools/phpunit"
     },
-    "testFrameworkOptions": "--no-extensions",
     "bootstrap": "src/autoload.php",
     "source": {
         "directories": [
