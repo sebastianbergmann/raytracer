@@ -2,7 +2,6 @@
 namespace SebastianBergmann\Raytracer;
 
 use function abs;
-use function array_keys;
 use function array_values;
 use function count;
 
@@ -176,25 +175,15 @@ final readonly class Matrix
     public function submatrix(int $row, int $column): self
     {
         $elements = [];
-        $tmp      = [];
-        $size     = $this->size();
 
-        for ($i = 0; $i < $size; $i++) {
+        foreach ($this->elements as $i => $currentRow) {
             if ($i === $row) {
                 continue;
             }
 
-            for ($j = 0; $j < $size; $j++) {
-                if ($j === $column) {
-                    continue;
-                }
+            unset($currentRow[$column]);
 
-                $tmp[$i][$j] = $this->elements[$i][$j];
-            }
-        }
-
-        foreach (array_keys($tmp) as $key) {
-            $elements[] = array_values($tmp[$key]);
+            $elements[] = array_values($currentRow);
         }
 
         return new self($elements);
