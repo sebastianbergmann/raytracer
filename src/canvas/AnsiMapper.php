@@ -3,7 +3,6 @@ namespace SebastianBergmann\Raytracer;
 
 use const PHP_EOL;
 use function file_put_contents;
-use function range;
 use function sprintf;
 
 final readonly class AnsiMapper
@@ -12,8 +11,8 @@ final readonly class AnsiMapper
     {
         $buffer = "\x1b[2J\x1b[H";
 
-        foreach (range(1, $canvas->height(), 2) as $y) {
-            foreach (range(1, $canvas->width()) as $x) {
+        for ($y = 1; $y <= $canvas->height(); $y += 2) {
+            for ($x = 1; $x <= $canvas->width(); $x++) {
                 $bg = $canvas->pixelAt($x, $y);
                 $fg = $canvas->pixelAt($x, $y + 1);
 

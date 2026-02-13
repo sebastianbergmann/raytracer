@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-use function range;
 use function tan;
 
 final class Camera
@@ -136,8 +135,8 @@ final class Camera
     {
         $canvas = Canvas::from($this->horizontalSize, $this->verticalSize, Color::from(0, 0, 0));
 
-        foreach (range(1, $this->verticalSize) as $y) {
-            foreach (range(1, $this->horizontalSize) as $x) {
+        for ($y = 1; $y <= $this->verticalSize; $y++) {
+            for ($x = 1; $x <= $this->horizontalSize; $x++) {
                 $ray   = $this->rayForPixel($x, $y);
                 $color = $world->colorAt($ray);
                 $canvas->writePixel($x, $y, $color);

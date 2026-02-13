@@ -5,7 +5,6 @@ use function abs;
 use function array_keys;
 use function array_values;
 use function count;
-use function range;
 
 final readonly class Matrix
 {
@@ -26,8 +25,8 @@ final readonly class Matrix
     {
         $elements = [];
 
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $j) {
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
                 if ($i === $j) {
                     $elements[$i][$j] = 1.0;
                 } else {
@@ -67,8 +66,8 @@ final readonly class Matrix
             return false;
         }
 
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $j) {
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
                 if (abs($this->elements[$i][$j] - $that->element($i, $j)) > $delta) {
                     return false;
                 }
@@ -83,15 +82,15 @@ final readonly class Matrix
         $size   = $this->size();
         $result = [];
 
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $j) {
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
                 $result[$i][$j] = 0.0;
             }
         }
 
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $k) {
-                foreach (range(0, $size - 1) as $j) {
+        for ($i = 0; $i < $size; $i++) {
+            for ($k = 0; $k < $size; $k++) {
+                for ($j = 0; $j < $size; $j++) {
                     $result[$i][$k] += $this->elements[$i][$j] * $that->element($j, $k);
                 }
             }
@@ -113,7 +112,7 @@ final readonly class Matrix
 
         $result = [0.0, 0.0, 0.0, 0.0];
 
-        foreach (range(0, 3) as $i) {
+        for ($i = 0; $i <= 3; $i++) {
             $result[$i] += $this->elements[$i][0] * $tuple->x;
             $result[$i] += $this->elements[$i][1] * $tuple->y;
             $result[$i] += $this->elements[$i][2] * $tuple->z;
@@ -133,8 +132,8 @@ final readonly class Matrix
         $elements = $this->elements;
         $size     = $this->size();
 
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $j) {
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
                 $elements[$i][$j] /= $divisor;
             }
         }
@@ -147,8 +146,8 @@ final readonly class Matrix
         $size   = $this->size();
         $result = [];
 
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $j) {
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
                 $result[$j][$i] = $this->elements[$i][$j];
             }
         }
@@ -167,7 +166,7 @@ final readonly class Matrix
 
         $determinant = 0.0;
 
-        foreach (range(0, $size - 1) as $i) {
+        for ($i = 0; $i < $size; $i++) {
             $determinant += $this->cofactor(0, $i) * $this->elements[0][$i];
         }
 
@@ -180,12 +179,12 @@ final readonly class Matrix
         $tmp      = [];
         $size     = $this->size();
 
-        foreach (range(0, $size - 1) as $i) {
+        for ($i = 0; $i < $size; $i++) {
             if ($i === $row) {
                 continue;
             }
 
-            foreach (range(0, $size - 1) as $j) {
+            for ($j = 0; $j < $size; $j++) {
                 if ($j === $column) {
                     continue;
                 }
@@ -248,8 +247,8 @@ final readonly class Matrix
         $size   = $this->size();
         $result = [];
 
-        foreach (range(0, $size - 1) as $i) {
-            foreach (range(0, $size - 1) as $j) {
+        for ($i = 0; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
                 $result[$i][$j] = $this->cofactor($i, $j);
             }
         }

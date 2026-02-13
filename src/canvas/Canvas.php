@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-use function range;
 use IteratorAggregate;
 
 /**
@@ -88,8 +87,8 @@ final class Canvas implements IteratorAggregate
     {
         $this->pixels = [];
 
-        foreach (range(1, $this->width) as $x) {
-            foreach (range(1, $this->height) as $y) {
+        for ($x = 1; $x <= $this->width; $x++) {
+            for ($y = 1; $y <= $this->height; $y++) {
                 $this->pixels[$x][$y] = $background;
             }
         }

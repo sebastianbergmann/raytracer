@@ -5,7 +5,6 @@ use function imagecolorallocate;
 use function imagecreatetruecolor;
 use function imagesetpixel;
 use function imagewebp;
-use function range;
 
 /**
  * @codeCoverageIgnore
@@ -25,8 +24,8 @@ final readonly class WebpMapper
             throw new RuntimeException('Cannot create image');
         }
 
-        foreach (range(1, $canvas->width()) as $x) {
-            foreach (range(1, $canvas->height()) as $y) {
+        for ($x = 1; $x <= $canvas->width(); $x++) {
+            for ($y = 1; $y <= $canvas->height(); $y++) {
                 $color = $canvas->pixelAt($x, $y);
                 $key   = $color->red() . $color->green() . $color->blue();
 
