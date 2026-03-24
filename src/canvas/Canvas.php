@@ -19,7 +19,7 @@ final class Canvas implements IteratorAggregate
     private readonly int $height;
 
     /**
-     * @var array<int,array<int,Color>>
+     * @var array<positive-int, array<positive-int, Color>>
      */
     private array $pixels;
 
