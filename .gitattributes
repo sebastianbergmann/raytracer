@@ -10,5 +10,6 @@
 /infection.json5.dist   export-ignore
 /phpstan.nein           export-ignore
 /phpunit.xml            export-ignore
+/renovate.json          export-ignore
 
 *.php diff=php
