@@ -1,12 +1,21 @@
+# https://docs.github.com/en/actions
+
 on:
-  pull_request: null
-  push: null
+  - pull_request
+  - push
 
 name: CI
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   PHP_VERSION: 8.4
   PHP_INI_VALUES: memory_limit=-1, assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit=1255, opcache.jit_buffer_size=32M
+
+permissions:
+  contents: read
 
 jobs:
   coding-guidelines:
