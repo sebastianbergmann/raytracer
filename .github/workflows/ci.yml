@@ -99,7 +99,7 @@ jobs:
           ini-values: ${{ env.PHP_INI_VALUES }}
           coverage: none
 
-      - name: Run unit tests with PHPUnit
+      - name: Run integration tests with PHPUnit
         run: ./tools/phpunit --testsuite integration
 
   code-coverage:
