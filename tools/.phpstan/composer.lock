@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3db68ba8c188fe9b58b358e01c4cd6df",
+    "content-hash": "0c93ea2648c723e1b2d3be0b3b5ce56f",
     "packages": [],
     "packages-dev": [
         {
@@ -252,22 +252,22 @@
         },
         {
             "name": "tomasvotruba/type-coverage",
-            "version": "2.1.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TomasVotruba/type-coverage.git",
-                "reference": "468354b3964120806a69890cbeb3fcf005876391"
+                "reference": "4087caa4639bdd4c646f2984bc333efeddf69e4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/468354b3964120806a69890cbeb3fcf005876391",
-                "reference": "468354b3964120806a69890cbeb3fcf005876391",
+                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/4087caa4639bdd4c646f2984bc333efeddf69e4b",
+                "reference": "4087caa4639bdd4c646f2984bc333efeddf69e4b",
                 "shasum": ""
             },
             "require": {
                 "nette/utils": "^3.2 || ^4.0",
                 "php": "^7.4 || ^8.0",
-                "phpstan/phpstan": "^2.0"
+                "phpstan/phpstan": "^2.1.33"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -293,7 +293,7 @@
             ],
             "support": {
                 "issues": "https://github.com/TomasVotruba/type-coverage/issues",
-                "source": "https://github.com/TomasVotruba/type-coverage/tree/2.1.0"
+                "source": "https://github.com/TomasVotruba/type-coverage/tree/2.2.1"
             },
             "funding": [
                 {
@@ -305,7 +305,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-05T16:38:02+00:00"
+            "time": "2026-05-26T08:14:01+00:00"
         }
     ],
     "aliases": [],
