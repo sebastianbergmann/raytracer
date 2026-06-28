@@ -30,7 +30,7 @@ final readonly class AnsiMapper
             $buffer .= PHP_EOL;
         }
 
-        return $buffer . "\x1b[0";
+        return $buffer . "\x1b[0m";
     }
 
     /**
