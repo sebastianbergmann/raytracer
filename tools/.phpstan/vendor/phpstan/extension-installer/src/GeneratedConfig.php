@@ -21,8 +21,8 @@ final class GeneratedConfig
         0 => 'rules.neon',
       ),
     ),
-    'version' => '2.0.11',
-    'phpstanVersionConstraint' => '>=2.1.39.0-dev, <3.0.0.0-dev',
+    'version' => '2.0.12',
+    'phpstanVersionConstraint' => '>=2.1.52.0-dev, <3.0.0.0-dev',
   ),
   'tomasvotruba/type-coverage' => 
   array (
@@ -33,9 +33,10 @@ final class GeneratedConfig
       'includes' => 
       array (
         0 => 'config/extension.neon',
+        1 => 'packages/type-perfect/config/extension.neon',
       ),
     ),
-    'version' => '2.2.2',
+    'version' => '2.3.0',
     'phpstanVersionConstraint' => '>=2.2.0.0-dev, <3.0.0.0-dev',
   ),
 );
