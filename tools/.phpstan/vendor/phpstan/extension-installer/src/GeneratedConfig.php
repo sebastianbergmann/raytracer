@@ -10,6 +10,20 @@ final class GeneratedConfig
 {
 
 	public const EXTENSIONS = array (
+  'phpstan/phpstan-deprecation-rules' => 
+  array (
+    'install_path' => '/Users/sb/Work/OpenSource/raytracer/tools/.phpstan/vendor/phpstan/phpstan-deprecation-rules',
+    'relative_install_path' => '../../phpstan-deprecation-rules',
+    'extra' => 
+    array (
+      'includes' => 
+      array (
+        0 => 'rules.neon',
+      ),
+    ),
+    'version' => '2.0.5',
+    'phpstanVersionConstraint' => '>=2.1.39.0-dev, <3.0.0.0-dev',
+  ),
   'phpstan/phpstan-strict-rules' => 
   array (
     'install_path' => '/Users/sb/Work/OpenSource/raytracer/tools/.phpstan/vendor/phpstan/phpstan-strict-rules',
