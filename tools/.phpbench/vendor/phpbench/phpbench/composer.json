@@ -1,0 +1,115 @@
+{
+    "name": "phpbench/phpbench",
+    "description": "PHP Benchmarking Framework",
+    "license": "MIT",
+    "keywords": [
+        "benchmarking",
+        "optimization",
+        "performance",
+        "profiling",
+        "testing"
+    ],
+    "authors": [
+        {
+            "name": "Daniel Leech",
+            "email": "daniel@dantleech.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-pcre": "*",
+        "ext-reflection": "*",
+        "ext-spl": "*",
+        "ext-tokenizer": "*",
+        "doctrine/annotations": "^2.0",
+        "phpbench/container": "^2.2",
+        "psr/log": "^1.1 || ^2.0 || ^3.0",
+        "seld/jsonlint": "^1.1",
+        "symfony/console": "^6.1 || ^7.0 || ^8.0",
+        "symfony/filesystem": "^6.1 || ^7.0 || ^8.0",
+        "symfony/finder": "^6.1 || ^7.0 || ^8.0",
+        "symfony/options-resolver": "^6.1 || ^7.0 || ^8.0",
+        "symfony/process": "^6.1 || ^7.0 || ^8.0",
+        "webmozart/glob": "^4.6"
+    },
+    "require-dev": {
+        "dantleech/invoke": "^2.0",
+        "ergebnis/composer-normalize": "^2.39",
+        "jangregor/phpstan-prophecy": "^2.0",
+        "php-cs-fixer/shim": "^3.9",
+        "phpspec/prophecy": "^1.22",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpunit/phpunit": "^11.5",
+        "rector/rector": "^2.2",
+        "sebastian/exporter": "^6.3.2",
+        "symfony/error-handler": "^6.1 || ^7.0 || ^8.0",
+        "symfony/var-dumper": "^6.1 || ^7.0 || ^8.0"
+    },
+    "suggest": {
+        "ext-xdebug": "For Xdebug profiling extension."
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "PhpBench\\": "lib/",
+            "PhpBench\\Extensions\\XDebug\\": "extensions/xdebug/lib/"
+        },
+        "files": [
+            "lib/Report/Func/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpBench\\Examples\\": "examples/",
+            "PhpBench\\Extensions\\XDebug\\Tests\\": "extensions/xdebug/tests/",
+            "PhpBench\\Tests\\": "tests/"
+        }
+    },
+    "bin": [
+        "bin/phpbench"
+    ],
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        },
+        "audit": {
+            "block-insecure": false
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2-dev"
+        }
+    },
+    "scripts": {
+        "docs": [
+            "rm -Rf docs/build",
+            "bin/phpbench doc:config-reference > docs/configuration.rst",
+            "bin/phpbench doc:service-options docs/report-generators/options generator",
+            "bin/phpbench doc:service-options docs/report-renderers/options renderer",
+            "bin/phpbench doc:service-options docs/report-components/options component",
+            "bin/phpbench doc:service-options docs/executors/options executor",
+            "make -C docs html"
+        ],
+        "integrate": [
+            "@composer normalize --indent-size=4 --indent-style=space",
+            "vendor/bin/php-cs-fixer fix",
+            "vendor/bin/phpstan analyse -c phpstan.neon.dist --memory-limit=-1",
+            "vendor/bin/phpunit",
+            "bin/phpbench run --revs=1 --iterations=2",
+            "bin/phpbench run --profile=examples --revs=1 --iterations=1 --report=examples",
+            "@docs",
+            "@schema"
+        ],
+        "schema": [
+            "bin/phpbench doc:config-schema > phpbench.schema.json"
+        ]
+    }
+}
