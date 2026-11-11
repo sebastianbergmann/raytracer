@@ -7,9 +7,6 @@ parameters:
         - tests/unit
         - tests/integration
 
-    bootstrapFiles:
-        - tools/phpunit.phar
-
     resultCachePath: %tmpDir%/raytracer.php
 
     checkTooWideReturnTypesInProtectedAndPublicMethods: true

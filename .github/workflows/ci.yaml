@@ -96,6 +96,9 @@ jobs:
           coverage: none
           tools: none
 
+      - name: Install dependencies with Composer
+        run: ./tools/composer update --no-ansi --no-interaction --no-progress
+
       - name: Run PHPStan
         run: ./tools/phpstan analyse --no-progress --error-format=github
 
@@ -142,7 +145,7 @@ jobs:
         run: ./tools/composer update --no-ansi --no-interaction --no-progress
 
       - name: Run unit tests with PHPUnit
-        run: ./tools/phpunit --testsuite unit
+        run: ./vendor/bin/phpunit --testsuite unit
 
   integration-tests:
     name: Integration Tests
@@ -187,7 +190,7 @@ jobs:
         run: ./tools/composer update --no-ansi --no-interaction --no-progress
 
       - name: Run integration tests with PHPUnit
-        run: ./tools/phpunit --testsuite integration
+        run: ./vendor/bin/phpunit --testsuite integration
 
   code-coverage:
     name: Code Coverage
@@ -232,7 +235,7 @@ jobs:
         run: ./tools/composer update --no-ansi --no-interaction --no-progress
 
       - name: Collect code coverage with PHPUnit
-        run: ./tools/phpunit --log-junit test-results.xml --coverage-clover=code-coverage.xml
+        run: ./vendor/bin/phpunit --log-junit test-results.xml --coverage-clover=code-coverage.xml
 
       - name: Upload test results to Codecov.io
         if: ${{ !cancelled() }}
