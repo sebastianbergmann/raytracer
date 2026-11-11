@@ -2,8 +2,7 @@
 $finder = PhpCsFixer\Finder::create()
     ->files()
     ->in(__DIR__ . '/src')
-    ->in(__DIR__ . '/tests')
-    ->notName('autoload.php');
+    ->in(__DIR__ . '/tests');
 
 $config = new PhpCsFixer\Config;
 $config->setFinder($finder)

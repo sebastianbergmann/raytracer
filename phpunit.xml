@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/13.4/phpunit.xsd"
-         bootstrap="src/autoload.php"
+         bootstrap="vendor/autoload.php"
          cacheDirectory=".phpunit.cache"
          executionOrder="defects"
          requireCoverageMetadata="true"
@@ -11,11 +11,11 @@
          failOnAllIssues="true"
          colors="true">
     <testsuites>
-        <testsuite name="unit" bootstrap="tests/src/unit/autoload.php">
+        <testsuite name="unit">
             <directory>tests/unit</directory>
         </testsuite>
 
-        <testsuite name="integration" bootstrap="tests/src/integration/autoload.php">
+        <testsuite name="integration">
             <directory>tests/integration</directory>
         </testsuite>
     </testsuites>
@@ -24,9 +24,5 @@
         <include>
             <directory>src</directory>
         </include>
-
-        <exclude>
-            <file>src/autoload.php</file>
-        </exclude>
     </source>
 </phpunit>

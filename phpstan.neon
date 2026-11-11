@@ -6,16 +6,9 @@ parameters:
         - tests/src
         - tests/unit
         - tests/integration
-    excludePaths:
-        - src/autoload.php
-        - tests/src/unit/autoload.php
-        - tests/src/integration/autoload.php
 
     bootstrapFiles:
         - tools/phpunit.phar
-        - src/autoload.php
-        - tests/src/unit/autoload.php
-        - tests/src/integration/autoload.php
 
     resultCachePath: %tmpDir%/raytracer.php
 

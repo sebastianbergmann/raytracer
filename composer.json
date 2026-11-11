@@ -1,0 +1,39 @@
+{
+    "name": "sebastian/raytracer",
+    "description": "Ray tracer written while reading \"The Ray Tracer Challenge\" by Jamis Buck",
+    "type": "project",
+    "homepage": "https://github.com/sebastianbergmann/raytracer",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Sebastian Bergmann",
+            "email": "sebastian@phpunit.de",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/sebastianbergmann/raytracer/issues"
+    },
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.4"
+    },
+    "config": {
+        "platform": {
+            "php": "8.4.27"
+        },
+        "classmap-authoritative": true,
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/src/"
+        ]
+    }
+}

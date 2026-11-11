@@ -138,6 +138,9 @@ jobs:
           ini-values: ${{ env.PHP_INI_VALUES }}
           coverage: none
 
+      - name: Install dependencies with Composer
+        run: ./tools/composer update --no-ansi --no-interaction --no-progress
+
       - name: Run unit tests with PHPUnit
         run: ./tools/phpunit --testsuite unit
 
@@ -180,6 +183,9 @@ jobs:
           ini-values: ${{ env.PHP_INI_VALUES }}
           coverage: none
 
+      - name: Install dependencies with Composer
+        run: ./tools/composer update --no-ansi --no-interaction --no-progress
+
       - name: Run integration tests with PHPUnit
         run: ./tools/phpunit --testsuite integration
 
@@ -221,6 +227,9 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
           ini-values: ${{ env.PHP_INI_VALUES }}
           coverage: xdebug
+
+      - name: Install dependencies with Composer
+        run: ./tools/composer update --no-ansi --no-interaction --no-progress
 
       - name: Collect code coverage with PHPUnit
         run: ./tools/phpunit --log-junit test-results.xml --coverage-clover=code-coverage.xml
