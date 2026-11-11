@@ -16,11 +16,11 @@
     },
     "prefer-stable": true,
     "require": {
-        "php": ">=8.4"
+        "php": ">=8.5.12"
     },
     "config": {
         "platform": {
-            "php": "8.4.27"
+            "php": "8.5.12"
         },
         "classmap-authoritative": true,
         "optimize-autoloader": true,
