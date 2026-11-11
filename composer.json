@@ -37,6 +37,6 @@
         ]
     },
     "require-dev": {
-        "phpunit/phpunit": "^13.4"
+        "phpunit/phpunit": "^13.4.6"
     }
 }
