@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use function abs;
+use function is_finite;
 use function sqrt;
 
 final readonly class Tuple
@@ -126,9 +127,18 @@ final readonly class Tuple
         return sqrt($this->x ** 2 + $this->y ** 2 + $this->z ** 2 + $this->w ** 2);
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function normalize(): self
     {
         $magnitude = $this->magnitude();
+
+        if ($magnitude === 0.0 || !is_finite($magnitude)) {
+            throw new RuntimeException(
+                'Cannot normalize tuple that does not have a finite magnitude greater than zero',
+            );
+        }
 
         return new self(
             $this->x / $magnitude,

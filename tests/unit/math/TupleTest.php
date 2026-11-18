@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use const NAN;
 use function sqrt;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -9,6 +10,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Tuple::class)]
@@ -288,6 +290,20 @@ final class TupleTest extends TestCase
 
         /* @noinspection UnusedFunctionResultInspection */
         $t->divideBy(0.0);
+    }
+
+    #[TestWith([0.0, 0.0, 0.0], 'zero vector')]
+    #[TestWith([1e-200, 0.0, 0.0], 'magnitude underflows to zero')]
+    #[TestWith([1e200, 0.0, 0.0], 'magnitude overflows to infinity')]
+    #[TestWith([NAN, 0.0, 0.0], 'magnitude is not a number')]
+    public function test_a_vector_without_a_usable_magnitude_cannot_be_normalized(float $x, float $y, float $z): void
+    {
+        $v = Tuple::vector($x, $y, $z);
+
+        $this->expectException(RuntimeException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $v->normalize();
     }
 
     #[Property]
