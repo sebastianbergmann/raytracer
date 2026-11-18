@@ -1,12 +1,19 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function abs;
+use function max;
+use function min;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\ForAll;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\Attributes\UseGenerators;
+use PHPUnit\Framework\PropertyBased\Generators;
+use PHPUnit\Framework\PropertyBased\ValueGenerator;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Color::class)]
@@ -14,6 +21,14 @@ use PHPUnit\Framework\TestCase;
 #[Small]
 final class ColorTest extends TestCase
 {
+    /**
+     * @return ValueGenerator<float>
+     */
+    public static function displayableChannels(): ValueGenerator
+    {
+        return Generators::floats(0.0, 1.0);
+    }
+
     #[TestDox('Colors are (red, green, blue) tuples')]
     public function test_colors_are_red_green_blue_tuples(): void
     {
@@ -94,6 +109,90 @@ final class ColorTest extends TestCase
     }
 
     #[Property]
+    public function test_addition_is_commutative_and_associative_and_undone_by_subtraction(Color $a, Color $b, Color $c): void
+    {
+        $this->assertEquals($a->plus($b), $b->plus($a));
+        $this->assertEquals($a->plus($b)->plus($c), $a->plus($b->plus($c)));
+        $this->assertEquals($a, $a->plus($b)->minus($b));
+    }
+
+    #[Property]
+    public function test_the_product_is_commutative_and_associative(Color $a, Color $b, Color $c): void
+    {
+        $this->assertEquals($a->product($b), $b->product($a));
+        $this->assertEquals($a->product($b)->product($c), $a->product($b->product($c)));
+    }
+
+    #[Property]
+    public function test_the_product_with_white_is_the_color_and_the_product_with_black_is_black(Color $color): void
+    {
+        $white = Color::from(1, 1, 1);
+        $black = Color::from(0, 0, 0);
+
+        $this->assertEquals($color, $color->product($white));
+        $this->assertEquals($black, $color->product($black));
+    }
+
+    #[Property]
+    public function test_multiplication_by_a_scalar_distributes_over_addition(
+        Color $a,
+        Color $b,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $factor,
+    ): void {
+        $this->assertEquals(
+            $a->plus($b)->multiplyBy($factor),
+            $a->multiplyBy($factor)->plus($b->multiplyBy($factor)),
+        );
+    }
+
+    /**
+     * @param int<0, 2> $channel
+     */
+    #[Property]
+    public function test_colors_are_equal_exactly_when_none_of_their_channels_differ(
+        Color $color,
+        int $channel,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $difference,
+    ): void {
+        $channels = [$color->red(), $color->green(), $color->blue()];
+
+        $same = Color::from(...$channels);
+
+        $channels[$channel] += $difference;
+
+        $other = Color::from(...$channels);
+
+        $this->assertTrue($color->equalTo($same));
+        $this->assertTrue($same->equalTo($color));
+        $this->assertFalse($color->equalTo($other));
+        $this->assertFalse($other->equalTo($color));
+    }
+
+    #[Property]
+    public function test_colors_are_equal_when_their_channels_differ_by_no_more_than_the_delta(
+        Color $color,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $difference,
+    ): void {
+        $delta = abs($difference);
+
+        foreach ([[1, 0, 0], [0, 1, 0], [0, 0, 1]] as [$red, $green, $blue]) {
+            $other = Color::from(
+                $color->red() + $red * $difference,
+                $color->green() + $green * $difference,
+                $color->blue() + $blue * $difference,
+            );
+
+            $this->assertTrue($color->equalTo($other, $delta));
+            $this->assertTrue($other->equalTo($color, $delta));
+            $this->assertFalse($color->equalTo($other, $delta / 2));
+            $this->assertFalse($other->equalTo($color, $delta / 2));
+        }
+    }
+
+    #[Property]
     #[TestWith([1e300, -1e300, 1e17], 'channels that are too large for an integer')]
     public function test_channels_of_any_finite_floats_are_represented_as_integers_from_0_to_255(float $red, float $green, float $blue): void
     {
@@ -102,6 +201,37 @@ final class ColorTest extends TestCase
         foreach ([$color->redAsInt(), $color->greenAsInt(), $color->blueAsInt()] as $channel) {
             $this->assertGreaterThanOrEqual(0, $channel);
             $this->assertLessThanOrEqual(255, $channel);
+        }
+    }
+
+    #[Property]
+    #[TestWith([0.0, 1.0], 'bounds of the displayable range')]
+    #[TestWith([-1e300, 1e300], 'far outside of the displayable range')]
+    public function test_a_brighter_channel_is_never_represented_by_a_smaller_integer(float $a, float $b): void
+    {
+        $darker   = Color::from(min($a, $b), min($a, $b), min($a, $b));
+        $brighter = Color::from(max($a, $b), max($a, $b), max($a, $b));
+
+        $this->assertLessThanOrEqual($brighter->redAsInt(), $darker->redAsInt());
+        $this->assertLessThanOrEqual($brighter->greenAsInt(), $darker->greenAsInt());
+        $this->assertLessThanOrEqual($brighter->blueAsInt(), $darker->blueAsInt());
+    }
+
+    #[Property]
+    #[TestWith([0.0])]
+    #[TestWith([1.0])]
+    public function test_a_displayable_channel_loses_less_than_one_step_when_it_is_represented_as_an_integer(
+        #[ForAll('displayableChannels')]
+        float $channel,
+    ): void {
+        $step = Color::from($channel, $channel, $channel)->redAsInt();
+
+        $this->assertLessThanOrEqual($channel + 0.000000000000001, $step / 255);
+
+        if ($step < 255) {
+            $this->assertGreaterThan($channel - 0.000000000000001, ($step + 1) / 255);
+        } else {
+            $this->assertEqualsWithDelta(1.0, $channel, 0.0);
         }
     }
 }
