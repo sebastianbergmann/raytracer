@@ -143,4 +143,17 @@ final class ShapeTest extends TestCase
         $this->assertTrue($normal->isVector());
         $this->assertEqualsWithDelta(1.0, $normal->magnitude(), 0.000000001);
     }
+
+    #[Property]
+    public function test_a_shape_can_be_created_from_a_transformation_and_a_material(
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $transformation,
+        #[ForAllExternal(RaytracerGenerators::class, 'materials')]
+        Material $material,
+    ): void {
+        $shape = TestShape::from($transformation, $material);
+
+        $this->assertSame($transformation, $shape->transform());
+        $this->assertSame($material, $shape->material());
+    }
 }
