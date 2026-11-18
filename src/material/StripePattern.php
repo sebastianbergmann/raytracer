@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use function floor;
+use function fmod;
 
 final class StripePattern extends Pattern
 {
@@ -18,7 +19,7 @@ final class StripePattern extends Pattern
 
     public function localPatternAt(Shape $object, Tuple $point): Color
     {
-        if (floor($point->x) % 2 === 0) {
+        if (fmod(floor($point->x), 2.0) === 0.0) {
             return $this->a;
         }
 

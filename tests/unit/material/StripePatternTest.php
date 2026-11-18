@@ -3,7 +3,10 @@ namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestWith;
+use PHPUnit\Framework\Attributes\UseGenerators;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Shape::class)]
 #[UsesClass(Sphere::class)]
 #[UsesClass(Tuple::class)]
+#[UseGenerators(RaytracerGenerators::class)]
 #[Group('material')]
 #[Small]
 final class StripePatternTest extends TestCase
@@ -56,5 +60,18 @@ final class StripePatternTest extends TestCase
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(-0.1, 0, 0))->equalTo($this->black));
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(-1, 0, 0))->equalTo($this->black));
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(-1.1, 0, 0))->equalTo($this->white));
+    }
+
+    #[Property]
+    #[TestWith([1e30, 1e30, 1e30], 'coordinates that are too large for an integer')]
+    #[TestWith([-1e30, -1e30, -1e30], 'coordinates that are too small for an integer')]
+    public function test_a_stripe_pattern_has_one_of_its_two_colors_at_any_point(float $x, float $y, float $z): void
+    {
+        $pattern = Pattern::stripe($this->white, $this->black);
+
+        $this->assertContains(
+            $pattern->localPatternAt(Sphere::default(), Tuple::point($x, $y, $z)),
+            [$this->white, $this->black],
+        );
     }
 }

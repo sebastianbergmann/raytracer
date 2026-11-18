@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use function floor;
+use function fmod;
 
 final class CheckersPattern extends Pattern
 {
@@ -18,7 +19,7 @@ final class CheckersPattern extends Pattern
 
     public function localPatternAt(Shape $object, Tuple $point): Color
     {
-        if ((floor($point->x) + floor($point->y) + floor($point->z)) % 2 === 0) {
+        if (fmod(floor($point->x) + floor($point->y) + floor($point->z), 2.0) === 0.0) {
             return $this->a;
         }
 

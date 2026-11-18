@@ -2,6 +2,7 @@
 namespace SebastianBergmann\Raytracer;
 
 use function floor;
+use function fmod;
 use function sqrt;
 
 final class RingPattern extends Pattern
@@ -19,7 +20,7 @@ final class RingPattern extends Pattern
 
     public function localPatternAt(Shape $object, Tuple $point): Color
     {
-        if (floor(sqrt($point->x ** 2 + $point->z ** 2)) % 2 === 0) {
+        if (fmod(floor(sqrt($point->x ** 2 + $point->z ** 2)), 2.0) === 0.0) {
             return $this->a;
         }
 
