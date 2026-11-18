@@ -3,9 +3,12 @@ namespace SebastianBergmann\Raytracer;
 
 use const M_PI_2;
 use const M_PI_4;
+use function deg2rad;
 use function sqrt;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -259,5 +262,206 @@ final class TransformationsTest extends TestCase
                 0.00001,
             ),
         );
+    }
+
+    #[Property]
+    public function test_a_translation_moves_points_by_its_offsets_and_does_not_affect_vectors(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $offsets,
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $p,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $v,
+    ): void {
+        $translation = Transformations::translation($offsets->x, $offsets->y, $offsets->z);
+
+        $this->assertEquals($p->plus($offsets), $translation->multiplyBy($p));
+        $this->assertEquals($v, $translation->multiplyBy($v));
+    }
+
+    #[Property]
+    public function test_translations_are_combined_by_adding_their_offsets_and_undone_by_negating_them(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $a,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $b,
+    ): void {
+        $sum = $a->plus($b);
+
+        $this->assertEquals(
+            Transformations::translation($sum->x, $sum->y, $sum->z),
+            Transformations::translation($a->x, $a->y, $a->z)->multiply(Transformations::translation($b->x, $b->y, $b->z)),
+        );
+
+        $this->assertEquals(
+            Transformations::translation(-$a->x, -$a->y, -$a->z),
+            Transformations::translation($a->x, $a->y, $a->z)->inverse(),
+        );
+    }
+
+    #[Property]
+    public function test_a_scaling_multiplies_each_coordinate_by_its_factor(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $factors,
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $p,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $v,
+    ): void {
+        $scaling = Transformations::scaling($factors->x, $factors->y, $factors->z);
+
+        $this->assertEquals(
+            Tuple::point($factors->x * $p->x, $factors->y * $p->y, $factors->z * $p->z),
+            $scaling->multiplyBy($p),
+        );
+
+        $this->assertEquals(
+            Tuple::vector($factors->x * $v->x, $factors->y * $v->y, $factors->z * $v->z),
+            $scaling->multiplyBy($v),
+        );
+    }
+
+    #[Property]
+    public function test_scalings_are_combined_by_multiplying_their_factors_and_undone_by_inverting_them(
+        #[ForAllExternal(RaytracerGenerators::class, 'scalingFactors')]
+        float $x1,
+        #[ForAllExternal(RaytracerGenerators::class, 'scalingFactors')]
+        float $y1,
+        #[ForAllExternal(RaytracerGenerators::class, 'scalingFactors')]
+        float $z1,
+        #[ForAllExternal(RaytracerGenerators::class, 'scalingFactors')]
+        float $x2,
+        #[ForAllExternal(RaytracerGenerators::class, 'scalingFactors')]
+        float $y2,
+        #[ForAllExternal(RaytracerGenerators::class, 'scalingFactors')]
+        float $z2,
+    ): void {
+        $this->assertEquals(
+            Transformations::scaling($x1 * $x2, $y1 * $y2, $z1 * $z2),
+            Transformations::scaling($x1, $y1, $z1)->multiply(Transformations::scaling($x2, $y2, $z2)),
+        );
+
+        $this->assertEqualsWithDelta(
+            Transformations::scaling(1 / $x1, 1 / $y1, 1 / $z1),
+            Transformations::scaling($x1, $y1, $z1)->inverse(),
+            0.000000000001,
+        );
+    }
+
+    /**
+     * @param 'x'|'y'|'z'    $axis
+     * @param int<-360, 360> $a
+     * @param int<-360, 360> $b
+     */
+    #[Property]
+    public function test_rotations_around_the_same_axis_are_combined_by_adding_their_angles_and_undone_by_negating_them(string $axis, int $a, int $b): void
+    {
+        $this->assertEqualsWithDelta(
+            $this->rotation($axis, $a + $b),
+            $this->rotation($axis, $a)->multiply($this->rotation($axis, $b)),
+            0.000000000001,
+        );
+
+        $this->assertEqualsWithDelta(
+            $this->rotation($axis, -$a),
+            $this->rotation($axis, $a)->inverse(),
+            0.000000000001,
+        );
+
+        $this->assertEquals(
+            $this->rotation($axis, -$a),
+            $this->rotation($axis, $a)->transpose(),
+        );
+    }
+
+    /**
+     * @param 'x'|'y'|'z'    $axis
+     * @param int<-360, 360> $degrees
+     */
+    #[Property]
+    public function test_a_rotation_preserves_lengths_and_angles_and_does_not_move_its_axis(
+        string $axis,
+        int $degrees,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $u,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $v,
+    ): void {
+        $rotation = $this->rotation($axis, $degrees);
+
+        $unitVectorOfAxis = match ($axis) {
+            'x' => Tuple::vector(1, 0, 0),
+            'y' => Tuple::vector(0, 1, 0),
+            'z' => Tuple::vector(0, 0, 1),
+        };
+
+        $this->assertEqualsWithDelta(1.0, $rotation->determinant(), 0.000000000001);
+        $this->assertEqualsWithDelta($u->magnitude(), $rotation->multiplyBy($u)->magnitude(), 0.000000001);
+        $this->assertEqualsWithDelta($u->dot($v), $rotation->multiplyBy($u)->dot($rotation->multiplyBy($v)), 0.000001);
+        $this->assertEquals($unitVectorOfAxis, $rotation->multiplyBy($unitVectorOfAxis));
+    }
+
+    #[Property]
+    public function test_a_shearing_moves_each_coordinate_in_proportion_to_the_other_two_coordinates(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $ofX,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $ofY,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $ofZ,
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $p,
+    ): void {
+        $shearing = Transformations::shearing($ofX->y, $ofX->z, $ofY->x, $ofY->z, $ofZ->x, $ofZ->y);
+
+        $this->assertEquals(
+            Tuple::point(
+                $p->x + $ofX->y * $p->y + $ofX->z * $p->z,
+                $p->y + $ofY->x * $p->x + $ofY->z * $p->z,
+                $p->z + $ofZ->x * $p->x + $ofZ->y * $p->y,
+            ),
+            $shearing->multiplyBy($p),
+        );
+    }
+
+    #[Property]
+    public function test_the_view_transformation_moves_the_eye_to_the_origin_and_what_it_looks_at_onto_the_negative_Z_axis(
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $from,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroVectors')]
+        Tuple $direction,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroVectors')]
+        Tuple $up,
+    ): void {
+        $to   = $from->plus($direction);
+        $view = Transformations::view($from, $to, $up);
+
+        $this->assertEqualsWithDelta(Tuple::point(0, 0, 0), $view->multiplyBy($from), 0.0000001);
+        $this->assertEqualsWithDelta(Tuple::point(0, 0, -$direction->magnitude()), $view->multiplyBy($to), 0.0000001);
+    }
+
+    #[Property]
+    public function test_there_is_no_view_transformation_for_an_eye_that_looks_at_its_own_position(
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $from,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroVectors')]
+        Tuple $up,
+    ): void {
+        $this->expectException(RuntimeException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        Transformations::view($from, $from, $up);
+    }
+
+    /**
+     * @param 'x'|'y'|'z' $axis
+     */
+    private function rotation(string $axis, int $degrees): Matrix
+    {
+        return match ($axis) {
+            'x' => Transformations::rotationAroundX(deg2rad($degrees)),
+            'y' => Transformations::rotationAroundY(deg2rad($degrees)),
+            'z' => Transformations::rotationAroundZ(deg2rad($degrees)),
+        };
     }
 }
