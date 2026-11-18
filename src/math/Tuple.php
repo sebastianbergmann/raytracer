@@ -160,6 +160,10 @@ final readonly class Tuple
             return false;
         }
 
+        if (abs($this->w - $that->w) > $delta) {
+            return false;
+        }
+
         return true;
     }
 

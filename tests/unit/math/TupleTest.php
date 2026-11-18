@@ -4,7 +4,9 @@ namespace SebastianBergmann\Raytracer;
 use function sqrt;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
@@ -275,5 +277,18 @@ final class TupleTest extends TestCase
         $r = $v->reflect($n);
 
         $this->assertTrue($r->equalTo(Tuple::vector(1, 0, 0)));
+    }
+
+    #[Property]
+    public function test_a_point_is_not_equal_to_the_vector_with_the_same_coordinates(
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $x,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $y,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $z,
+    ): void {
+        $this->assertFalse(Tuple::point($x, $y, $z)->equalTo(Tuple::vector($x, $y, $z)));
+        $this->assertFalse(Tuple::vector($x, $y, $z)->equalTo(Tuple::point($x, $y, $z)));
     }
 }
