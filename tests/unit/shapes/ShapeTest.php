@@ -4,7 +4,9 @@ namespace SebastianBergmann\Raytracer;
 use const M_PI;
 use function sqrt;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -105,5 +107,40 @@ final class ShapeTest extends TestCase
         $normal = $shape->normalAt(Tuple::point(0, sqrt(2) / 2, -sqrt(2) / 2));
 
         $this->assertTrue($normal->equalTo(Tuple::vector(0, 0.97014, -0.24254), 0.00001));
+    }
+
+    #[Property]
+    public function test_a_shape_is_intersected_with_the_ray_that_is_transformed_by_the_inverse_of_the_transformation_of_the_shape(
+        #[ForAllExternal(RaytracerGenerators::class, 'raysNearTheUnitSphere')]
+        Ray $ray,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $transformation,
+    ): void {
+        $shape = TestShape::default();
+
+        $shape->setTransform($transformation);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $shape->intersect($ray);
+
+        $this->assertEqualsWithDelta($ray, $shape->savedRay()->transform($transformation), 0.0000001);
+    }
+
+    #[Property]
+    public function test_the_normal_on_a_transformed_shape_is_a_unit_vector(
+        #[ForAllExternal(RaytracerGenerators::class, 'nearNonZeroVectors')]
+        Tuple $fromOriginToPoint,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $transformation,
+    ): void {
+        $shape = TestShape::default();
+
+        $shape->setTransform($transformation);
+
+        $point  = Tuple::point($fromOriginToPoint->x, $fromOriginToPoint->y, $fromOriginToPoint->z);
+        $normal = $shape->normalAt($transformation->multiplyBy($point));
+
+        $this->assertTrue($normal->isVector());
+        $this->assertEqualsWithDelta(1.0, $normal->magnitude(), 0.000000001);
     }
 }
