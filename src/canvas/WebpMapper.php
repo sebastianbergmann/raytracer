@@ -44,10 +44,12 @@ final readonly class WebpMapper
                     $colors[$key] = $allocatedColor;
                 }
 
+                // The pixels of a canvas are numbered starting with one,
+                // the pixels of an image starting with zero
                 imagesetpixel(
                     $image,
-                    $x,
-                    $y,
+                    $x - 1,
+                    $y - 1,
                     $colors[$key],
                 );
             }
