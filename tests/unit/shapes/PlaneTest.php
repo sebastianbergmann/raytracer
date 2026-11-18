@@ -2,7 +2,9 @@
 namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -73,5 +75,68 @@ final class PlaneTest extends TestCase
 
         $this->assertSame(1.0, $intersections->at(0)->t());
         $this->assertSame($plane, $intersections->at(0)->shape());
+    }
+
+    #[Property]
+    public function test_the_normal_of_a_plane_is_the_same_at_every_point(
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $point,
+    ): void {
+        $this->assertEquals(Tuple::vector(0, 1, 0), Plane::default()->normalAt($point));
+        $this->assertEquals(Tuple::vector(0, 1, 0), Plane::default()->localNormalAt($point));
+    }
+
+    #[Property]
+    public function test_a_ray_that_is_parallel_to_a_plane_does_not_intersect_it(
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $origin,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $x,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $z,
+    ): void {
+        $this->assertCount(0, Plane::default()->intersect(Ray::from($origin, Tuple::vector($x, 0, $z))));
+        $this->assertCount(0, Plane::default()->intersect(Ray::from($origin, Tuple::vector($z, 0, $x))));
+    }
+
+    #[Property]
+    public function test_a_ray_that_is_not_parallel_to_a_plane_intersects_it_once_where_the_Y_coordinate_of_the_ray_is_zero(
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $origin,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $direction,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $y,
+    ): void {
+        $plane = Plane::default();
+        $ray   = Ray::from($origin, Tuple::vector($direction->x, $y, $direction->z));
+        $xs    = $plane->intersect($ray);
+
+        $this->assertCount(1, $xs);
+        $this->assertSame($plane, $xs->at(0)->shape());
+        $this->assertEqualsWithDelta(0.0, $ray->position($xs->at(0)->t())->y, 0.000000001);
+
+        // The ray intersects the plane in front of its origin exactly when it
+        // starts above the plane and points down or starts below the plane
+        // and points up
+        $this->assertSame(($origin->y > 0 && $y < 0) || ($origin->y < 0 && $y > 0), $xs->hasHit());
+    }
+
+    #[Property]
+    public function test_moving_a_ray_parallel_to_a_plane_does_not_change_when_the_ray_intersects_the_plane(
+        #[ForAllExternal(RaytracerGenerators::class, 'rays')]
+        Ray $ray,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $x,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $z,
+    ): void {
+        $plane = Plane::default();
+        $moved = Ray::from($ray->origin()->plus(Tuple::vector($x, 0, $z)), $ray->direction());
+
+        $this->assertEquals(
+            $plane->intersect($ray)->asArray(),
+            $plane->intersect($moved)->asArray(),
+        );
     }
 }
