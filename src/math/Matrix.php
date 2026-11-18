@@ -110,13 +110,13 @@ final readonly class Matrix
             );
         }
 
-        $result = [0.0, 0.0, 0.0, 0.0];
+        $result = [];
 
         for ($i = 0; $i <= 3; $i++) {
-            $result[$i] += $this->elements[$i][0] * $tuple->x;
-            $result[$i] += $this->elements[$i][1] * $tuple->y;
-            $result[$i] += $this->elements[$i][2] * $tuple->z;
-            $result[$i] += $this->elements[$i][3] * $tuple->w;
+            $result[$i] = $this->elements[$i][0] * $tuple->x +
+                          $this->elements[$i][1] * $tuple->y +
+                          $this->elements[$i][2] * $tuple->z +
+                          $this->elements[$i][3] * $tuple->w;
         }
 
         return Tuple::from(
