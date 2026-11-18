@@ -2,11 +2,15 @@
 namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\TestWith;
+use PHPUnit\Framework\Attributes\UseGenerators;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Color::class)]
+#[UseGenerators(RaytracerGenerators::class)]
 #[Small]
 final class ColorTest extends TestCase
 {
@@ -87,5 +91,17 @@ final class ColorTest extends TestCase
         $this->assertFalse($c1->equalTo($c2));
         $this->assertFalse($c1->equalTo($c3));
         $this->assertFalse($c1->equalTo($c4));
+    }
+
+    #[Property]
+    #[TestWith([1e300, -1e300, 1e17], 'channels that are too large for an integer')]
+    public function test_channels_of_any_finite_floats_are_represented_as_integers_from_0_to_255(float $red, float $green, float $blue): void
+    {
+        $color = Color::from($red, $green, $blue);
+
+        foreach ([$color->redAsInt(), $color->greenAsInt(), $color->blueAsInt()] as $channel) {
+            $this->assertGreaterThanOrEqual(0, $channel);
+            $this->assertLessThanOrEqual(255, $channel);
+        }
     }
 }

@@ -3,6 +3,8 @@ namespace SebastianBergmann\Raytracer;
 
 use function abs;
 use function floor;
+use function max;
+use function min;
 
 final readonly class Color
 {
@@ -119,7 +121,9 @@ final readonly class Color
      */
     private function floatToInt(float $float): int
     {
-        $int = (int) floor($float * 255);
+        // Limit the float before it is cast: a float that is too large to be
+        // represented as an integer cannot be cast without a warning
+        $int = (int) floor(max(-1.0E+18, min(1.0E+18, $float * 255)));
 
         if ($int < 0) {
             return 0;
