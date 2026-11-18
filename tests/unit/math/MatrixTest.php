@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-use function abs;
 use function array_fill;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -808,13 +807,15 @@ final class MatrixTest extends TestCase
     }
 
     /**
-     * @param int<1, 4> $size
+     * @param int<1, 4>      $size
+     * @param positive-float $delta
      */
     #[Property]
     public function test_matrices_are_equal_when_their_elements_differ_by_no_more_than_the_delta(
         int $size,
-        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
-        float $difference,
+        #[ForAllExternal(RaytracerGenerators::class, 'positiveCoordinates')]
+        float $delta,
+        bool $negative,
     ): void {
         $rows   = $this->draw(RaytracerGenerators::rowsOfSize($size), 'rows');
         $row    = $this->draw(Generators::integers(0, $size - 1), 'row');
@@ -822,14 +823,14 @@ final class MatrixTest extends TestCase
 
         $matrix = Matrix::fromArray($rows);
 
-        $rows[$row][$column] += $difference;
+        $rows[$row][$column] += $negative ? -$delta : $delta;
 
         $other = Matrix::fromArray($rows);
 
-        $this->assertTrue($matrix->equalTo($other, abs($difference)));
-        $this->assertTrue($other->equalTo($matrix, abs($difference)));
-        $this->assertFalse($matrix->equalTo($other, abs($difference) / 2));
-        $this->assertFalse($other->equalTo($matrix, abs($difference) / 2));
+        $this->assertTrue($matrix->equalTo($other, $delta));
+        $this->assertTrue($other->equalTo($matrix, $delta));
+        $this->assertFalse($matrix->equalTo($other, $delta / 2));
+        $this->assertFalse($other->equalTo($matrix, $delta / 2));
     }
 
     /**

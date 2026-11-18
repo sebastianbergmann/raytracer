@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
-use function abs;
 use function max;
 use function min;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -170,13 +169,17 @@ final class ColorTest extends TestCase
         $this->assertFalse($other->equalTo($color));
     }
 
+    /**
+     * @param positive-float $delta
+     */
     #[Property]
     public function test_colors_are_equal_when_their_channels_differ_by_no_more_than_the_delta(
         Color $color,
-        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
-        float $difference,
+        #[ForAllExternal(RaytracerGenerators::class, 'positiveCoordinates')]
+        float $delta,
+        bool $negative,
     ): void {
-        $delta = abs($difference);
+        $difference = $negative ? -$delta : $delta;
 
         foreach ([[1, 0, 0], [0, 1, 0], [0, 0, 1]] as [$red, $green, $blue]) {
             $other = Color::from(

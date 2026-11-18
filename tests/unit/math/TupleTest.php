@@ -526,14 +526,18 @@ final class TupleTest extends TestCase
         $this->assertFalse($other->equalTo($t));
     }
 
+    /**
+     * @param positive-float $delta
+     */
     #[Property]
     public function test_tuples_are_equal_when_their_components_differ_by_no_more_than_the_delta(
         #[ForAllExternal(RaytracerGenerators::class, 'tuples')]
         Tuple $t,
-        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
-        float $difference,
+        #[ForAllExternal(RaytracerGenerators::class, 'positiveCoordinates')]
+        float $delta,
+        bool $negative,
     ): void {
-        $delta = abs($difference);
+        $difference = $negative ? -$delta : $delta;
 
         foreach ([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]] as [$x, $y, $z, $w]) {
             $other = Tuple::from(

@@ -40,6 +40,18 @@ final class RaytracerGenerators
     }
 
     /**
+     * Multiples of 1/8 from 1/8 to 1024.
+     *
+     * @return ValueGenerator<positive-float>
+     */
+    public static function positiveCoordinates(): ValueGenerator
+    {
+        return Generators::integers(1, 8192)->map(
+            static fn (int $eighths): float => max(1, $eighths) * 0.125,
+        );
+    }
+
+    /**
      * @return ValueGenerator<Tuple>
      */
     public static function points(): ValueGenerator
