@@ -118,4 +118,17 @@ final class IntersectionTest extends TestCase
         $this->assertFalse($xs->at(0)->prepare($ray)->inside());
         $this->assertTrue($xs->at(1)->prepare($ray)->inside());
     }
+
+    /**
+     * @param int<1, 1000> $distance
+     */
+    #[Property]
+    public function test_a_ray_that_only_touches_a_sphere_is_not_inside_of_the_sphere(int $distance): void
+    {
+        $ray   = Ray::from(Tuple::point(0, 1, -$distance), Tuple::vector(0, 0, 1));
+        $comps = Intersection::from($distance, Sphere::default())->prepare($ray);
+
+        $this->assertFalse($comps->inside());
+        $this->assertEquals(Tuple::vector(0, 1, 0), $comps->normal());
+    }
 }
