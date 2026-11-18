@@ -1,16 +1,26 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function array_map;
+use function count;
+use function sort;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\ForAll;
+use PHPUnit\Framework\Attributes\ForAllExternal;
+use PHPUnit\Framework\Attributes\Property;
+use PHPUnit\Framework\Attributes\RequireClassification;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
+use PHPUnit\Framework\PropertyBased\Generators;
+use PHPUnit\Framework\PropertyBased\ValueGenerator;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(World::class)]
 #[UsesClass(Color::class)]
 #[UsesClass(Intersection::class)]
 #[UsesClass(IntersectionCollection::class)]
+#[UsesClass(IntersectionCollectionIterator::class)]
 #[UsesClass(Material::class)]
 #[UsesClass(Matrix::class)]
 #[UsesClass(PointLight::class)]
@@ -25,6 +35,26 @@ use PHPUnit\Framework\TestCase;
 #[Small]
 final class WorldTest extends TestCase
 {
+    /**
+     * @return ValueGenerator<list<Matrix>>
+     */
+    public static function transformationsOfUpToFourSpheres(): ValueGenerator
+    {
+        return Generators::lists(RaytracerGenerators::transformations(), 0, 4);
+    }
+
+    /**
+     * Points with a distance from the origin of more than 1.1.
+     *
+     * @return ValueGenerator<Tuple>
+     */
+    public static function pointsOutsideTheUnitSphere(): ValueGenerator
+    {
+        return RaytracerGenerators::nearPoints()->filter(
+            static fn (Tuple $point): bool => $point->minus(Tuple::point(0, 0, 0))->magnitude() > 1.1,
+        );
+    }
+
     public function test_creating_a_world(): void
     {
         $w = new World;
@@ -190,5 +220,155 @@ final class WorldTest extends TestCase
         $c = $w->shadeHit($comps);
 
         $this->assertTrue($c->equalTo(Color::from(0.1, 0.1, 0.1)));
+    }
+
+    /**
+     * @param list<Matrix> $transformations
+     */
+    #[Property]
+    #[RequireClassification('ray intersects a shape', 50.0)]
+    public function test_a_ray_intersects_a_world_where_it_intersects_the_shapes_of_the_world(
+        #[ForAll('transformationsOfUpToFourSpheres')]
+        array $transformations,
+        #[ForAllExternal(RaytracerGenerators::class, 'raysThroughTheUnitSphere')]
+        Ray $ray,
+    ): void {
+        $world = new World;
+
+        foreach ($transformations as $transformation) {
+            $sphere = Sphere::default();
+
+            $sphere->setTransform($transformation);
+
+            $world->add($sphere);
+        }
+
+        // The ray passes through the unit sphere. When it is transformed in
+        // the same way as one of the spheres of the world, it passes through
+        // this sphere
+        if ($transformations !== []) {
+            $ray = $ray->transform(
+                $this->draw(Generators::elements(...$transformations), 'transformation of the sphere that the ray passes through'),
+            );
+        }
+
+        $xs = $world->intersect($ray);
+
+        if ($xs->isNotEmpty()) {
+            $this->classify('ray intersects a shape');
+        }
+
+        $numberOfIntersections = 0;
+
+        foreach ($world->shapes() as $shape) {
+            $numberOfIntersections += count($shape->intersect($ray));
+        }
+
+        $this->assertCount($numberOfIntersections, $xs);
+
+        $ts     = array_map(static fn (Intersection $x): float => $x->t(), $xs->asArray());
+        $sorted = $ts;
+
+        sort($sorted);
+
+        $this->assertSame($sorted, $ts);
+
+        foreach ($xs as $x) {
+            $this->assertContains($x->shape(), $world->shapes()->asArray());
+        }
+
+        $world->add(Sphere::default());
+
+        $this->assertCount($numberOfIntersections + count(Sphere::default()->intersect($ray)), $world->intersect($ray));
+    }
+
+    #[Property]
+    #[RequireClassification('sphere is in front of the origin of the ray', 25.0)]
+    #[RequireClassification('sphere is not in front of the origin of the ray', 10.0)]
+    public function test_the_color_at_a_ray_is_black_when_nothing_is_hit_and_requires_a_light_otherwise(
+        #[ForAllExternal(RaytracerGenerators::class, 'raysThroughTheUnitSphere')]
+        Ray $ray,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $transformation,
+    ): void {
+        $sphere = Sphere::default();
+
+        $sphere->setTransform($transformation);
+
+        $world = new World;
+
+        $world->add($sphere);
+
+        $ray = $ray->transform($transformation);
+
+        $this->assertEquals(Color::from(0, 0, 0), (new World)->colorAt($ray));
+
+        if (!$world->intersect($ray)->hasHit()) {
+            $this->classify('sphere is not in front of the origin of the ray');
+
+            $this->assertEquals(Color::from(0, 0, 0), $world->colorAt($ray));
+
+            return;
+        }
+
+        $this->classify('sphere is in front of the origin of the ray');
+
+        $this->expectException(WorldHasNoLightException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $world->colorAt($ray);
+    }
+
+    #[Property]
+    #[RequireClassification('in shadow', 25.0)]
+    #[RequireClassification('not in shadow', 25.0)]
+    public function test_a_point_is_in_shadow_exactly_when_a_shape_is_between_the_point_and_the_light(
+        #[ForAll('pointsOutsideTheUnitSphere')]
+        Tuple $point,
+    ): void {
+        // A light at any position is rarely behind the sphere. Half of the
+        // lights are therefore placed so that a point inside the sphere is
+        // halfway between the point and the light
+        $light = $this->draw(
+            Generators::oneOf(
+                self::pointsOutsideTheUnitSphere(),
+                RaytracerGenerators::pointsInsideTheUnitSphere()->map(
+                    static fn (Tuple $inside): Tuple => $point->plus($inside->minus($point)->multiplyBy(2)),
+                )->filter(
+                    static fn (Tuple $light): bool => $light->minus(Tuple::point(0, 0, 0))->magnitude() > 1.1,
+                ),
+            ),
+            'position of the light',
+        );
+
+        $sphere = Sphere::default();
+        $world  = new World;
+
+        $world->add($sphere);
+        $world->setLight(PointLight::from($light, Color::from(1, 1, 1)));
+
+        $fromPointToLight = $light->minus($point);
+
+        // A point cannot be at the position of the light, and a line from
+        // the point to the light that only touches the sphere is neither
+        // clearly in shadow nor clearly not in shadow
+        $product = $point->minus($sphere->origin())->cross($fromPointToLight);
+
+        $this->assume($fromPointToLight->magnitude() > 0.0);
+        $this->assume($product->dot($product) !== $fromPointToLight->dot($fromPointToLight));
+
+        // A ray with this direction is at the point at t = 0 and at the
+        // light at t = 1
+        $between = false;
+
+        foreach ($sphere->intersect(Ray::from($point, $fromPointToLight)) as $x) {
+            if ($x->t() > 0 && $x->t() < 1) {
+                $between = true;
+            }
+        }
+
+        $this->classify($between ? 'in shadow' : 'not in shadow');
+
+        $this->assertSame($between, $world->isShadowed($point));
     }
 }
