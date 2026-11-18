@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\Attributes\UseGenerators;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -325,5 +326,27 @@ final class MaterialTest extends TestCase
         $result = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
 
         $this->assertTrue($result->equalTo(Color::from(1.0, 1.0, 1.0)));
+    }
+
+    /**
+     * @param int<0, 300> $shininess
+     */
+    #[Property]
+    #[TestWith([0], 'no shininess')]
+    public function test_there_is_no_specular_reflection_towards_an_eye_that_is_perpendicular_to_the_reflection_vector(int $shininess): void
+    {
+        $eye    = Tuple::vector(0, 0, -1);
+        $normal = Tuple::vector(0, 1, 0);
+        $light  = PointLight::from(Tuple::point(0, 10, 0), Color::from(1, 1, 1));
+
+        $this->material->setShininess($shininess);
+
+        $withSpecularReflection = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
+
+        $this->material->setSpecular(0.0);
+
+        $withoutSpecularReflection = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
+
+        $this->assertEquals($withoutSpecularReflection, $withSpecularReflection);
     }
 }
