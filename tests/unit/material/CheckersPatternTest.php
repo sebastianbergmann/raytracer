@@ -59,6 +59,45 @@ final class CheckersPatternTest extends TestCase
         $this->assertTrue($pattern->patternAt(Sphere::default(), Tuple::point(0, 0, 1.01))->equalTo($this->black));
     }
 
+    /**
+     * @param int<-64, 64> $cellX
+     * @param int<-64, 64> $cellY
+     * @param int<-64, 64> $cellZ
+     * @param int<0, 7>    $eighthsX
+     * @param int<0, 7>    $eighthsY
+     * @param int<0, 7>    $eighthsZ
+     */
+    #[Property]
+    public function test_checkers_are_cubes_with_edges_of_one_unit_that_have_another_color_than_the_cubes_next_to_them(
+        int $cellX,
+        int $cellY,
+        int $cellZ,
+        int $eighthsX,
+        int $eighthsY,
+        int $eighthsZ,
+        Color $a,
+        Color $b,
+    ): void {
+        $pattern = Pattern::checkers($a, $b);
+        $shape   = Sphere::default();
+        $x       = $cellX + $eighthsX / 8;
+        $y       = $cellY + $eighthsY / 8;
+        $z       = $cellZ + $eighthsZ / 8;
+
+        $color = $pattern->localPatternAt($shape, Tuple::point($x, $y, $z));
+
+        $this->assertSame($a, $pattern->localPatternAt($shape, Tuple::point($eighthsX / 8, $eighthsY / 8, $eighthsZ / 8)));
+        $this->assertSame($color, $pattern->localPatternAt($shape, Tuple::point((float) $cellX, (float) $cellY, (float) $cellZ)));
+
+        $this->assertNotSame($color, $pattern->localPatternAt($shape, Tuple::point($x + 1, $y, $z)));
+        $this->assertNotSame($color, $pattern->localPatternAt($shape, Tuple::point($x, $y + 1, $z)));
+        $this->assertNotSame($color, $pattern->localPatternAt($shape, Tuple::point($x, $y, $z + 1)));
+
+        $this->assertSame($color, $pattern->localPatternAt($shape, Tuple::point($x + 1, $y + 1, $z)));
+        $this->assertSame($color, $pattern->localPatternAt($shape, Tuple::point($x, $y + 1, $z + 1)));
+        $this->assertSame($color, $pattern->localPatternAt($shape, Tuple::point($x + 1, $y, $z + 1)));
+    }
+
     #[Property]
     #[TestWith([1e30, 1e30, 1e30], 'coordinates that are too large for an integer')]
     #[TestWith([-1e30, -1e30, -1e30], 'coordinates that are too small for an integer')]
