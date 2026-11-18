@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
@@ -138,5 +139,16 @@ final class PlaneTest extends TestCase
             $plane->intersect($ray)->asArray(),
             $plane->intersect($moved)->asArray(),
         );
+    }
+
+    #[TestWith([0.00001, 1])]
+    #[TestWith([-0.00001, 1])]
+    #[TestWith([0.000009, 0])]
+    #[TestWith([-0.000009, 0])]
+    public function test_a_ray_is_considered_parallel_to_a_plane_when_the_Y_coordinate_of_its_direction_is_closer_to_zero_than_0_00001(float $y, int $numberOfIntersections): void
+    {
+        $ray = Ray::from(Tuple::point(0, 1, 0), Tuple::vector(0, $y, 1));
+
+        $this->assertCount($numberOfIntersections, Plane::default()->localIntersect($ray));
     }
 }
