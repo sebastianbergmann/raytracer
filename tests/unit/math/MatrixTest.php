@@ -1,9 +1,12 @@
 <?php declare(strict_types=1);
 namespace SebastianBergmann\Raytracer;
 
+use function abs;
+use function array_fill;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\ForAll;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
@@ -586,10 +589,158 @@ final class MatrixTest extends TestCase
      * @param int<1, 4> $size
      */
     #[Property]
+    public function test_transposing_twice_gives_back_the_matrix_and_a_product_is_transposed_by_transposing_its_factors_in_reverse_order(int $size): void
+    {
+        $a = $this->draw(RaytracerGenerators::matricesOfSize($size), 'a');
+        $b = $this->draw(RaytracerGenerators::matricesOfSize($size), 'b');
+
+        $this->assertEquals($a, $a->transpose()->transpose());
+        $this->assertEquals($a->multiply($b)->transpose(), $b->transpose()->multiply($a->transpose()));
+    }
+
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
+    public function test_multiplication_is_associative_and_the_identity_matrix_is_its_neutral_element(int $size): void
+    {
+        $a = $this->draw(RaytracerGenerators::matricesOfSize($size), 'a');
+        $b = $this->draw(RaytracerGenerators::matricesOfSize($size), 'b');
+        $c = $this->draw(RaytracerGenerators::matricesOfSize($size), 'c');
+
+        $this->assertEquals($a->multiply($b)->multiply($c), $a->multiply($b->multiply($c)));
+        $this->assertEquals($a, $a->multiply(Matrix::identity($size)));
+        $this->assertEquals($a, Matrix::identity($size)->multiply($a));
+    }
+
+    #[Property]
+    public function test_multiplying_a_tuple_by_a_product_is_multiplying_it_by_the_factors_one_after_the_other(
+        #[ForAllExternal(RaytracerGenerators::class, 'tuples')]
+        Tuple $t,
+    ): void {
+        $a = $this->draw(RaytracerGenerators::matricesOfSize(4), 'a');
+        $b = $this->draw(RaytracerGenerators::matricesOfSize(4), 'b');
+
+        $this->assertEquals($a->multiply($b)->multiplyBy($t), $a->multiplyBy($b->multiplyBy($t)));
+        $this->assertEquals($t, Matrix::identity(4)->multiplyBy($t));
+    }
+
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
     public function test_the_determinant_of_an_identity_matrix_is_one(int $size): void
     {
         $this->assertSame(1.0, Matrix::identity($size)->determinant());
         $this->assertTrue(Matrix::identity($size)->invertible());
+    }
+
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
+    public function test_the_determinant_is_multiplicative_and_not_changed_by_transposition(int $size): void
+    {
+        $a = $this->draw(RaytracerGenerators::matricesOfSize($size), 'a');
+        $b = $this->draw(RaytracerGenerators::matricesOfSize($size), 'b');
+
+        $this->assertEqualsWithDelta($a->determinant(), $a->transpose()->determinant(), 0.0);
+        $this->assertEqualsWithDelta($a->determinant() * $b->determinant(), $a->multiply($b)->determinant(), 0.0);
+    }
+
+    /**
+     * @param int<2, 4> $size
+     */
+    #[Property]
+    public function test_swapping_two_rows_negates_the_determinant(int $size): void
+    {
+        $rows   = $this->draw(RaytracerGenerators::rowsOfSize($size), 'rows');
+        $first  = $this->draw(Generators::integers(0, $size - 2), 'first row');
+        $second = $this->draw(Generators::integers($first + 1, $size - 1), 'second row');
+
+        $swapped          = $rows;
+        $swapped[$first]  = $rows[$second];
+        $swapped[$second] = $rows[$first];
+
+        $this->assertEqualsWithDelta(
+            -Matrix::fromArray($rows)->determinant(),
+            Matrix::fromArray($swapped)->determinant(),
+            0.0,
+        );
+    }
+
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
+    public function test_the_determinant_is_the_sum_of_the_elements_of_any_row_or_column_multiplied_by_their_cofactors(int $size): void
+    {
+        $a           = $this->draw(RaytracerGenerators::matricesOfSize($size), 'a');
+        $determinant = $a->determinant();
+
+        for ($i = 0; $i < $size; $i++) {
+            $alongRow    = 0.0;
+            $alongColumn = 0.0;
+
+            for ($j = 0; $j < $size; $j++) {
+                $alongRow    += $a->element($i, $j) * $a->cofactor($i, $j);
+                $alongColumn += $a->element($j, $i) * $a->cofactor($j, $i);
+            }
+
+            $this->assertEqualsWithDelta($determinant, $alongRow, 0.0);
+            $this->assertEqualsWithDelta($determinant, $alongColumn, 0.0);
+        }
+    }
+
+    /**
+     * @param int<2, 4> $size
+     */
+    #[Property]
+    public function test_a_submatrix_is_the_matrix_without_one_of_its_rows_and_one_of_its_columns(int $size): void
+    {
+        $a      = $this->draw(RaytracerGenerators::matricesOfSize($size), 'a');
+        $row    = $this->draw(Generators::integers(0, $size - 1), 'row');
+        $column = $this->draw(Generators::integers(0, $size - 1), 'column');
+
+        $submatrix = $a->submatrix($row, $column);
+
+        $this->assertSame($size - 1, $submatrix->size());
+
+        for ($i = 0; $i < $size - 1; $i++) {
+            for ($j = 0; $j < $size - 1; $j++) {
+                $this->assertSame(
+                    $a->element($i < $row ? $i : $i + 1, $j < $column ? $j : $j + 1),
+                    $submatrix->element($i, $j),
+                );
+            }
+        }
+    }
+
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
+    public function test_the_product_of_an_invertible_matrix_and_its_inverse_is_the_identity_matrix(int $size): void
+    {
+        $a = $this->draw(RaytracerGenerators::invertibleMatricesOfSize($size), 'a');
+
+        $this->assertTrue($a->invertible());
+        $this->assertEqualsWithDelta(Matrix::identity($size), $a->multiply($a->inverse()), 0.000000001);
+        $this->assertEqualsWithDelta(Matrix::identity($size), $a->inverse()->multiply($a), 0.000000001);
+        $this->assertEqualsWithDelta(1.0, $a->determinant() * $a->inverse()->determinant(), 0.000000001);
+    }
+
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
+    public function test_inverting_twice_gives_back_the_matrix_and_a_product_is_inverted_by_inverting_its_factors_in_reverse_order(int $size): void
+    {
+        $a = $this->draw(RaytracerGenerators::invertibleMatricesOfSize($size), 'a');
+        $b = $this->draw(RaytracerGenerators::invertibleMatricesOfSize($size), 'b');
+
+        $this->assertEqualsWithDelta($a, $a->inverse()->inverse(), 0.00000001);
+        $this->assertEqualsWithDelta($a->multiply($b)->inverse(), $b->inverse()->multiply($a->inverse()), 0.00000001);
     }
 
     /**
@@ -629,6 +780,86 @@ final class MatrixTest extends TestCase
         $matrix->inverse();
     }
 
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
+    public function test_matrices_are_equal_exactly_when_they_have_the_same_size_and_none_of_their_elements_differ(
+        int $size,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $difference,
+    ): void {
+        $rows   = $this->draw(RaytracerGenerators::rowsOfSize($size), 'rows');
+        $row    = $this->draw(Generators::integers(0, $size - 1), 'row');
+        $column = $this->draw(Generators::integers(0, $size - 1), 'column');
+
+        $matrix = Matrix::fromArray($rows);
+        $same   = Matrix::fromArray($rows);
+
+        $rows[$row][$column] += $difference;
+
+        $other = Matrix::fromArray($rows);
+
+        $this->assertTrue($matrix->equalTo($same));
+        $this->assertFalse($matrix->equalTo($other));
+        $this->assertFalse($other->equalTo($matrix));
+        $this->assertFalse(Matrix::identity($size)->equalTo(Matrix::identity($size + 1)));
+        $this->assertFalse(Matrix::identity($size + 1)->equalTo(Matrix::identity($size)));
+    }
+
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
+    public function test_matrices_are_equal_when_their_elements_differ_by_no_more_than_the_delta(
+        int $size,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $difference,
+    ): void {
+        $rows   = $this->draw(RaytracerGenerators::rowsOfSize($size), 'rows');
+        $row    = $this->draw(Generators::integers(0, $size - 1), 'row');
+        $column = $this->draw(Generators::integers(0, $size - 1), 'column');
+
+        $matrix = Matrix::fromArray($rows);
+
+        $rows[$row][$column] += $difference;
+
+        $other = Matrix::fromArray($rows);
+
+        $this->assertTrue($matrix->equalTo($other, abs($difference)));
+        $this->assertTrue($other->equalTo($matrix, abs($difference)));
+        $this->assertFalse($matrix->equalTo($other, abs($difference) / 2));
+        $this->assertFalse($other->equalTo($matrix, abs($difference) / 2));
+    }
+
+    /**
+     * @param int<1, 4>    $size
+     * @param int<-40, 40> $exponent
+     */
+    #[Property]
+    public function test_dividing_all_elements_of_a_matrix_by_a_number_does_not_change_whether_it_is_invertible(int $size, int $exponent): void
+    {
+        $invertible = $this->draw(RaytracerGenerators::invertibleMatricesOfSize($size), 'invertible matrix');
+        $rows       = $this->draw(RaytracerGenerators::rowsOfSize($size), 'rows of a matrix that is not invertible');
+
+        // A matrix with a row that is the sum of all of its rows but the
+        // first one is not invertible
+        $rows[0] = array_fill(0, $size, 0.0);
+
+        for ($i = 1; $i < $size; $i++) {
+            for ($j = 0; $j < $size; $j++) {
+                $rows[0][$j] += $rows[$i][$j];
+            }
+        }
+
+        $notInvertible = Matrix::fromArray($rows);
+
+        $this->assertTrue($invertible->invertible());
+        $this->assertFalse($notInvertible->invertible());
+        $this->assertTrue($invertible->divideAllElementsBy(2 ** $exponent)->invertible());
+        $this->assertFalse($notInvertible->divideAllElementsBy(2 ** $exponent)->invertible());
+    }
+
     #[TestWith([1000000.0], 'small elements')]
     #[TestWith([0.000001], 'large elements')]
     public function test_whether_a_matrix_is_invertible_does_not_depend_on_the_magnitude_of_its_elements(float $divisor): void
@@ -651,5 +882,29 @@ final class MatrixTest extends TestCase
 
         $this->assertTrue($invertible->divideAllElementsBy($divisor)->invertible());
         $this->assertFalse($notInvertible->divideAllElementsBy($divisor)->invertible());
+    }
+
+    /**
+     * @param int<1, 4> $numberOfRows
+     */
+    #[Property]
+    public function test_rows_that_do_not_all_have_as_many_elements_as_there_are_rows_do_not_describe_a_matrix(int $numberOfRows): void
+    {
+        $row              = $this->draw(Generators::integers(0, $numberOfRows - 1), 'row');
+        $numberOfElements = $this->draw(
+            Generators::oneOf(
+                Generators::integers(0, $numberOfRows - 1),
+                Generators::integers($numberOfRows + 1, $numberOfRows + 3),
+            ),
+            'number of elements of that row',
+        );
+
+        $rows       = array_fill(0, $numberOfRows, array_fill(0, $numberOfRows, 0.0));
+        $rows[$row] = array_fill(0, $numberOfElements, 0.0);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        Matrix::fromArray($rows);
     }
 }
