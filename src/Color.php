@@ -99,6 +99,9 @@ final readonly class Color
         );
     }
 
+    /**
+     * @param non-negative-float $delta
+     */
     public function equalTo(self $that, float $delta = 0.00001): bool
     {
         if (abs($this->red - $that->red()) > $delta) {

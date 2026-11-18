@@ -58,6 +58,9 @@ final readonly class Matrix
         return count($this->elements);
     }
 
+    /**
+     * @param non-negative-float $delta
+     */
     public function equalTo(self $that, float $delta = 0.00000000000001): bool
     {
         $size = $this->size();
