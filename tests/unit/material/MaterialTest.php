@@ -315,4 +315,15 @@ final class MaterialTest extends TestCase
             $material->lighting($shape, $light, $point, $otherEye, $normal, false),
         );
     }
+
+    public function test_lighting_with_the_light_in_the_plane_of_the_surface_and_the_eye_in_the_path_of_the_reflection_vector(): void
+    {
+        $eye    = Tuple::vector(0, 0, 1);
+        $normal = Tuple::vector(0, 1, 0);
+        $light  = PointLight::from(Tuple::point(0, 0, -10), Color::from(1, 1, 1));
+
+        $result = $this->material->lighting(Sphere::default(), $light, $this->position, $eye, $normal, false);
+
+        $this->assertTrue($result->equalTo(Color::from(1.0, 1.0, 1.0)));
+    }
 }
