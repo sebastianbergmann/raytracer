@@ -73,6 +73,68 @@ final class RayTest extends TestCase
     }
 
     #[Property]
+    public function test_a_ray_starts_at_its_origin_and_moves_along_its_direction(
+        #[ForAllExternal(RaytracerGenerators::class, 'rays')]
+        Ray $ray,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $s,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $t,
+    ): void {
+        $this->assertEquals($ray->origin(), $ray->position(0.0));
+        $this->assertEquals($ray->direction()->multiplyBy($t), $ray->position($t)->minus($ray->origin()));
+        $this->assertEquals($ray->position($s)->plus($ray->direction()->multiplyBy($t)), $ray->position($s + $t));
+    }
+
+    #[Property]
+    public function test_transforming_a_ray_transforms_all_of_its_positions(
+        #[ForAllExternal(RaytracerGenerators::class, 'rays')]
+        Ray $ray,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $transformation,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $t,
+    ): void {
+        $this->assertEqualsWithDelta(
+            $transformation->multiplyBy($ray->position($t)),
+            $ray->transform($transformation)->position($t),
+            0.0001,
+        );
+    }
+
+    #[Property]
+    public function test_transforming_a_ray_by_a_product_is_transforming_it_by_the_factors_one_after_the_other(
+        #[ForAllExternal(RaytracerGenerators::class, 'rays')]
+        Ray $ray,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $a,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $b,
+    ): void {
+        $this->assertEquals($ray, $ray->transform(Matrix::identity(4)));
+
+        $this->assertEqualsWithDelta(
+            $ray->transform($a->multiply($b)),
+            $ray->transform($b)->transform($a),
+            0.0000001,
+        );
+    }
+
+    #[Property]
+    public function test_a_transformed_ray_is_transformed_back_by_the_inverse_of_the_transformation(
+        #[ForAllExternal(RaytracerGenerators::class, 'rays')]
+        Ray $ray,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $transformation,
+    ): void {
+        $this->assertEqualsWithDelta(
+            $ray,
+            $ray->transform($transformation)->transform($transformation->inverse()),
+            0.0000001,
+        );
+    }
+
+    #[Property]
     public function test_a_ray_cannot_be_created_without_a_direction(
         #[ForAllExternal(RaytracerGenerators::class, 'points')]
         Tuple $origin,
