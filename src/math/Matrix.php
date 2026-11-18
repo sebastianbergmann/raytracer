@@ -215,9 +215,20 @@ final readonly class Matrix
         return !$this->isSingularFor($this->determinant());
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function inverse(): self
     {
-        return $this->cofactorMatrix()->transpose()->divideAllElementsBy($this->determinant());
+        $determinant = $this->determinant();
+
+        if ($this->isSingularFor($determinant)) {
+            throw new RuntimeException(
+                'Matrix is not invertible',
+            );
+        }
+
+        return $this->cofactorMatrix()->transpose()->divideAllElementsBy($determinant);
     }
 
     /**

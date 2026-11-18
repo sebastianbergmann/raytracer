@@ -3,12 +3,15 @@ namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\ForAll;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\Attributes\UsesClass;
+use PHPUnit\Framework\PropertyBased\Generators;
+use PHPUnit\Framework\PropertyBased\ValueGenerator;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Matrix::class)]
@@ -112,6 +115,28 @@ final class MatrixTest extends TestCase
                 ),
             ],
         ];
+    }
+
+    /**
+     * Multiples of 1/100 from -1000 to 1000. Unlike the numbers that
+     * RaytracerGenerators::coordinates() generates, most of these cannot be
+     * represented exactly as floating-point numbers.
+     *
+     * @return ValueGenerator<float>
+     */
+    public static function decimals(): ValueGenerator
+    {
+        return Generators::integers(-100000, 100000)->map(
+            static fn (int $hundredths): float => $hundredths / 100,
+        );
+    }
+
+    /**
+     * @return ValueGenerator<list<float>>
+     */
+    public static function rowsOfThreeDecimals(): ValueGenerator
+    {
+        return Generators::lists(self::decimals(), 3, 3);
     }
 
     public function test_a_2x2_matrix_can_be_represented(): void
@@ -565,6 +590,43 @@ final class MatrixTest extends TestCase
     {
         $this->assertSame(1.0, Matrix::identity($size)->determinant());
         $this->assertTrue(Matrix::identity($size)->invertible());
+    }
+
+    /**
+     * @param list<float> $a
+     * @param list<float> $b
+     */
+    #[Property]
+    #[TestWith([[0.1, 0.2, 0.3], [0.4, 0.5, 0.6], 0.7, 0.8], 'determinant is almost, but not exactly, zero')]
+    #[TestWith([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], 1.0, 1.0], 'determinant is exactly zero')]
+    public function test_a_matrix_with_a_row_that_is_a_combination_of_its_other_rows_is_not_invertible(
+        #[ForAll('rowsOfThreeDecimals')]
+        array $a,
+        #[ForAll('rowsOfThreeDecimals')]
+        array $b,
+        #[ForAll('decimals')]
+        float $f,
+        #[ForAll('decimals')]
+        float $g,
+    ): void {
+        $matrix = Matrix::fromArray(
+            [
+                $a,
+                $b,
+                [
+                    $f * $a[0] + $g * $b[0],
+                    $f * $a[1] + $g * $b[1],
+                    $f * $a[2] + $g * $b[2],
+                ],
+            ],
+        );
+
+        $this->assertFalse($matrix->invertible());
+
+        $this->expectException(RuntimeException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $matrix->inverse();
     }
 
     #[TestWith([1000000.0], 'small elements')]
