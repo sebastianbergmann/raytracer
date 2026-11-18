@@ -2,8 +2,11 @@
 namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
@@ -67,5 +70,26 @@ final class RayTest extends TestCase
 
         $this->assertTrue($r2->origin()->equalTo(Tuple::point(2, 6, 12)));
         $this->assertTrue($r2->direction()->equalTo(Tuple::vector(0, 3, 0)));
+    }
+
+    #[Property]
+    public function test_a_ray_cannot_be_created_without_a_direction(
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $origin,
+    ): void {
+        $this->expectException(InvalidArgumentException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        Ray::from($origin, Tuple::vector(0, 0, 0));
+    }
+
+    #[TestWith([0.0, 0.0, 0.0], 'zero vector')]
+    #[TestWith([1e-200, 0.0, 0.0], 'magnitude underflows to zero')]
+    public function test_a_ray_cannot_be_created_with_a_direction_that_has_no_magnitude(float $x, float $y, float $z): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        Ray::from(Tuple::point(0, 0, 0), Tuple::vector($x, $y, $z));
     }
 }

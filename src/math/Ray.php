@@ -6,8 +6,17 @@ final readonly class Ray
     private Tuple $origin;
     private Tuple $direction;
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public static function from(Tuple $origin, Tuple $direction): self
     {
+        if ($direction->magnitude() === 0.0) {
+            throw new InvalidArgumentException(
+                'The direction of a ray must have a magnitude greater than zero',
+            );
+        }
+
         return new self($origin, $direction);
     }
 
@@ -36,6 +45,7 @@ final readonly class Ray
     }
 
     /**
+     * @throws InvalidArgumentException
      * @throws RuntimeException
      */
     public function transform(Matrix $m): self
