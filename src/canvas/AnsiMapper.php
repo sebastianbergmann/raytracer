@@ -14,7 +14,14 @@ final readonly class AnsiMapper
         for ($y = 1; $y <= $canvas->height(); $y += 2) {
             for ($x = 1; $x <= $canvas->width(); $x++) {
                 $bg = $canvas->pixelAt($x, $y);
-                $fg = $canvas->pixelAt($x, $y + 1);
+
+                // A character shows two rows of pixels. When the number of
+                // rows is odd, the lower half of the last line is black.
+                if ($y < $canvas->height()) {
+                    $fg = $canvas->pixelAt($x, $y + 1);
+                } else {
+                    $fg = Color::from(0.0, 0.0, 0.0);
+                }
 
                 $buffer .= sprintf(
                     "\x1b[48;2;%d;%d;%dm\x1b[38;2;%d;%d;%dm▄",
