@@ -125,14 +125,6 @@ final readonly class Color
         // represented as an integer cannot be cast without a warning
         $int = (int) floor(max(-1.0E+18, min(1.0E+18, $float * 255)));
 
-        if ($int < 0) {
-            return 0;
-        }
-
-        if ($int > 255) {
-            return 255;
-        }
-
-        return $int;
+        return max(0, min(255, $int));
     }
 }
