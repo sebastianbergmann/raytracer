@@ -371,4 +371,20 @@ final class WorldTest extends TestCase
 
         $this->assertSame($between, $world->isShadowed($point));
     }
+
+    /**
+     * @param int<2, 1000> $distance
+     */
+    #[Property]
+    public function test_a_shape_only_casts_a_shadow_on_a_point_when_it_is_closer_to_the_point_than_the_light(int $distance): void
+    {
+        // The light is on the surface of the sphere
+        $world = new World;
+
+        $world->add(Sphere::default());
+        $world->setLight(PointLight::from(Tuple::point(0, 0, -1), Color::from(1, 1, 1)));
+
+        $this->assertFalse($world->isShadowed(Tuple::point(0, 0, -$distance)));
+        $this->assertTrue($world->isShadowed(Tuple::point(0, 0, $distance)));
+    }
 }
