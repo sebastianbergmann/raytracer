@@ -137,7 +137,9 @@ final class Camera
 
         for ($y = 1; $y <= $this->verticalSize; $y++) {
             for ($x = 1; $x <= $this->horizontalSize; $x++) {
-                $ray   = $this->rayForPixel($x, $y);
+                // The pixels of a canvas are numbered starting with one,
+                // the pixels that rays are cast for starting with zero
+                $ray   = $this->rayForPixel($x - 1, $y - 1);
                 $color = $world->colorAt($ray);
                 $canvas->writePixel($x, $y, $color);
             }
