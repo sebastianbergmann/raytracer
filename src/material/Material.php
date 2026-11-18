@@ -4,9 +4,25 @@ namespace SebastianBergmann\Raytracer;
 final class Material
 {
     private Color $color;
+
+    /**
+     * @var non-negative-float
+     */
     private float $ambient;
+
+    /**
+     * @var non-negative-float
+     */
     private float $diffuse;
+
+    /**
+     * @var non-negative-float
+     */
     private float $specular;
+
+    /**
+     * @var non-negative-float
+     */
     private float $shininess;
     private ?Pattern $pattern = null;
 
@@ -15,11 +31,23 @@ final class Material
         return self::from(Color::from(1, 1, 1), 0.1, 0.9, 0.9, 200.0);
     }
 
+    /**
+     * @param non-negative-float $ambient
+     * @param non-negative-float $diffuse
+     * @param non-negative-float $specular
+     * @param non-negative-float $shininess
+     */
     public static function from(Color $color, float $ambient, float $diffuse, float $specular, float $shininess): self
     {
         return new self($color, $ambient, $diffuse, $specular, $shininess);
     }
 
+    /**
+     * @param non-negative-float $ambient
+     * @param non-negative-float $diffuse
+     * @param non-negative-float $specular
+     * @param non-negative-float $shininess
+     */
     private function __construct(Color $color, float $ambient, float $diffuse, float $specular, float $shininess)
     {
         $this->color     = $color;
@@ -39,41 +67,65 @@ final class Material
         $this->color = $color;
     }
 
+    /**
+     * @return non-negative-float
+     */
     public function ambient(): float
     {
         return $this->ambient;
     }
 
+    /**
+     * @param non-negative-float $ambient
+     */
     public function setAmbient(float $ambient): void
     {
         $this->ambient = $ambient;
     }
 
+    /**
+     * @return non-negative-float
+     */
     public function diffuse(): float
     {
         return $this->diffuse;
     }
 
+    /**
+     * @param non-negative-float $diffuse
+     */
     public function setDiffuse(float $diffuse): void
     {
         $this->diffuse = $diffuse;
     }
 
+    /**
+     * @return non-negative-float
+     */
     public function specular(): float
     {
         return $this->specular;
     }
 
+    /**
+     * @param non-negative-float $specular
+     */
     public function setSpecular(float $specular): void
     {
         $this->specular = $specular;
     }
 
+    /**
+     * @return non-negative-float
+     */
     public function shininess(): float
     {
         return $this->shininess;
     }
 
+    /**
+     * @param non-negative-float $shininess
+     */
     public function setShininess(float $shininess): void
     {
         $this->shininess = $shininess;

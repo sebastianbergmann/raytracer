@@ -148,7 +148,11 @@ final class RaytracerGenerators
     public static function materials(): ValueGenerator
     {
         $reflection = Generators::integers(0, 8)->map(
-            static fn (int $eighths): float => $eighths / 8,
+            static fn (int $eighths): float => max(0, $eighths) * 0.125,
+        );
+
+        $shininess = Generators::integers(1, 300)->map(
+            static fn (int $integer): float => (float) max(1, $integer),
         );
 
         return Generators::combine(
@@ -157,7 +161,7 @@ final class RaytracerGenerators
             $reflection,
             $reflection,
             $reflection,
-            self::integersAsFloats(1, 300),
+            $shininess,
         );
     }
 
