@@ -2,6 +2,8 @@
 namespace SebastianBergmann\Raytracer;
 
 use const NAN;
+use function abs;
+use function is_finite;
 use function sqrt;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -282,6 +284,110 @@ final class TupleTest extends TestCase
     }
 
     #[Property]
+    public function test_addition_is_commutative_and_associative(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $a,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $b,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $c,
+    ): void {
+        $this->assertEquals($a->plus($b), $b->plus($a));
+        $this->assertEquals($a->plus($b)->plus($c), $a->plus($b->plus($c)));
+        $this->assertEquals($a, $a->plus(Tuple::vector(0, 0, 0)));
+    }
+
+    #[Property]
+    public function test_subtraction_undoes_addition(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $a,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $b,
+    ): void {
+        $this->assertEquals($a, $a->plus($b)->minus($b));
+        $this->assertEquals($a->minus($b), $a->plus($b->negate()));
+    }
+
+    #[Property]
+    public function test_sums_and_differences_of_points_and_vectors_are_points_or_vectors(
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $p,
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $q,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $u,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $v,
+    ): void {
+        $this->assertTrue($p->plus($v)->isPoint());
+        $this->assertTrue($v->plus($p)->isPoint());
+        $this->assertTrue($u->plus($v)->isVector());
+        $this->assertTrue($p->minus($q)->isVector());
+        $this->assertTrue($p->minus($v)->isPoint());
+        $this->assertTrue($u->minus($v)->isVector());
+    }
+
+    #[Property]
+    public function test_no_point_can_be_added_to_a_point(
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $p,
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $q,
+    ): void {
+        $this->expectException(RuntimeException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $p->plus($q);
+    }
+
+    #[Property]
+    public function test_no_point_can_be_subtracted_from_a_vector(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $v,
+        #[ForAllExternal(RaytracerGenerators::class, 'points')]
+        Tuple $p,
+    ): void {
+        $this->expectException(RuntimeException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $v->minus($p);
+    }
+
+    #[Property]
+    public function test_negating_twice_gives_back_the_tuple_and_a_tuple_and_its_negation_cancel_out(
+        #[ForAllExternal(RaytracerGenerators::class, 'tuples')]
+        Tuple $t,
+    ): void {
+        $this->assertEquals($t, $t->negate()->negate());
+        $this->assertEquals(Tuple::from(0, 0, 0, 0), $t->plus($t->negate()));
+    }
+
+    #[Property]
+    public function test_multiplication_by_a_scalar_distributes_over_addition(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $a,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $b,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $factor,
+    ): void {
+        $this->assertEquals(
+            $a->plus($b)->multiplyBy($factor),
+            $a->multiplyBy($factor)->plus($b->multiplyBy($factor)),
+        );
+    }
+
+    #[Property]
+    public function test_division_by_a_scalar_undoes_multiplication_by_it(
+        #[ForAllExternal(RaytracerGenerators::class, 'tuples')]
+        Tuple $t,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $factor,
+    ): void {
+        $this->assertEquals($t, $t->multiplyBy($factor)->divideBy($factor));
+    }
+
+    #[Property]
     public function test_no_tuple_can_be_divided_by_zero(
         #[ForAllExternal(RaytracerGenerators::class, 'tuples')]
         Tuple $t,
@@ -290,6 +396,81 @@ final class TupleTest extends TestCase
 
         /* @noinspection UnusedFunctionResultInspection */
         $t->divideBy(0.0);
+    }
+
+    #[Property]
+    public function test_the_dot_product_is_commutative_and_bilinear(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $a,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $b,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $c,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $factor,
+    ): void {
+        $this->assertSame($a->dot($b), $b->dot($a));
+        $this->assertSame($a->dot($c) + $b->dot($c), $a->plus($b)->dot($c));
+        $this->assertSame($factor * $a->dot($b), $a->multiplyBy($factor)->dot($b));
+    }
+
+    #[Property]
+    public function test_the_cross_product_is_anticommutative_and_orthogonal_to_its_operands(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $a,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $b,
+    ): void {
+        $product = $a->cross($b);
+
+        $this->assertTrue($product->isVector());
+        $this->assertEquals($product, $b->cross($a)->negate());
+        $this->assertEquals(Tuple::vector(0, 0, 0), $a->cross($a));
+        $this->assertEqualsWithDelta(0.0, $product->dot($a), 0.0);
+        $this->assertEqualsWithDelta(0.0, $product->dot($b), 0.0);
+    }
+
+    #[Property]
+    public function test_the_magnitude_is_a_norm(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $a,
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $b,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $factor,
+    ): void {
+        $this->assertGreaterThanOrEqual(0.0, $a->magnitude());
+        $this->assertEqualsWithDelta($a->dot($a), $a->magnitude() ** 2, 0.000001);
+        $this->assertEqualsWithDelta(abs($factor) * $a->magnitude(), $a->multiplyBy($factor)->magnitude(), 0.000001);
+        $this->assertLessThanOrEqual($a->magnitude() + $b->magnitude() + 0.000001, $a->plus($b)->magnitude());
+    }
+
+    #[Property]
+    public function test_a_normalized_vector_has_magnitude_one_and_the_direction_of_the_vector(
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroVectors')]
+        Tuple $v,
+    ): void {
+        $n = $v->normalize();
+
+        $this->assertTrue($n->isVector());
+        $this->assertEqualsWithDelta(1.0, $n->magnitude(), 0.000000000001);
+        $this->assertEqualsWithDelta($n, $n->normalize(), 0.000000000001);
+        $this->assertEqualsWithDelta($v, $n->multiplyBy($v->magnitude()), 0.000000001);
+    }
+
+    #[Property]
+    #[TestWith([0.0, 0.0, 0.0, 2.0], 'only w is not zero')]
+    public function test_a_normalized_tuple_has_magnitude_one(
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $x,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $y,
+        #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
+        float $z,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $w,
+    ): void {
+        $this->assertEqualsWithDelta(1.0, Tuple::from($x, $y, $z, $w)->normalize()->magnitude(), 0.000000000001);
     }
 
     #[TestWith([0.0, 0.0, 0.0], 'zero vector')]
@@ -307,6 +488,69 @@ final class TupleTest extends TestCase
     }
 
     #[Property]
+    public function test_reflecting_twice_gives_back_the_vector_and_reflection_preserves_the_magnitude(
+        #[ForAllExternal(RaytracerGenerators::class, 'vectors')]
+        Tuple $v,
+        #[ForAllExternal(RaytracerGenerators::class, 'unitVectors')]
+        Tuple $normal,
+    ): void {
+        $reflected = $v->reflect($normal);
+
+        $this->assertEqualsWithDelta($v, $reflected->reflect($normal), 0.00000001);
+        $this->assertEqualsWithDelta($v->magnitude(), $reflected->magnitude(), 0.00000001);
+        $this->assertEqualsWithDelta(-$v->dot($normal), $reflected->dot($normal), 0.00000001);
+    }
+
+    /**
+     * @param int<0, 3> $component
+     */
+    #[Property]
+    public function test_tuples_are_equal_exactly_when_none_of_their_components_differ(
+        #[ForAllExternal(RaytracerGenerators::class, 'tuples')]
+        Tuple $t,
+        int $component,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $difference,
+    ): void {
+        $components = [$t->x, $t->y, $t->z, $t->w];
+
+        $same = Tuple::from(...$components);
+
+        $components[$component] += $difference;
+
+        $other = Tuple::from(...$components);
+
+        $this->assertTrue($t->equalTo($same));
+        $this->assertTrue($same->equalTo($t));
+        $this->assertFalse($t->equalTo($other));
+        $this->assertFalse($other->equalTo($t));
+    }
+
+    #[Property]
+    public function test_tuples_are_equal_when_their_components_differ_by_no_more_than_the_delta(
+        #[ForAllExternal(RaytracerGenerators::class, 'tuples')]
+        Tuple $t,
+        #[ForAllExternal(RaytracerGenerators::class, 'nonZeroCoordinates')]
+        float $difference,
+    ): void {
+        $delta = abs($difference);
+
+        foreach ([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]] as [$x, $y, $z, $w]) {
+            $other = Tuple::from(
+                $t->x + $x * $difference,
+                $t->y + $y * $difference,
+                $t->z + $z * $difference,
+                $t->w + $w * $difference,
+            );
+
+            $this->assertTrue($t->equalTo($other, $delta));
+            $this->assertTrue($other->equalTo($t, $delta));
+            $this->assertFalse($t->equalTo($other, $delta / 2));
+            $this->assertFalse($other->equalTo($t, $delta / 2));
+        }
+    }
+
+    #[Property]
     public function test_a_point_is_not_equal_to_the_vector_with_the_same_coordinates(
         #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
         float $x,
@@ -317,5 +561,31 @@ final class TupleTest extends TestCase
     ): void {
         $this->assertFalse(Tuple::point($x, $y, $z)->equalTo(Tuple::vector($x, $y, $z)));
         $this->assertFalse(Tuple::vector($x, $y, $z)->equalTo(Tuple::point($x, $y, $z)));
+    }
+
+    #[Property]
+    public function test_tuples_of_any_finite_floats_are_either_operated_on_or_rejected(float $x, float $y, float $z, float $w, float $factor): void
+    {
+        $t = Tuple::from($x, $y, $z, $w);
+
+        $this->assertEquals($t, $t->negate()->negate());
+        $this->assertGreaterThanOrEqual(0.0, $t->magnitude());
+        $this->assertSame($t->dot($t), $t->multiplyBy(1.0)->dot($t));
+        $this->assertTrue($t->cross($t)->isVector());
+
+        try {
+            $this->assertGreaterThan(0.0, $t->normalize()->magnitude());
+        } catch (RuntimeException) {
+            $this->assertFalse($t->magnitude() > 0.0 && is_finite($t->magnitude()));
+        }
+
+        try {
+            /* @noinspection UnusedFunctionResultInspection */
+            $t->divideBy($factor);
+
+            $this->assertNotEqualsWithDelta(0.0, $factor, 0.0);
+        } catch (RuntimeException) {
+            $this->assertEqualsWithDelta(0.0, $factor, 0.0);
+        }
     }
 }
