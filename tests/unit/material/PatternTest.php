@@ -2,7 +2,9 @@
 namespace SebastianBergmann\Raytracer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -65,5 +67,29 @@ final class PatternTest extends TestCase
         $pattern->setTransform(Transformations::translation(0.5, 1, 1.5));
 
         $this->assertTrue($pattern->patternAt($object, Tuple::point(2.5, 3, 3.5))->equalTo(Color::from(0.75, 0.5, 0.25)));
+    }
+
+    #[Property]
+    public function test_a_pattern_is_evaluated_at_the_point_that_is_transformed_back_from_world_space_to_the_space_of_the_pattern(
+        #[ForAllExternal(RaytracerGenerators::class, 'nearPoints')]
+        Tuple $point,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $transformationOfShape,
+        #[ForAllExternal(RaytracerGenerators::class, 'transformations')]
+        Matrix $transformationOfPattern,
+    ): void {
+        $shape   = Sphere::default();
+        $pattern = TestPattern::default();
+
+        $shape->setTransform($transformationOfShape);
+        $pattern->setTransform($transformationOfPattern);
+
+        $pointInWorldSpace = $transformationOfShape->multiply($transformationOfPattern)->multiplyBy($point);
+
+        $this->assertEqualsWithDelta(
+            Color::from($point->x, $point->y, $point->z),
+            $pattern->patternAt($shape, $pointInWorldSpace),
+            0.0000001,
+        );
     }
 }
