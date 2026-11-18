@@ -280,6 +280,17 @@ final class TupleTest extends TestCase
     }
 
     #[Property]
+    public function test_no_tuple_can_be_divided_by_zero(
+        #[ForAllExternal(RaytracerGenerators::class, 'tuples')]
+        Tuple $t,
+    ): void {
+        $this->expectException(RuntimeException::class);
+
+        /* @noinspection UnusedFunctionResultInspection */
+        $t->divideBy(0.0);
+    }
+
+    #[Property]
     public function test_a_point_is_not_equal_to_the_vector_with_the_same_coordinates(
         #[ForAllExternal(RaytracerGenerators::class, 'coordinates')]
         float $x,

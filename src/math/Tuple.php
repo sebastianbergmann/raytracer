@@ -102,8 +102,17 @@ final readonly class Tuple
         );
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function divideBy(float $divisor): self
     {
+        if ($divisor === 0.0) {
+            throw new RuntimeException(
+                'Cannot divide tuple by zero',
+            );
+        }
+
         return new self(
             $this->x / $divisor,
             $this->y / $divisor,
