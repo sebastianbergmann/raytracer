@@ -10,6 +10,9 @@ final class Sphere extends Shape
         return Tuple::point(0, 0, 0);
     }
 
+    /**
+     * @return positive-float
+     */
     public function radius(): float
     {
         return 1.0;
