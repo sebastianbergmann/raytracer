@@ -158,6 +158,10 @@ final readonly class Matrix
     {
         $size = $this->size();
 
+        if ($size === 0) {
+            return 1.0;
+        }
+
         if ($size === 2) {
             return $this->elements[0][0] * $this->elements[1][1] -
                    $this->elements[0][1] * $this->elements[1][0];

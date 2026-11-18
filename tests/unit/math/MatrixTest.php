@@ -4,6 +4,7 @@ namespace SebastianBergmann\Raytracer;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
@@ -21,6 +22,40 @@ final class MatrixTest extends TestCase
     public static function matrixInversionProvider(): array
     {
         return [
+            '1x1 matrix' => [
+                Matrix::fromArray([[0.25]]),
+                Matrix::fromArray([[4.0]]),
+            ],
+            '2x2 matrix' => [
+                Matrix::fromArray(
+                    [
+                        [-2.0, 1.0],
+                        [1.5, -0.5],
+                    ],
+                ),
+                Matrix::fromArray(
+                    [
+                        [1.0, 2.0],
+                        [3.0, 4.0],
+                    ],
+                ),
+            ],
+            '3x3 matrix' => [
+                Matrix::fromArray(
+                    [
+                        [-24.0, 18.0, 5.0],
+                        [20.0, -15.0, -4.0],
+                        [-5.0, 4.0, 1.0],
+                    ],
+                ),
+                Matrix::fromArray(
+                    [
+                        [1.0, 2.0, 3.0],
+                        [0.0, 1.0, 4.0],
+                        [5.0, 6.0, 0.0],
+                    ],
+                ),
+            ],
             '4x4 matrix' => [
                 Matrix::fromArray(
                     [
@@ -519,5 +554,15 @@ final class MatrixTest extends TestCase
         $c = $a->multiply($b);
 
         $this->assertTrue($a->equalTo($c->multiply($b->inverse())));
+    }
+
+    /**
+     * @param int<1, 4> $size
+     */
+    #[Property]
+    public function test_the_determinant_of_an_identity_matrix_is_one(int $size): void
+    {
+        $this->assertSame(1.0, Matrix::identity($size)->determinant());
+        $this->assertTrue(Matrix::identity($size)->invertible());
     }
 }
