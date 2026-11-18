@@ -7,6 +7,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
@@ -564,5 +565,29 @@ final class MatrixTest extends TestCase
     {
         $this->assertSame(1.0, Matrix::identity($size)->determinant());
         $this->assertTrue(Matrix::identity($size)->invertible());
+    }
+
+    #[TestWith([1000000.0], 'small elements')]
+    #[TestWith([0.000001], 'large elements')]
+    public function test_whether_a_matrix_is_invertible_does_not_depend_on_the_magnitude_of_its_elements(float $divisor): void
+    {
+        $invertible = Matrix::fromArray(
+            [
+                [1.0, 2.0, 3.0],
+                [0.0, 1.0, 4.0],
+                [5.0, 6.0, 0.0],
+            ],
+        );
+
+        $notInvertible = Matrix::fromArray(
+            [
+                [0.1, 0.2, 0.3],
+                [0.4, 0.5, 0.6],
+                [0.7 * 0.1 + 0.8 * 0.4, 0.7 * 0.2 + 0.8 * 0.5, 0.7 * 0.3 + 0.8 * 0.6],
+            ],
+        );
+
+        $this->assertTrue($invertible->divideAllElementsBy($divisor)->invertible());
+        $this->assertFalse($notInvertible->divideAllElementsBy($divisor)->invertible());
     }
 }

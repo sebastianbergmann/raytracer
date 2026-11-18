@@ -4,6 +4,7 @@ namespace SebastianBergmann\Raytracer;
 use function abs;
 use function array_values;
 use function count;
+use function sqrt;
 
 final readonly class Matrix
 {
@@ -211,7 +212,7 @@ final readonly class Matrix
 
     public function invertible(): bool
     {
-        return $this->determinant() !== 0.0;
+        return !$this->isSingularFor($this->determinant());
     }
 
     public function inverse(): self
@@ -233,6 +234,32 @@ final readonly class Matrix
                 );
             }
         }
+    }
+
+    /**
+     * The determinant of a singular matrix is zero. When it is calculated
+     * with floating-point numbers, it is usually not exactly zero, though.
+     *
+     * The absolute value of a determinant is at most the product of the
+     * lengths of the rows of its matrix (Hadamard's inequality). A matrix is
+     * therefore considered singular when its determinant is negligible in
+     * comparison with this product.
+     */
+    private function isSingularFor(float $determinant): bool
+    {
+        $bound = 1.0;
+
+        foreach ($this->elements as $row) {
+            $sumOfSquares = 0.0;
+
+            foreach ($row as $element) {
+                $sumOfSquares += $element ** 2;
+            }
+
+            $bound *= sqrt($sumOfSquares);
+        }
+
+        return abs($determinant) <= 0.0000000001 * $bound;
     }
 
     private function cofactorMatrix(): self
