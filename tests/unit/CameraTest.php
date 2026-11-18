@@ -3,14 +3,19 @@ namespace SebastianBergmann\Raytracer;
 
 use const M_PI_2;
 use const M_PI_4;
+use function abs;
 use function array_reverse;
 use function deg2rad;
+use function max;
 use function sqrt;
+use function tan;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\ForAllExternal;
 use PHPUnit\Framework\Attributes\Property;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\Attributes\UsesClass;
+use PHPUnit\Framework\PropertyBased\Generators;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Camera::class)]
@@ -110,6 +115,92 @@ final class CameraTest extends TestCase
     }
 
     /**
+     * @param int<1, 16>  $horizontalSize
+     * @param int<1, 16>  $verticalSize
+     * @param int<1, 179> $fieldOfView
+     */
+    #[Property]
+    public function test_the_pixels_of_a_camera_are_squares_that_cover_its_field_of_view(int $horizontalSize, int $verticalSize, int $fieldOfView): void
+    {
+        $camera = Camera::from($horizontalSize, $verticalSize, deg2rad($fieldOfView));
+
+        $this->assertSame($horizontalSize, $camera->horizontalSize());
+        $this->assertSame($verticalSize, $camera->verticalSize());
+        $this->assertEqualsWithDelta($horizontalSize / $verticalSize, $camera->aspect(), 0.000000000001);
+        $this->assertEqualsWithDelta(tan(deg2rad($fieldOfView) / 2), max($camera->cameraHalfWidth(), $camera->cameraHalfHeight()), 0.000000000001);
+        $this->assertEqualsWithDelta(2 * $camera->cameraHalfWidth(), $horizontalSize * $camera->pixelSize(), 0.000000001 * $camera->cameraHalfWidth());
+        $this->assertEqualsWithDelta(2 * $camera->cameraHalfHeight(), $verticalSize * $camera->pixelSize(), 0.000000001 * $camera->cameraHalfHeight());
+    }
+
+    /**
+     * @param int<1, 16>  $horizontalSize
+     * @param int<1, 16>  $verticalSize
+     * @param int<1, 179> $fieldOfView
+     */
+    #[Property]
+    public function test_the_ray_for_a_pixel_passes_through_the_field_of_view_and_mirrors_the_ray_for_the_pixel_on_the_opposite_side(int $horizontalSize, int $verticalSize, int $fieldOfView): void
+    {
+        $camera = Camera::from($horizontalSize, $verticalSize, deg2rad($fieldOfView));
+
+        $px = $this->draw(Generators::integers(0, $horizontalSize - 1), 'px');
+        $py = $this->draw(Generators::integers(0, $verticalSize - 1), 'py');
+
+        $ray = $camera->rayForPixel($px, $py);
+
+        $this->assertEquals(Tuple::point(0, 0, 0), $ray->origin());
+        $this->assertEqualsWithDelta(1.0, $ray->direction()->magnitude(), 0.000000000001);
+
+        // The ray passes through the plane at z = -1 within the rectangle
+        // that the camera can see of this plane
+        $this->assertLessThan(0.0, $ray->direction()->z);
+
+        $onPlane = $ray->position(-1 / $ray->direction()->z);
+
+        $this->assertLessThan($camera->cameraHalfWidth(), abs($onPlane->x));
+        $this->assertLessThan($camera->cameraHalfHeight(), abs($onPlane->y));
+
+        $this->assertEqualsWithDelta(
+            Tuple::vector(-$ray->direction()->x, $ray->direction()->y, $ray->direction()->z),
+            $camera->rayForPixel($horizontalSize - 1 - $px, $py)->direction(),
+            0.000000000001,
+        );
+
+        $this->assertEqualsWithDelta(
+            Tuple::vector($ray->direction()->x, -$ray->direction()->y, $ray->direction()->z),
+            $camera->rayForPixel($px, $verticalSize - 1 - $py)->direction(),
+            0.000000000001,
+        );
+    }
+
+    /**
+     * @param int<1, 16>  $horizontalSize
+     * @param int<1, 16>  $verticalSize
+     * @param int<1, 179> $fieldOfView
+     */
+    #[Property]
+    public function test_transforming_a_camera_transforms_the_rays_for_its_pixels(
+        int $horizontalSize,
+        int $verticalSize,
+        int $fieldOfView,
+        #[ForAllExternal(RaytracerGenerators::class, 'rigidTransformations')]
+        Matrix $transformation,
+    ): void {
+        $camera      = Camera::from($horizontalSize, $verticalSize, deg2rad($fieldOfView));
+        $transformed = Camera::from($horizontalSize, $verticalSize, deg2rad($fieldOfView));
+
+        $transformed->setTransform($transformation);
+
+        $px = $this->draw(Generators::integers(0, $horizontalSize - 1), 'px');
+        $py = $this->draw(Generators::integers(0, $verticalSize - 1), 'py');
+
+        $this->assertEqualsWithDelta(
+            $camera->rayForPixel($px, $py)->transform($transformation->inverse()),
+            $transformed->rayForPixel($px, $py),
+            0.000000001,
+        );
+    }
+
+    /**
      * @param int<1, 9>    $horizontalSize
      * @param int<1, 9>    $verticalSize
      * @param int<30, 120> $fieldOfView
@@ -198,6 +289,33 @@ final class CameraTest extends TestCase
                 $this->assertGreaterThan(0.0, $image->pixelAt($x, $y)->red());
                 $this->assertEquals($world->colorAt($camera->rayForPixel($x - 1, $y - 1)), $image->pixelAt($x, $y));
             }
+        }
+    }
+
+    /**
+     * @param int<1, 9>   $horizontalSize
+     * @param int<1, 9>   $verticalSize
+     * @param int<1, 179> $fieldOfView
+     */
+    #[Property(examples: 25)]
+    public function test_the_image_of_a_world_without_shapes_is_black(
+        int $horizontalSize,
+        int $verticalSize,
+        int $fieldOfView,
+        #[ForAllExternal(RaytracerGenerators::class, 'rigidTransformations')]
+        Matrix $transformation,
+    ): void {
+        $camera = Camera::from($horizontalSize, $verticalSize, deg2rad($fieldOfView));
+
+        $camera->setTransform($transformation);
+
+        $image = $camera->render(new World);
+
+        $this->assertSame($horizontalSize, $image->width());
+        $this->assertSame($verticalSize, $image->height());
+
+        foreach ($image as $pixel) {
+            $this->assertEquals(Color::from(0, 0, 0), $pixel);
         }
     }
 }
