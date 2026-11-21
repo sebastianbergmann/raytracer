@@ -209,7 +209,7 @@ final class CameraTest extends TestCase
      * @param int<2, 10>   $distanceOfLight
      * @param int<-10, 10> $heightOfLight
      */
-    #[Property(examples: 25)]
+    #[Property(25)]
     #[TestWith([5, 5, 60, 5, 0, 10, 0], 'sphere in the center of the image')]
     #[TestWith([4, 3, 90, 3, 2, 5, 10], 'camera and light above the sphere')]
     public function test_the_image_of_a_scene_that_is_symmetric_is_symmetric(
@@ -260,7 +260,7 @@ final class CameraTest extends TestCase
      * @param int<1, 9>    $verticalSize
      * @param int<30, 120> $fieldOfView
      */
-    #[Property(examples: 25)]
+    #[Property(25)]
     #[TestWith([1, 1, 90], 'one pixel')]
     #[TestWith([3, 2, 90], 'more than one row and more than one column')]
     public function test_each_pixel_of_an_image_has_the_color_at_the_ray_for_this_pixel(int $horizontalSize, int $verticalSize, int $fieldOfView): void
@@ -297,7 +297,7 @@ final class CameraTest extends TestCase
      * @param int<1, 9>   $verticalSize
      * @param int<1, 179> $fieldOfView
      */
-    #[Property(examples: 25)]
+    #[Property(25)]
     public function test_the_image_of_a_world_without_shapes_is_black(
         int $horizontalSize,
         int $verticalSize,
